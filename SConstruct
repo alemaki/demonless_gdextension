@@ -3,10 +3,9 @@ import os
 # Include necessary environment
 env = SConscript('godot-cpp/SConstruct')
 
-env.Append(CPPPATH=["doctest"])
-
+# Add include paths for compialtion
+env.Append(CPPPATH=["doctest/doctest"])
 env.Append(CPPPATH=["behaviour_tree"])
-
 env.Append(CPPPATH=["src"])
 
 #for libraries
@@ -25,7 +24,7 @@ def collect_cpp_files(root):
 # Collect all CPP files
 src = []
 src += collect_cpp_files("doctest/doctest")
-src += collect_cpp_files("behaviour_tree/behaviour_tree")
+src += collect_cpp_files("behaviour_tree")
 src += collect_cpp_files("src")
 
 if env['platform'] == 'linux':
