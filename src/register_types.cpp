@@ -14,24 +14,8 @@
 #include <doctest.h>
 #include "tests/test_utils/test_runner.hpp"
 
-#include "behaviour_tree/behaviour_tree.hpp"
-#include "behaviour_tree/tasks/bt_action.hpp"
-#include "behaviour_tree/tasks/bt_composite.hpp"
-#include "behaviour_tree/tasks/bt_condition.hpp"
-#include "behaviour_tree/tasks/bt_decorator.hpp"
-#include "behaviour_tree/tasks/bt_subtree.hpp"
-#include "behaviour_tree/tasks/bt_task.hpp"
-#include "behaviour_tree/tasks/composites/bt_selector.hpp"
-#include "behaviour_tree/tasks/composites/bt_sequence.hpp"
-#include "behaviour_tree/tasks/composites/bt_random_sequence.hpp"
-#include "behaviour_tree/tasks/composites/bt_random_selector.hpp"
-#include "behaviour_tree/tasks/decorators/bt_always_fail.hpp"
-#include "behaviour_tree/tasks/decorators/bt_always_succeed.hpp"
-#include "behaviour_tree/tasks/decorators/bt_invert.hpp"
-#include "behaviour_tree/tasks/decorators/bt_probability.hpp"
-#include "behaviour_tree/ui/bt_editor_plugin.hpp"
-#include "behaviour_tree/ui/bt_graph_node.hpp"
-#include "behaviour_tree/ui/bt_graph_node_subtree.hpp"
+#include "behaviour_tree/register_types.h"
+
 #include "components/area2d/hitbox.hpp"
 #include "components/area2d/hurtbox.hpp"
 #include "components/health/health_component.hpp"
@@ -45,6 +29,9 @@ using namespace godot;
 
 void initialize_gdextension_module(ModuleInitializationLevel p_level)
 {
+	initialize_behaviour_tree_module(p_level);
+	initialize_test_module(p_level);
+	
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
 	{
 		ClassDB::register_class<Projectile>();
@@ -54,35 +41,11 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<LinearProjectile>();
 		ClassDB::register_class<CharacterInputComponent>();
 		ClassDB::register_class<CharacterMovementComponent>();
-		ClassDB::register_class<BTTask>();
-		ClassDB::register_class<BTDecorator>();
-		ClassDB::register_class<BTComposite>();
-		ClassDB::register_class<BTSelector>();
-		ClassDB::register_class<BTSequence>();
-		ClassDB::register_class<BTRandomSequence>();
-		ClassDB::register_class<BTRandomSelector>();
-		ClassDB::register_class<BTCondition>();
-		ClassDB::register_class<BTAlwaysSucceed>();
-		ClassDB::register_class<BTAlwaysFail>();
-		ClassDB::register_class<BTInvert>();
-		ClassDB::register_class<BTProbability>();
-		ClassDB::register_class<BTRepeat>();
-		ClassDB::register_class<BTAction>();
-		ClassDB::register_class<BTSubtree>();
-
-		ClassDB::register_class<BehaviourTree>();
-
-		ClassDB::register_class<TestRunner>();
+		
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
 	{
-		
-		ClassDB::register_internal_class<BTGraphNode>();
-		ClassDB::register_internal_class<BTGraphNodeSubtree>();
-		ClassDB::register_internal_class<BTGraphEditor>();
-		ClassDB::register_internal_class<BTEditorPlugin>();
-		
-		EditorPlugins::add_by_type<BTEditorPlugin>();
+
 	}
 }
 

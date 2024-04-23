@@ -29,8 +29,8 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
             hitbox->set_monitoring(true);
             hitbox->emit_signal("area_entered", hurtbox);
 
-            CHECK(SignalWatcher::was_signal_emitted(hitbox, "hit_hurtbox"));
-            CHECK(SignalWatcher::was_signal_emitted(hurtbox, "hurtbox_hit"));
+            CHECK(SignalWatcher::signal_emitted(hitbox, "hit_hurtbox"));
+            CHECK(SignalWatcher::signal_emitted(hurtbox, "hurtbox_hit"));
 
             godot::Array hitbox_signal;
             hitbox_signal.push_back(hurtbox);
@@ -60,8 +60,8 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
             hitbox->emit_signal("area_entered", area2d);
             hurtbox->emit_signal("area_entered", area2d);
 
-            CHECK_FALSE(SignalWatcher::was_signal_emitted(hitbox, "hit_hurtbox"));
-            CHECK_FALSE(SignalWatcher::was_signal_emitted(hurtbox, "hurtbox_hit"));
+            CHECK_FALSE(SignalWatcher::signal_emitted(hitbox, "hit_hurtbox"));
+            CHECK_FALSE(SignalWatcher::signal_emitted(hurtbox, "hurtbox_hit"));
 
             memfree(area2d);
         }

@@ -89,11 +89,11 @@ TEST_SUITE("HealthComponentTests")
         SignalWatcher::watch_signals(health_component);
 
         health_component->take_damage(1);
-        CHECK_FALSE(SignalWatcher::was_signal_emitted(health_component, godot::String("health_depleted")));
+        CHECK_FALSE(SignalWatcher::signal_emitted(health_component, godot::String("health_depleted")));
         CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_depleted")) == 0);
 
         health_component->take_damage(1);
-        CHECK(SignalWatcher::was_signal_emitted(health_component, godot::String("health_depleted")));
+        CHECK(SignalWatcher::signal_emitted(health_component, godot::String("health_depleted")));
 
         memfree(health_component);
     }
