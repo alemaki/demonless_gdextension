@@ -23,7 +23,6 @@ public:
     {
         return this->current_hp;
     }
-    
     void take_damage(int amount);
     void heal(int amount);
     
