@@ -2,7 +2,6 @@
 #define PLAYER_CHARACTER_HPP
 
 #include <godot_cpp/classes/character_body2d.hpp>
-#include <godot_cpp/variant/variant.hpp>
 
 class PlayerCharacter : public godot::CharacterBody2D
 {

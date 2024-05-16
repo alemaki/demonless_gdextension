@@ -32,7 +32,7 @@ if env['platform'] == 'linux':
 	sharedlib = env.SharedLibrary(libpath, src)
 	Default(sharedlib)
 
-if env['platform'] == 'windows': # TODO
+if env['platform'] == 'windows':
 	libpath = '../libdemonless{}{}'.format(env['suffix'], env['SHLIBSUFFIX'])
 	sharedlib = env.SharedLibrary(libpath, src)
 	Default(sharedlib)
