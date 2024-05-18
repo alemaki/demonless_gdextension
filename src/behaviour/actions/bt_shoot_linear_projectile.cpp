@@ -17,15 +17,13 @@ BTTask::Status BTShootLinearProjectile::_tick(double delta)
     projectile->set_position(actor->get_position());
     projectile->set_direction(godot::Vector2(1, 0));
 
-    godot::Node* parent = actor->get_parent();
-
-    if (parent == nullptr)
+    if (actor == nullptr)
     {
-        godot::UtilityFunctions::printerr("Actor has not parent.");
         return BTTask::Status::FAILURE;
     }
 
-    parent->add_child(projectile);
+    /* TODO: should bullet be actor's child. */
+    actor->add_child(projectile);
 
     return BTTask::Status::SUCCESS;
 }

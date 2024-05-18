@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cgms8yufnih0c"]
+
+[node name="TestRunner" type="TestRunner"]

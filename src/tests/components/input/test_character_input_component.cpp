@@ -16,7 +16,6 @@ TEST_SUITE("TestCaracterInputComponent")
 {
     TEST_CASE("Test Character input component")
     {
-
         CharacterInputComponent* character_input_component = memnew(CharacterInputComponent);
 
         CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 0));
