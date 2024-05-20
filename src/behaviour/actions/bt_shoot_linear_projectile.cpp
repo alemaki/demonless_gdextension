@@ -13,14 +13,12 @@ void BTShootLinearProjectile::_setup()
 BTTask::Status BTShootLinearProjectile::_tick(double delta)
 {
     LinearProjectile* projectile = godot::Object::cast_to<LinearProjectile>(this->linear_projectile->duplicate());
+
+    TASK_FAIL_COND_MSG(projectile == nullptr, "Cannot duplicate linear projectile.");
+
     godot::Node2D* actor = godot::Object::cast_to<godot::Node2D>(this->get_actor());
     projectile->set_position(actor->get_position());
     projectile->set_direction(godot::Vector2(1, 0));
-
-    if (actor == nullptr)
-    {
-        return BTTask::Status::FAILURE;
-    }
 
     /* TODO: should bullet be actor's child. */
     actor->add_child(projectile);
