@@ -3,9 +3,9 @@
 
 #include "behaviour_tree/tasks/bt_condition.hpp"
 
-class BTIsNode2DInRange : public BTCondition
+class BTNode2DInRange : public BTCondition
 {
-    GDCLASS(BTIsNode2DInRange, BTCondition);
+    GDCLASS(BTNode2DInRange, BTCondition);
 
 private: 
     double range;

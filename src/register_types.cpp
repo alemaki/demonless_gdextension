@@ -18,6 +18,8 @@
 
 #include "behaviour/actions/bt_shoot_linear_projectile.hpp"
 
+#include "behaviour/conditions/bt_node2d_in_range.hpp"
+
 #include "components/area2d/hitbox.hpp"
 #include "components/area2d/hurtbox.hpp"
 #include "components/health/health_component.hpp"
@@ -46,6 +48,8 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		
 		/* Behaviour */
 		ClassDB::register_class<BTShootLinearProjectile>();
+
+		ClassDB::register_class<BTNode2DInRange>();
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
 	{

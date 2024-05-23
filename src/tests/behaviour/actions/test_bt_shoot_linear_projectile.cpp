@@ -11,12 +11,12 @@ TEST_CASE("BTShootLinearProjectile")
     godot::Ref<BTShootLinearProjectile> task = memnew(BTShootLinearProjectile);
     task->set_linear_projectile_scene_path("res://gdextension/src/tests/mock_objects/projectiles/MockLinearProjectile.tscn");
 
-    SUBCASE("BTShootLinearProjectile set and get scene path expected behavior")
+    SUBCASE("Set and get scene path expected behavior")
     {
         CHECK(task->get_linear_projectile_scene_path() == "res://gdextension/src/tests/mock_objects/projectiles/MockLinearProjectile.tscn");
     }
 
-    SUBCASE("BTShootLinearProjectile creates projectile")
+    SUBCASE("Creates projectile")
     {
         godot::Node2D* mock_actor = memnew(godot::Node2D);
 
