@@ -3,6 +3,7 @@
 
 #include "components/area2d/hitbox.hpp"
 #include "components/area2d/hurtbox.hpp"
+#include "tests/test_utils/test_runner.hpp"
 #include "tests/test_utils/signal_watcher.hpp"
 
 TEST_SUITE("HitboxHurtboxInteractionTests")
@@ -14,11 +15,13 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         Hitbox* hitbox = memnew(Hitbox);
         Hurtbox* hurtbox = memnew(Hurtbox);
 
+        godot::Node* scene_root = get_scene_root();
+        scene_root->add_child(hitbox);
+        scene_root->add_child(hurtbox);
+
         SUBCASE("Test hitbox and hurtbox interaction")
         {
-            /* simulate addition to tree. TODO: find solution. */
-            hitbox->_ready();
-            hurtbox->_ready();
+            godot::Node* tree = get_scene_root();
 
             REQUIRE(hitbox->has_signal("hit_hurtbox"));
             REQUIRE(hurtbox->has_signal("hurtbox_hit"));
@@ -44,11 +47,7 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         SUBCASE("Test hitbox and hurtbox won't emmit signal when touched by other area2D objects")
         {
             godot::Area2D* area2d= memnew(godot::Area2D);
-
-            /* simulate addition to tree. TODO: find solution. */
-            area2d->_ready();
-            hitbox->_ready();
-            hurtbox->_ready();
+            scene_root->add_child(area2d);
 
             REQUIRE(hitbox->has_signal("hit_hurtbox"));
             REQUIRE(hurtbox->has_signal("hurtbox_hit"));
@@ -63,8 +62,13 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
             CHECK_FALSE(SignalWatcher::signal_emitted(hitbox, "hit_hurtbox"));
             CHECK_FALSE(SignalWatcher::signal_emitted(hurtbox, "hurtbox_hit"));
 
+            scene_root->remove_child(area2d);
+
             memfree(area2d);
         }
+
+        scene_root->remove_child(hitbox);
+        scene_root->remove_child(hurtbox);
 
         memfree(hitbox);
         memfree(hurtbox);

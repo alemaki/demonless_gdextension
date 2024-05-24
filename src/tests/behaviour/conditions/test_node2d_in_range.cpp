@@ -17,6 +17,16 @@ TEST_SUITE("BTNode2DInRange")
         /* TODO: Node's names snake or pascal case?*/
         task->set_node_name("TargetNode");
 
+        godot::Node2D* actor = memnew(godot::Node2D);
+        actor->set_position(godot::Vector2(0, 0));
+
+        godot::Node2D* target_node = memnew(godot::Node2D);
+        target_node->set_name("TargetNode");
+
+        godot::Node* scene_root = get_scene_root();
+        scene_root->add_child(actor);
+        scene_root->add_child(target_node);
+
         SUBCASE("Set and get range and node name expected behavior")
         {
             CHECK(task->get_range() == doctest::Approx(100.0));
@@ -25,65 +35,50 @@ TEST_SUITE("BTNode2DInRange")
 
         SUBCASE("Node in range")
         {
-            godot::Node2D* actor = memnew(godot::Node2D);
-            actor->set_position(godot::Vector2(0, 0));
-
-            godot::Node2D* target_node = memnew(godot::Node2D);
             target_node->set_position(godot::Vector2(50, 50));
-            target_node->set_name("TargetNode");
-
-            godot::Node* scene_root = get_scene_root();
-            godot::UtilityFunctions::print(scene_root);
-            scene_root->add_child(actor);
-            scene_root->add_child(target_node);
-
-
+            godot::UtilityFunctions::print(target_node->get_position());
             task->initialize(actor);
             auto status = task->execute(0.1);
-
 
             CHECK(status == BTTask::Status::SUCCESS);
-
-            memfree(actor);
-            memfree(target_node);
         }
-        /*
+
         SUBCASE("Node out of range")
         {
-            godot::Node2D* actor = memnew(godot::Node2D);
-            actor->set_position(godot::Vector2(0, 0));
-
-            godot::Node2D* target_node = memnew(godot::Node2D);
             target_node->set_position(godot::Vector2(200, 200));
-            target_node->set_name("TargetNode");
-
-            godot::Node* scene_root = get_scene_root();
-            scene_root->add_child(actor);
-            scene_root->add_child(target_node);
 
             task->initialize(actor);
             auto status = task->execute(0.1);
 
             CHECK(status == BTTask::Status::FAILURE);
-
-            memfree(actor);
-            memfree(target_node);
         }
 
-        SUBCASE("Node not found")
-        {
-            godot::Node2D* actor = memnew(godot::Node2D);
-            actor->set_position(godot::Vector2(0, 0));
+        scene_root->remove_child(actor);
+        scene_root->remove_child(target_node);
 
-            godot::Node* scene_root = get_scene_root();
-            scene_root->add_child(actor);
+        memfree(actor);
+        memfree(target_node);
+    }
 
-            task->initialize(actor);
-            auto status = task->execute(0.1);
+    TEST_CASE("Non-existent node")
+    {
+        godot::Ref<BTNode2DInRange> task = memnew(BTNode2DInRange);
+        task->set_range(100.0);
 
-            CHECK(status == BTTask::Status::FAILURE);
+        task->set_node_name("TargetNode");
 
-            memfree(actor);
-        }*/
+        godot::Node2D* actor = memnew(godot::Node2D);
+        actor->set_position(godot::Vector2(0, 0));
+
+        godot::Node* scene_root = get_scene_root();
+        scene_root->add_child(actor);
+
+        task->initialize(actor);
+        auto status = task->execute(0.1);
+
+        CHECK(status == BTTask::Status::FAILURE);
+
+        scene_root->remove_child(actor);
+        memfree(actor);
     }
 }

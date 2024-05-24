@@ -12,10 +12,10 @@ BTTask::Status BTNode2DInRange::_tick(double delta)
     /* TODO: make it blackboard reference. */
     godot::Node* current_scene = actor->get_tree()->get_current_scene();
     godot::Node2D* node = godot::Object::cast_to<godot::Node2D>(current_scene->find_child(this->node_name, true, false));
-    
+
     TASK_FAIL_COND(node == nullptr);
 
-    if (actor->get_position().distance_to(node->get_position()) < range)
+    if (actor->get_position().distance_to(node->get_position()) <= range)
     {
         return BTTask::Status::SUCCESS;
     }
