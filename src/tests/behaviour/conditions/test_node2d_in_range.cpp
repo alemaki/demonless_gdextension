@@ -36,7 +36,6 @@ TEST_SUITE("BTNode2DInRange")
         SUBCASE("Node in range")
         {
             target_node->set_position(godot::Vector2(50, 50));
-            godot::UtilityFunctions::print(target_node->get_position());
             task->initialize(actor);
             auto status = task->execute(0.1);
 
@@ -53,11 +52,8 @@ TEST_SUITE("BTNode2DInRange")
             CHECK(status == BTTask::Status::FAILURE);
         }
 
-        scene_root->remove_child(actor);
-        scene_root->remove_child(target_node);
-
-        memfree(actor);
-        memfree(target_node);
+        memdelete(actor);
+        memdelete(target_node);
     }
 
     TEST_CASE("Non-existent node")
@@ -78,7 +74,6 @@ TEST_SUITE("BTNode2DInRange")
 
         CHECK(status == BTTask::Status::FAILURE);
 
-        scene_root->remove_child(actor);
-        memfree(actor);
+        memdelete(actor);
     }
 }

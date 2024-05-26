@@ -26,7 +26,7 @@ TEST_CASE("BTShootLinearProjectile")
         CHECK(status == BTTask::Status::SUCCESS);
         CHECK(mock_actor->get_child(0)->get_class() == LinearProjectile::get_class_static());
 
-        memfree(mock_actor);
+        memdelete(mock_actor);
     }
 }
 

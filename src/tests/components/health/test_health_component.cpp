@@ -35,7 +35,7 @@ TEST_SUITE("HealthComponentTests")
         health_component->set_current_hp(-1);
         CHECK(health_component->get_current_hp() == 0);
 
-        memfree(health_component);
+        memdelete(health_component);
     }
 
     TEST_CASE("Test health component take damage")
@@ -54,7 +54,7 @@ TEST_SUITE("HealthComponentTests")
         health_component->take_damage(-20);
         CHECK(health_component->get_current_hp() == 0);
 
-        memfree(health_component);
+        memdelete(health_component);
     }
 
     TEST_CASE("Test health component heal")
@@ -74,7 +74,7 @@ TEST_SUITE("HealthComponentTests")
         health_component->heal(-20);
         CHECK(health_component->get_current_hp() == 50);
 
-        memfree(health_component);
+        memdelete(health_component);
     }
 
     TEST_CASE("Test health component health_depleted signal")
@@ -95,7 +95,7 @@ TEST_SUITE("HealthComponentTests")
         health_component->take_damage(1);
         CHECK(SignalWatcher::signal_emitted(health_component, godot::String("health_depleted")));
 
-        memfree(health_component);
+        memdelete(health_component);
     }
 
 }

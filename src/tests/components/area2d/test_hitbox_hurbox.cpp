@@ -62,16 +62,11 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
             CHECK_FALSE(SignalWatcher::signal_emitted(hitbox, "hit_hurtbox"));
             CHECK_FALSE(SignalWatcher::signal_emitted(hurtbox, "hurtbox_hit"));
 
-            scene_root->remove_child(area2d);
-
-            memfree(area2d);
+            memdelete(area2d);
         }
 
-        scene_root->remove_child(hitbox);
-        scene_root->remove_child(hurtbox);
-
-        memfree(hitbox);
-        memfree(hurtbox);
+        memdelete(hitbox);
+        memdelete(hurtbox);
     }
 
 }

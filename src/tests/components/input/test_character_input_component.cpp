@@ -47,6 +47,6 @@ TEST_SUITE("TestCaracterInputComponent")
         godot::Input::get_singleton()->action_release("ui_right");
         godot::Input::get_singleton()->action_release("ui_down");
 
-        memfree(character_input_component);
+        memdelete(character_input_component);
     }
 }
