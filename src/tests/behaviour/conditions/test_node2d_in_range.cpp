@@ -36,7 +36,7 @@ TEST_SUITE("BTNode2DInRange")
         SUBCASE("Node in range")
         {
             target_node->set_position(godot::Vector2(50, 50));
-            task->initialize(actor);
+            task->initialize(actor, nullptr);
             auto status = task->execute(0.1);
 
             CHECK(status == BTTask::Status::SUCCESS);
@@ -46,7 +46,7 @@ TEST_SUITE("BTNode2DInRange")
         {
             target_node->set_position(godot::Vector2(200, 200));
 
-            task->initialize(actor);
+            task->initialize(actor, nullptr);
             auto status = task->execute(0.1);
 
             CHECK(status == BTTask::Status::FAILURE);
@@ -69,7 +69,7 @@ TEST_SUITE("BTNode2DInRange")
         godot::Node* scene_root = get_scene_root();
         scene_root->add_child(actor);
 
-        task->initialize(actor);
+        task->initialize(actor, nullptr);
         auto status = task->execute(0.1);
 
         CHECK(status == BTTask::Status::FAILURE);
