@@ -9,7 +9,7 @@ class BTNode2DInRange : public BTCondition
 
 private: 
     double range;
-    godot::String node_name;
+    godot::StringName node_name;
 
 protected:
     virtual BTTask::Status _tick(double delta) override;

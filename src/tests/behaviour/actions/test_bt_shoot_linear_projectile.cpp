@@ -20,7 +20,7 @@ TEST_CASE("BTShootLinearProjectile")
     {
         godot::Node2D* mock_actor = memnew(godot::Node2D);
 
-        task->initialize(mock_actor, nullptr);
+        task->initialize(mock_actor, memnew(Blackboard));
         auto status = task->execute(0.1);
 
         CHECK(status == BTTask::Status::SUCCESS);
