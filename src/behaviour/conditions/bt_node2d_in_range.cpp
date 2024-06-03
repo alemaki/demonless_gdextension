@@ -2,14 +2,12 @@
 
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
-#include <godot_cpp/classes/window.hpp>
-
 #include <godot_cpp/variant/utility_functions.hpp>
 
 BTTask::Status BTNode2DInRange::_tick(double delta)
 {
     godot::Node2D* actor = godot::Object::cast_to<godot::Node2D>(this->get_actor());
-    godot::Node2D* node = godot::Object::cast_to<Node2D>(this->get_blackboard()->get_var(this->node_name, nullptr, false));
+    godot::Node2D* node = godot::Object::cast_to<Node2D>(this->get_blackboard()->get_var(this->node_name, godot::Variant(), false));
 
     TASK_FAIL_COND(node == nullptr);
 

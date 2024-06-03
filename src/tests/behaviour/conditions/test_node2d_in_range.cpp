@@ -10,7 +10,7 @@
 
 TEST_SUITE("BTNode2DInRange")
 {
-    TEST_CASE("BTNode2DInRange")
+    TEST_CASE("Basics")
     {
         godot::Ref<BTNode2DInRange> task = memnew(BTNode2DInRange);
         task->set_range(100.0);
@@ -21,7 +21,6 @@ TEST_SUITE("BTNode2DInRange")
         actor->set_position(godot::Vector2(0, 0));
 
         godot::Node2D* target_node = memnew(godot::Node2D);
-        target_node->set_name("TargetNode");
 
         godot::Node* scene_root = get_scene_root();
         scene_root->add_child(actor);
@@ -29,6 +28,7 @@ TEST_SUITE("BTNode2DInRange")
 
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
         task->initialize(actor, blackboard);
+        blackboard->set_var("TargetNode", target_node);
 
         SUBCASE("Set and get range and node name expected behavior")
         {
@@ -39,7 +39,7 @@ TEST_SUITE("BTNode2DInRange")
         SUBCASE("Node in range")
         {
             target_node->set_position(godot::Vector2(50, 50));
-            auto status = task->execute(0.1);
+            BTTask::Status status = task->execute(0.1);
 
             CHECK(status == BTTask::Status::SUCCESS);
         }
@@ -47,7 +47,7 @@ TEST_SUITE("BTNode2DInRange")
         SUBCASE("Node out of range")
         {
             target_node->set_position(godot::Vector2(200, 200));
-            auto status = task->execute(0.1);
+            BTTask::Status status = task->execute(0.1);
 
             CHECK(status == BTTask::Status::FAILURE);
         }
@@ -70,7 +70,7 @@ TEST_SUITE("BTNode2DInRange")
         scene_root->add_child(actor);
 
         task->initialize(actor, memnew(Blackboard));
-        auto status = task->execute(0.1);
+        BTTask::Status status = task->execute(0.1);
 
         CHECK(status == BTTask::Status::FAILURE);
 
