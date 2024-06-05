@@ -14,7 +14,7 @@
 #include <doctest.h>
 #include "tests/test_utils/test_runner.hpp"
 
-#include "behaviour_tree/register_types.h"
+#include "bt_register_types.h"
 
 #include "behaviour/actions/bt_shoot_linear_projectile.hpp"
 
