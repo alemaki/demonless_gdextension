@@ -1,5 +1,13 @@
 import os
 
+# Define build directories
+target = ARGUMENTS.get('target', "release")
+variant_dir = os.path.join('..', 'bin')
+
+# Ensure variant directory exists
+if not os.path.exists(variant_dir):
+    os.makedirs(variant_dir)
+
 # Include necessary environment
 env = SConscript('godot-cpp/SConstruct')
 
@@ -21,24 +29,18 @@ def collect_cpp_files(root):
     return cpp_files
 
 # Collect all CPP files
-src = []
-src += collect_cpp_files("doctest/doctest")
-src += collect_cpp_files("behaviour_tree")
-src += collect_cpp_files("src")
-
-target = ARGUMENTS.get('target', 'template_release')
+src = collect_cpp_files('doctest/doctest')
+src += collect_cpp_files('behaviour_tree')
+src += collect_cpp_files('src')
 
 if target == 'template_debug' or target == 'debug':
     env.Append(CPPDEFINES=['DEBUG'])
     env.Append(CXXFLAGS=['-g', '-O0'])  # Debug flags: No optimization, include debug symbols
-    env['suffix'] = '.template_debug'
 else:
     env.Append(CPPDEFINES=['NDEBUG'])
-    env.Append(CXXFLAGS=['-O3'])  # Release flags: Full optimization
-    env['suffix'] = '.template_release'
 
 if env['platform'] == 'linux' or env['platform'] == 'windows':
-	libpath = '../libdemonless{}{}'.format(env['suffix'], env['SHLIBSUFFIX'])
+	libpath = os.path.join(variant_dir, 'demonless{}{}'.format(env['suffix'], env['SHLIBSUFFIX']))
 	sharedlib = env.SharedLibrary(libpath, src)
 	Default(sharedlib)
 
