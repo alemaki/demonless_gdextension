@@ -17,6 +17,12 @@ protected:
 
 public:
     HealthBar();
+    
+    void set_health_component(HealthComponent* health_component);
+    _FORCE_INLINE_ HealthComponent* get_health_component()
+    {
+        return this->health_component;
+    }
 
 protected:
     static void _bind_methods();

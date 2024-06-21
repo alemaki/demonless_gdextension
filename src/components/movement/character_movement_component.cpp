@@ -3,19 +3,6 @@
 #include <godot_cpp/classes/character_body2d.hpp>
 #include "components/input/character_input_component.hpp"
 
-void CharacterMovementComponent::_bind_methods()
-{
-    using namespace godot;
-
-    ClassDB::bind_method(D_METHOD("set_character", "character"), &CharacterMovementComponent::set_character);
-    ClassDB::bind_method(D_METHOD("get_character"), &CharacterMovementComponent::get_character);
-    ClassDB::bind_method(D_METHOD("set_input_component", "input_component"), &CharacterMovementComponent::set_input_component);
-    ClassDB::bind_method(D_METHOD("get_input_component"), &CharacterMovementComponent::get_input_component);
-
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "input_component"), "set_input_component", "get_input_component");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "character"), "set_character", "get_character");
-}
-
 void CharacterMovementComponent::_physics_process(double delta)
 {
     CharacterInputComponent* input_component = godot::Object::cast_to<CharacterInputComponent>(this->input_component);
@@ -94,4 +81,17 @@ void CharacterMovementComponent::set_friction(float friction)
 float CharacterMovementComponent::get_friction() const
 {
     return this->friction;
+}
+
+void CharacterMovementComponent::_bind_methods()
+{
+    using namespace godot;
+
+    ClassDB::bind_method(D_METHOD("set_character", "character"), &CharacterMovementComponent::set_character);
+    ClassDB::bind_method(D_METHOD("get_character"), &CharacterMovementComponent::get_character);
+    ClassDB::bind_method(D_METHOD("set_input_component", "input_component"), &CharacterMovementComponent::set_input_component);
+    ClassDB::bind_method(D_METHOD("get_input_component"), &CharacterMovementComponent::get_input_component);
+
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "input_component"), "set_input_component", "get_input_component");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "character"), "set_character", "get_character");
 }
