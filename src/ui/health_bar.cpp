@@ -9,10 +9,19 @@ void HealthBar::_on_change()
 {
     ERR_FAIL_NULL(this->health_component);
     double max_health = this->health_component->get_max_hp();
-    double current_health = this->health_component->get_max_hp();
+    double current_health = this->health_component->get_current_hp();
 
-    double percentage = (current_health*100)/max_health;
-    this->set_value(current_health);
+    double percentage;
+    if (max_health == 0)
+    {
+        percentage = 0;
+    }
+    else
+    {
+        percentage = (current_health*100)/max_health;
+    }
+
+    this->set_value(percentage);
 }
 
 void HealthBar::set_health_component(HealthComponent* health_component)

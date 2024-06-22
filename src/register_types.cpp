@@ -27,6 +27,7 @@
 #include "components/movement/character_movement_component.hpp"
 #include "projectiles/projectile.hpp"
 #include "projectiles/linear_projectile.hpp"
+#include "ui/health_bar.hpp"
 
 
 using namespace godot;
@@ -45,6 +46,9 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<LinearProjectile>();
 		ClassDB::register_class<CharacterInputComponent>();
 		ClassDB::register_class<CharacterMovementComponent>();
+
+		/* UI*/
+		ClassDB::register_class<HealthBar>();
 		
 		/* Behaviour */
 		ClassDB::register_class<BTShootLinearProjectile>();

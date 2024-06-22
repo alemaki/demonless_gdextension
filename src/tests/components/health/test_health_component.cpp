@@ -90,10 +90,38 @@ TEST_SUITE("HealthComponentTests")
 
         health_component->take_damage(1);
         CHECK_FALSE(SignalWatcher::signal_emitted(health_component, godot::String("health_depleted")));
-        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_depleted")) == 0);
 
         health_component->take_damage(1);
         CHECK(SignalWatcher::signal_emitted(health_component, godot::String("health_depleted")));
+        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_depleted")) == 1);
+
+        memdelete(health_component);
+    }
+
+    TEST_CASE("Test health component health_changed signal")
+    {
+        HealthComponent* health_component = memnew(HealthComponent);
+
+        health_component->set_max_hp(10);
+        health_component->set_current_hp(0);
+
+        REQUIRE(health_component->has_signal("health_changed"));
+
+        SignalWatcher::watch_signals(health_component);
+
+        health_component->take_damage(1);
+        CHECK_FALSE(SignalWatcher::signal_emitted(health_component, godot::String("health_changed")));
+
+        health_component->set_current_hp(5);
+        health_component->take_damage(1);
+        CHECK(SignalWatcher::signal_emitted(health_component, godot::String("health_changed")));
+        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_changed")) == 1);
+
+        health_component->take_damage(1);
+        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_changed")) == 2);
+
+        health_component->heal(1);
+        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_changed")) == 3);
 
         memdelete(health_component);
     }

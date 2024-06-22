@@ -9,22 +9,23 @@ class HealthComponent : public godot::Node
     GDCLASS(HealthComponent, godot::Node);
     
 public:
-    int max_hp = 0;
-    int current_hp = 0;
+    double max_hp = 0;
+    double current_hp = 0;
 
 public:
-    void set_max_hp(int max_hp);
-    void set_current_hp(int current_hp);
-    _FORCE_INLINE_ int get_max_hp() const
+    void set_max_hp(double max_hp);
+    _FORCE_INLINE_ double get_max_hp() const
     {
         return this->max_hp;
     }
-    _FORCE_INLINE_ int get_current_hp() const
+    void set_current_hp(double current_hp);
+    _FORCE_INLINE_ double get_current_hp() const
     {
         return this->current_hp;
     }
-    void take_damage(int amount);
-    void heal(int amount);
+
+    void take_damage(double amount);
+    void heal(double amount);
     
 
 protected:
