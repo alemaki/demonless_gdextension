@@ -10,7 +10,9 @@ TEST_SUITE("TestHealthBar")
     {
         godot::UtilityFunctions::print("here");
         HealthComponent* health_component = memnew(HealthComponent);
+        godot::UtilityFunctions::print("here after hc");
         HealthBar* health_bar = memnew(HealthBar);
+        godot::UtilityFunctions::print("here after hb");
 
         health_bar->set_health_component(health_component);
         godot::UtilityFunctions::print("here0");

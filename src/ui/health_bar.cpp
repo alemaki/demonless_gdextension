@@ -1,4 +1,5 @@
 #include "health_bar.hpp"
+#include <godot_cpp/variant/utility_functions.hpp>
 
 HealthBar::HealthBar()
 {
@@ -26,8 +27,9 @@ void HealthBar::_on_change()
 
 void HealthBar::set_health_component(HealthComponent* health_component)
 {
-    if (this->health_component != nullptr)
+    if (this->health_component != nullptr) // !!!TODO: check_instance_is_valid
     {
+        godot::UtilityFunctions::print("disconnecting");
         this->health_component->disconnect("health_changed", callable_mp(this, &HealthBar::_on_change));
     }
 

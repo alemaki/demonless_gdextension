@@ -10,7 +10,7 @@ class HealthBar : public godot::ProgressBar
     GDCLASS(HealthBar, godot::ProgressBar);
 
 private:
-    HealthComponent* health_component;
+    HealthComponent* health_component = nullptr;
 
 protected:
     void _on_change();
