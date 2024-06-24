@@ -11,6 +11,11 @@ class HealthComponent : public godot::Node
 public:
     double max_hp = 0;
     double current_hp = 0;
+    double percentage = 100;
+
+private:
+    void recalculate_percentage();
+    void apply_amount(double amount);
 
 public:
     void set_max_hp(double max_hp);
@@ -22,6 +27,10 @@ public:
     _FORCE_INLINE_ double get_current_hp() const
     {
         return this->current_hp;
+    }
+    _FORCE_INLINE_ double get_percentage() const
+    {
+        return this->percentage;
     }
 
     void take_damage(double amount);

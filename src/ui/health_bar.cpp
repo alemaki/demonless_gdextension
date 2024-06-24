@@ -9,35 +9,22 @@ HealthBar::HealthBar()
 void HealthBar::_on_change()
 {
     ERR_FAIL_NULL(this->health_component);
-    double max_health = this->health_component->get_max_hp();
-    double current_health = this->health_component->get_current_hp();
-
-    double percentage;
-    if (max_health == 0)
-    {
-        percentage = 0;
-    }
-    else
-    {
-        percentage = (current_health*100)/max_health;
-    }
-
-    this->set_value(percentage);
+    this->set_value(this->health_component->get_percentage());
 }
 
 void HealthBar::set_health_component(HealthComponent* health_component)
 {
-    if (this->health_component != nullptr) // !!!TODO: check_instance_is_valid
+    if (this->health_component != nullptr) // godot::UtilityFunctions::is_instance_valid(this->health_component)
     {
-        godot::UtilityFunctions::print("disconnecting");
-        this->health_component->disconnect("health_changed", callable_mp(this, &HealthBar::_on_change));
+        this->health_component->disconnect("perc_health_changed", callable_mp(this, &HealthBar::_on_change));
     }
 
     this->health_component = health_component;
 
     if (this->health_component != nullptr)
     {
-        this->health_component->connect("health_changed", callable_mp(this, &HealthBar::_on_change));
+        this->health_component->connect("perc_health_changed", callable_mp(this, &HealthBar::_on_change));
+        this->_on_change();
     }
 }
 
