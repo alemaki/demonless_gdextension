@@ -47,7 +47,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<CharacterInputComponent>();
 		ClassDB::register_class<CharacterMovementComponent>();
 
-		/* UI*/
+		/* UI */
 		ClassDB::register_class<HealthBar>();
 		
 		/* Behaviour */
