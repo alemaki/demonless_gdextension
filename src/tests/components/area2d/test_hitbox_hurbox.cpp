@@ -37,11 +37,11 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
 
             godot::Array hitbox_signal;
             hitbox_signal.push_back(hurtbox);
-            CHECK(hitbox_signal == SignalWatcher::get_signal_emitted_arguments(hitbox, "hit_hurtbox"));
+            CHECK_EQ(hitbox_signal, SignalWatcher::get_signal_emitted_arguments(hitbox, "hit_hurtbox"));
 
             godot::Array hurtbox_signal;
             hurtbox_signal.push_back(hitbox);
-            CHECK(hurtbox_signal == SignalWatcher::get_signal_emitted_arguments(hurtbox, "hurtbox_hit"));
+            CHECK_EQ(hurtbox_signal, SignalWatcher::get_signal_emitted_arguments(hurtbox, "hurtbox_hit"));
         }
 
         SUBCASE("Test hitbox and hurtbox won't emmit signal when touched by other area2D objects")

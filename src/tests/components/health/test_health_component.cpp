@@ -11,29 +11,29 @@ TEST_SUITE("HealthComponentTests")
     {
         HealthComponent* health_component = memnew(HealthComponent);
 
-        CHECK(health_component->get_max_hp() == 0);
-        CHECK(health_component->get_current_hp() == 0);
+        CHECK_EQ(health_component->get_max_hp(), 0);
+        CHECK_EQ(health_component->get_current_hp(), 0);
 
         health_component->set_max_hp(100);
-        CHECK(health_component->get_max_hp() == 100);
+        CHECK_EQ(health_component->get_max_hp(), 100);
 
         health_component->set_max_hp(-10);
-        CHECK(health_component->get_max_hp() == 0);
+        CHECK_EQ(health_component->get_max_hp(), 0);
 
         health_component->set_current_hp(-10);
-        CHECK(health_component->get_current_hp() == 0);
+        CHECK_EQ(health_component->get_current_hp(), 0);
 
         health_component->set_max_hp(10);
         health_component->set_current_hp(10);
         health_component->set_max_hp(5);
-        CHECK(health_component->get_current_hp() == 5);
+        CHECK_EQ(health_component->get_current_hp(), 5);
 
         health_component->set_max_hp(10);
         health_component->set_current_hp(20);
-        CHECK(health_component->get_current_hp() == 10);
+        CHECK_EQ(health_component->get_current_hp(), 10);
 
         health_component->set_current_hp(-1);
-        CHECK(health_component->get_current_hp() == 0);
+        CHECK_EQ(health_component->get_current_hp(), 0);
 
         memdelete(health_component);
     }
@@ -46,13 +46,13 @@ TEST_SUITE("HealthComponentTests")
         health_component->set_current_hp(50);
 
         health_component->take_damage(20);
-        CHECK(health_component->get_current_hp() == 30);
+        CHECK_EQ(health_component->get_current_hp(), 30);
 
         health_component->take_damage(40);
-        CHECK(health_component->get_current_hp() == 0);
+        CHECK_EQ(health_component->get_current_hp(), 0);
 
         health_component->take_damage(-20);
-        CHECK(health_component->get_current_hp() == 0);
+        CHECK_EQ(health_component->get_current_hp(), 0);
 
         memdelete(health_component);
     }
@@ -65,14 +65,14 @@ TEST_SUITE("HealthComponentTests")
         health_component->set_current_hp(50);
 
         health_component->heal(20);
-        CHECK(health_component->get_current_hp() == 70);
+        CHECK_EQ(health_component->get_current_hp(), 70);
 
         health_component->heal(31);
-        CHECK(health_component->get_current_hp() == 100);
+        CHECK_EQ(health_component->get_current_hp(), 100);
 
         health_component->set_current_hp(50);
         health_component->heal(-20);
-        CHECK(health_component->get_current_hp() == 50);
+        CHECK_EQ(health_component->get_current_hp(), 50);
 
         memdelete(health_component);
     }
@@ -93,7 +93,7 @@ TEST_SUITE("HealthComponentTests")
 
         health_component->take_damage(1);
         CHECK(SignalWatcher::signal_emitted(health_component, godot::String("health_depleted")));
-        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_depleted")) == 1);
+        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_depleted")), 1);
 
         memdelete(health_component);
     }
@@ -110,21 +110,21 @@ TEST_SUITE("HealthComponentTests")
         CHECK(SignalWatcher::signal_emitted(health_component, godot::String("perc_health_changed")));
         health_component->set_current_hp(0);
         CHECK(SignalWatcher::signal_emitted(health_component, godot::String("perc_health_changed")));
-        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")) == 1);
+        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 1);
 
         REQUIRE(health_component->has_signal("perc_health_changed"));
 
         health_component->take_damage(1);
-        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")) == 1);
+        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 1);
 
         health_component->set_current_hp(5);
-        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")) == 2);
+        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 2);
         health_component->take_damage(1);
-        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")) == 3);
+        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 3);
         health_component->take_damage(1);
-        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")) == 4);
+        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 4);
         health_component->heal(1);
-        CHECK(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")) == 5);
+        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 5);
 
         memdelete(health_component);
     }

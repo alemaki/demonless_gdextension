@@ -7,7 +7,11 @@ class PlayerCharacter : public godot::CharacterBody2D
 {
     GDCLASS(PlayerCharacter, CharacterBody2D);
 
-protected:
+public:
+    void _process(double delta) override;
+    void _physics_process(double delta) override;
+
+protected: 
     static void _bind_methods();
 
 };

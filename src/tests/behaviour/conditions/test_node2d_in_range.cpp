@@ -32,8 +32,8 @@ TEST_SUITE("BTNode2DInRange")
 
         SUBCASE("Set and get range and node name expected behavior")
         {
-            CHECK(task->get_range() == doctest::Approx(100.0));
-            CHECK(task->get_node_name() == "TargetNode");
+            CHECK_EQ(task->get_range(), doctest::Approx(100.0));
+            CHECK_EQ(task->get_node_name(), "TargetNode");
         }
 
         SUBCASE("Node in range")
@@ -41,7 +41,7 @@ TEST_SUITE("BTNode2DInRange")
             target_node->set_position(godot::Vector2(50, 50));
             BTTask::Status status = task->execute(0.1);
 
-            CHECK(status == BTTask::Status::SUCCESS);
+            CHECK_EQ(status, BTTask::Status::SUCCESS);
         }
 
         SUBCASE("Node out of range")
@@ -49,7 +49,7 @@ TEST_SUITE("BTNode2DInRange")
             target_node->set_position(godot::Vector2(200, 200));
             BTTask::Status status = task->execute(0.1);
 
-            CHECK(status == BTTask::Status::FAILURE);
+            CHECK_EQ(status, BTTask::Status::FAILURE);
         }
 
         memdelete(actor);
@@ -72,7 +72,7 @@ TEST_SUITE("BTNode2DInRange")
         task->initialize(actor, memnew(Blackboard));
         BTTask::Status status = task->execute(0.1);
 
-        CHECK(status == BTTask::Status::FAILURE);
+        CHECK_EQ(status, BTTask::Status::FAILURE);
 
         memdelete(actor);
     }
