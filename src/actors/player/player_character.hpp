@@ -16,6 +16,10 @@ class PlayerCharacter : public godot::CharacterBody2D
     FSM* movement_fsm;
     FSM* action_fsm;
     BehaviourTree* behaviour_tree;
+    godot::Ref<BTTask> task;
+    godot::Ref<Blackboard> blackboard;
+
+    double movement_speed;
     
 public:
     void _ready() override;
@@ -31,6 +35,26 @@ public:
     _FORCE_INLINE_ CharacterInputComponent* get_input_component() const
     {
         return this->input_component;
+    }
+    void set_movement_fsm(FSM* movement_fsm);
+    _FORCE_INLINE_ FSM* get_movement_fsm() const
+    {
+        return this->movement_fsm;
+    }
+    void set_action_fsm(FSM* action_fsm);
+    _FORCE_INLINE_ FSM* get_action_fsm() const
+    {
+        return this->action_fsm;
+    }
+    void set_behaviour_tree(BehaviourTree* behaviour_tree);
+    _FORCE_INLINE_ BehaviourTree* get_behaviour_tree() const
+    {
+        return this->behaviour_tree;
+    }
+    void set_movement_speed(double movement_speed);
+    _FORCE_INLINE_ double get_movement_speed() const
+    {
+        return this->movement_speed;
     }
 
 protected: 

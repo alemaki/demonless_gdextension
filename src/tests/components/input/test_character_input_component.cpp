@@ -7,11 +7,21 @@
 
 #include "tests/test_utils/test_utils.hpp"
 
+struct CharacterInputComponentFixture
+{
+    CharacterInputComponent* character_input_component;
+
+    CharacterInputComponentFixture() : character_input_component(memnew(CharacterInputComponent)){}
+    ~CharacterInputComponentFixture()
+    {
+        memdelete(character_input_component);
+    }
+};
+
 TEST_SUITE("TestCaracterInputComponent")
 {
-    TEST_CASE("Test actions exist")
+    TEST_CASE_FIXTURE(CharacterInputComponentFixture, "Test actions exist")
     {
-        CharacterInputComponent* character_input_component = memnew(CharacterInputComponent);
         godot::InputMap* input_map = godot::InputMap::get_singleton();
 
         REQUIRE_NE(input_map, nullptr);
@@ -21,14 +31,10 @@ TEST_SUITE("TestCaracterInputComponent")
         REQUIRE(input_map->has_action("ui_left"));
         REQUIRE(input_map->has_action("ui_down"));
         REQUIRE(input_map->has_action("ui_up"));
-
-        memdelete(character_input_component);
     }
 
-    TEST_CASE("Test directional input")
+    TEST_CASE_FIXTURE(CharacterInputComponentFixture, "Test directional input")
     {
-        CharacterInputComponent* character_input_component = memnew(CharacterInputComponent);
-
         CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 0));
         simulate(character_input_component);
         CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 0));
@@ -59,14 +65,10 @@ TEST_SUITE("TestCaracterInputComponent")
 
         godot::Input::get_singleton()->action_release("ui_right");
         godot::Input::get_singleton()->action_release("ui_down");
-
-        memdelete(character_input_component);
     }
 
-    TEST_CASE("Test Character input component")
+    TEST_CASE_FIXTURE(CharacterInputComponentFixture, "Test Character input component")
     {
-        CharacterInputComponent* character_input_component = memnew(CharacterInputComponent);
-
         CHECK_FALSE(character_input_component->is_attack_pressed());
         CHECK_FALSE(character_input_component->is_block_pressed());
 
@@ -89,8 +91,5 @@ TEST_SUITE("TestCaracterInputComponent")
         godot::Input::get_singleton()->action_release("ui_block");
         simulate(character_input_component);
         CHECK_FALSE(character_input_component->is_block_pressed());
-        
-
-        memdelete(character_input_component);
     }
 }
