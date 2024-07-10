@@ -8,72 +8,68 @@
 
 #include "behaviour/conditions/bt_node2d_in_range.hpp"
 
-TEST_SUITE("BTNode2DInRange")
+struct BTNode2DInRangeFixture
 {
-    TEST_CASE("Basics")
+    godot::Ref<BTNode2DInRange> task;
+    godot::Node2D* actor;
+    godot::Node2D* target_node;
+    godot::Node* scene_root;
+    godot::Ref<Blackboard> blackboard;
+
+    BTNode2DInRangeFixture() : task(memnew(BTNode2DInRange)),
+                               actor(memnew(godot::Node2D)),
+                               target_node(memnew(godot::Node2D)),
+                               scene_root(get_scene_root()),
+                               blackboard(memnew(Blackboard))
+
     {
-        godot::Ref<BTNode2DInRange> task = memnew(BTNode2DInRange);
         task->set_range(100.0);
-        /* TODO: Node's names snake or pascal case?*/
         task->set_node_name("TargetNode");
 
-        godot::Node2D* actor = memnew(godot::Node2D);
         actor->set_position(godot::Vector2(0, 0));
 
-        godot::Node2D* target_node = memnew(godot::Node2D);
-
-        godot::Node* scene_root = get_scene_root();
         scene_root->add_child(actor);
         scene_root->add_child(target_node);
 
-        godot::Ref<Blackboard> blackboard = memnew(Blackboard);
         task->initialize(actor, blackboard);
         blackboard->set_var("TargetNode", target_node);
-
-        SUBCASE("Set and get range and node name expected behavior")
-        {
-            CHECK_EQ(task->get_range(), doctest::Approx(100.0));
-            CHECK_EQ(task->get_node_name(), "TargetNode");
-        }
-
-        SUBCASE("Node in range")
-        {
-            target_node->set_position(godot::Vector2(50, 50));
-            BTTask::Status status = task->execute(0.1);
-
-            CHECK_EQ(status, BTTask::Status::SUCCESS);
-        }
-
-        SUBCASE("Node out of range")
-        {
-            target_node->set_position(godot::Vector2(200, 200));
-            BTTask::Status status = task->execute(0.1);
-
-            CHECK_EQ(status, BTTask::Status::FAILURE);
-        }
-
+    }
+    ~BTNode2DInRangeFixture()
+    {
         memdelete(actor);
         memdelete(target_node);
     }
+};
 
-    TEST_CASE("Non-existent node")
+TEST_SUITE("BTNode2DInRange")
+{
+    TEST_CASE_FIXTURE(BTNode2DInRangeFixture, "Set and get range and node name expected behavior")
     {
-        godot::Ref<BTNode2DInRange> task = memnew(BTNode2DInRange);
-        task->set_range(100.0);
+        CHECK_EQ(task->get_range(), doctest::Approx(100.0));
+        CHECK_EQ(task->get_node_name(), "TargetNode");
+    }
 
-        task->set_node_name("TargetNode");
+    TEST_CASE_FIXTURE(BTNode2DInRangeFixture, "Node in range")
+    {
+        target_node->set_position(godot::Vector2(50, 50));
+        BTTask::Status status = task->execute(0.1);
 
-        godot::Node2D* actor = memnew(godot::Node2D);
-        actor->set_position(godot::Vector2(0, 0));
+        CHECK_EQ(status, BTTask::Status::SUCCESS);
+    }
 
-        godot::Node* scene_root = get_scene_root();
-        scene_root->add_child(actor);
-
-        task->initialize(actor, memnew(Blackboard));
+    TEST_CASE_FIXTURE(BTNode2DInRangeFixture, "Node out of range")
+    {
+        target_node->set_position(godot::Vector2(200, 200));
         BTTask::Status status = task->execute(0.1);
 
         CHECK_EQ(status, BTTask::Status::FAILURE);
+    }
 
-        memdelete(actor);
+    TEST_CASE_FIXTURE(BTNode2DInRangeFixture, "Non-existent node")
+    {
+        blackboard->erase_var("TargetNode");
+        BTTask::Status status = task->execute(0.1);
+
+        CHECK_EQ(status, BTTask::Status::FAILURE);
     }
 }

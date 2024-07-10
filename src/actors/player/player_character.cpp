@@ -68,7 +68,7 @@ void PlayerCharacter::_bind_methods()
     ADD_PROPERTY(PropertyInfo(godot::Variant::FLOAT, "movement_speed"), "set_movement_speed", "get_movement_speed");
     ADD_PROPERTY(PropertyInfo(godot::Variant::OBJECT, "health_component"), "set_health_component", "get_health_component");
     ADD_PROPERTY(PropertyInfo(godot::Variant::OBJECT, "input_component"), "set_input_component", "get_input_component");
-    ADD_PROPERTY(PropertyInfo(godot::Variant::OBJECT, "set_movement_fsm"), "set_set_movement_fsm", "get_set_movement_fsm");
+    ADD_PROPERTY(PropertyInfo(godot::Variant::OBJECT, "movement_fsm"), "set_movement_fsm", "get_movement_fsm");
     ADD_PROPERTY(PropertyInfo(godot::Variant::OBJECT, "action_fsm"), "set_action_fsm", "get_action_fsm");
     ADD_PROPERTY(PropertyInfo(godot::Variant::OBJECT, "behaviour_tree"), "set_behaviour_tree", "get_behaviour_tree");
 }

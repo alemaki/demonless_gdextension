@@ -16,5 +16,4 @@ BTTask::Status BTEvaluateMovementInput::_tick(double delta)
 void BTEvaluateMovementInput::_bind_methods()
 {
     using namespace godot;
-
 }

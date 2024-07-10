@@ -16,9 +16,13 @@
 
 #include "bt_register_types.h"
 
+#include "actors/player/player_character.hpp"
+
 #include "behaviour/actions/bt_shoot_linear_projectile.hpp"
 
 #include "behaviour/conditions/bt_node2d_in_range.hpp"
+
+#include "behaviour/player/actions/bt_evaluate_movement_input.hpp"
 
 #include "components/area2d/hitbox.hpp"
 #include "components/area2d/hurtbox.hpp"
@@ -34,7 +38,7 @@ using namespace godot;
 
 void initialize_gdextension_module(ModuleInitializationLevel p_level)
 {
-	initialize_behaviour_tree_module(p_level);
+	::initialize_behaviour_tree_module(p_level);
 	initialize_test_module(p_level);
 	
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
@@ -47,6 +51,8 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<CharacterInputComponent>();
 		ClassDB::register_class<CharacterMovementComponent>();
 
+		ClassDB::register_class<PlayerCharacter>();
+
 		/* UI */
 		ClassDB::register_class<HealthBar>();
 		
@@ -54,6 +60,9 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<BTShootLinearProjectile>();
 
 		ClassDB::register_class<BTNode2DInRange>();
+
+		/* Player behavior */
+		ClassDB::register_class<BTEvaluateMovementInput>();
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
 	{
@@ -63,6 +72,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 
 void uninitialize_gdextension_module(ModuleInitializationLevel p_level)
 {
+	::uninitialize_behaviour_tree_module(p_level);
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE)
 	{
 		return;

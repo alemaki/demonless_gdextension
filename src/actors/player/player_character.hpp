@@ -19,7 +19,7 @@ class PlayerCharacter : public godot::CharacterBody2D
     godot::Ref<BTTask> task;
     godot::Ref<Blackboard> blackboard;
 
-    double movement_speed;
+    double movement_speed = 1;
     
 public:
     void _ready() override;
