@@ -11,11 +11,11 @@ class PlayerCharacter : public godot::CharacterBody2D
 {
     GDCLASS(PlayerCharacter, CharacterBody2D);
 
-    HealthComponent* health_component;
-    CharacterInputComponent* input_component;
-    FSM* movement_fsm;
-    FSM* action_fsm;
-    BehaviourTree* behaviour_tree;
+    HealthComponent* health_component = nullptr;
+    CharacterInputComponent* input_component = nullptr;
+    FSM* movement_fsm = nullptr;
+    FSM* action_fsm = nullptr;
+    BehaviourTree* behaviour_tree = nullptr ;
     godot::Ref<BTTask> task;
     godot::Ref<Blackboard> blackboard;
 
