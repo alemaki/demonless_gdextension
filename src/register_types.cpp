@@ -60,6 +60,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<BTNode2DInRange>();
 
 		/* Player behavior */
+		ClassDB::register_class<BTEvaluateMovementInput>();
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
 	{

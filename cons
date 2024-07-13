@@ -1,0 +1,102 @@
+warning: in the working copy of 'src/tests/test_runner.tscn', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/behaviour_tree b/behaviour_tree[m
+[1mindex 7d2da10..9cbb159 160000[m
+[1m--- a/behaviour_tree[m
+[1m+++ b/behaviour_tree[m
+[36m@@ -1 +1 @@[m
+[31m-Subproject commit 7d2da10fe7fae595db203e247292d982218d88d1[m
+[32m+[m[32mSubproject commit 9cbb1591dd7aac27c214e00235ce820f42a825fc[m
+[1mdiff --git a/godot-cpp b/godot-cpp[m
+[1mindex 1f9a0b7..9da6ecd 160000[m
+[1m--- a/godot-cpp[m
+[1m+++ b/godot-cpp[m
+[36m@@ -1 +1 @@[m
+[31m-Subproject commit 1f9a0b7171b4a3c89139236653b13318d312ab39[m
+[32m+[m[32mSubproject commit 9da6ecd14485a3dacc04d8e0558c21beb709ca9f[m
+[1mdiff --git a/src/behaviour/player/actions/bt_evaluate_movement_input.cpp b/src/behaviour/player/actions/bt_evaluate_movement_input.cpp[m
+[1mindex 63644b3..165717d 100644[m
+[1m--- a/src/behaviour/player/actions/bt_evaluate_movement_input.cpp[m
+[1m+++ b/src/behaviour/player/actions/bt_evaluate_movement_input.cpp[m
+[36m@@ -9,8 +9,18 @@[m [mBTTask::Status BTEvaluateMovementInput::_tick(double delta)[m
+     CharacterInputComponent* input_cp = player->get_input_component();[m
+     TASK_FAIL_COND_MSG(input_cp == nullptr, this->get_name() + ": actor doesn't have an input component.");[m
+ [m
+[31m-    player->move_and_collide(input_cp->get_direction_input()*player->get_movement_speed()*delta);[m
+[32m+[m[32m    godot::UtilityFunctions::print("before");[m
+[32m+[m[32m    // godot::UtilityFunctions::print(player->get_position());[m
+[32m+[m[32m    // godot::UtilityFunctions::print(player->get_position_delta());[m
+[32m+[m[32m    // godot::UtilityFunctions::print(player->get_global_position());[m
+[32m+[m
+[32m+[m[32m    player->set_velocity(input_cp->get_direction_input()*player->get_movement_speed());[m
+[32m+[m[32m    player->move_and_slide();[m
+     TASK_SUCCEED_COND(true);[m
+[32m+[m[32m    godot::UtilityFunctions::print("after");[m
+[32m+[m[32m    // godot::UtilityFunctions::print(player->get_position());[m
+[32m+[m[32m    // godot::UtilityFunctions::print(player->get_position_delta());[m
+[32m+[m[32m    // godot::UtilityFunctions::print(player->get_global_position());[m
+ }[m
+ [m
+ void BTEvaluateMovementInput::_bind_methods()[m
+[1mdiff --git a/src/register_types.cpp b/src/register_types.cpp[m
+[1mindex 600df0d..f6886b3 100644[m
+[1m--- a/src/register_types.cpp[m
+[1m+++ b/src/register_types.cpp[m
+[36m@@ -60,6 +60,7 @@[m [mvoid initialize_gdextension_module(ModuleInitializationLevel p_level)[m
+ 		ClassDB::register_class<BTNode2DInRange>();[m
+ [m
+ 		/* Player behavior */[m
+[32m+[m		[32mClassDB::register_class<BTEvaluateMovementInput>();[m
+ 	}[m
+ 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)[m
+ 	{[m
+[1mdiff --git a/src/tests/behaviour/player/actions/test_bt_evaluate_movement_input.cpp b/src/tests/behaviour/player/actions/test_bt_evaluate_movement_input.cpp[m
+[1mindex e39f488..53c901f 100644[m
+[1m--- a/src/tests/behaviour/player/actions/test_bt_evaluate_movement_input.cpp[m
+[1m+++ b/src/tests/behaviour/player/actions/test_bt_evaluate_movement_input.cpp[m
+[36m@@ -2,6 +2,8 @@[m
+ #include <doctest.h>[m
+ #include <godot_cpp/classes/input.hpp>[m
+ [m
+[32m+[m[32m#include "tests/test_utils/test_runner.hpp"[m
+[32m+[m
+ #include "behaviour/player/actions/bt_evaluate_movement_input.hpp"[m
+ #include "actors/player/player_character.hpp"[m
+ [m
+[36m@@ -17,9 +19,11 @@[m [mstruct BTEvaluateMovementInputFixture[m
+                                        input_component(memnew(CharacterInputComponent)),[m
+                                        blackboard(memnew(Blackboard))[m
+     {[m
+[32m+[m[32m        ::get_scene_root()->add_child(player);[m
+[32m+[m[32m        player->add_child(input_component);[m
+         player->set_name("Player");[m
+[32m+[m[32m        player->set_movement_speed(100.0);[m
+         player->set_input_component(input_component);[m
+[31m-        player->set_movement_speed(1);[m
+         task->initialize(player, blackboard);[m
+         //task->set_complain(false);[m
+     }[m
+[36m@@ -41,7 +45,6 @@[m [mTEST_SUITE("BTEvaluateMovementInput")[m
+     TEST_CASE_FIXTURE(BTEvaluateMovementInputFixture, "Player moves based on input")[m
+     {[m
+         godot::Input::get_singleton()->action_press("ui_right");[m
+[31m-        player->set_movement_speed(100.0);[m
+ [m
+         const godot::Vector2 start_position = player->get_position();[m
+         BTTask::Status status = task->execute(0.1);[m
+[36m@@ -53,7 +56,7 @@[m [mTEST_SUITE("BTEvaluateMovementInput")[m
+         godot::Input::get_singleton()->action_release("ui_right");[m
+     }[m
+ [m
+[31m-    TEST_CASE_FIXTURE(BTEvaluateMovementInputFixture, "Actor without input component")[m
+[32m+[m[32m    /*TEST_CASE_FIXTURE(BTEvaluateMovementInputFixture, "Actor without input component")[m
+     {[m
+         player->set_input_component(nullptr);[m
+         BTTask::Status status = task->execute(0.1);[m
+[36m@@ -71,5 +74,5 @@[m [mTEST_SUITE("BTEvaluateMovementInput")[m
+         CHECK_EQ(status, BTTask::Status::FAILURE);[m
+ [m
+         memdelete(non_player_actor);[m
+[31m-    }[m
+[32m+[m[32m    }*/[m
+ }[m
+\ No newline at end of file[m

@@ -21,8 +21,6 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
 
         SUBCASE("Test hitbox and hurtbox interaction")
         {
-            godot::Node* tree = get_scene_root();
-
             REQUIRE(hitbox->has_signal("hit_hurtbox"));
             REQUIRE(hurtbox->has_signal("hurtbox_hit"));
 

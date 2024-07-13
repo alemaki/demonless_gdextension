@@ -5,7 +5,10 @@
 void PlayerCharacter::_ready()
 {
     this->blackboard = godot::Ref<Blackboard>(memnew(Blackboard));
-    this->task = this->behaviour_tree->instantiate(this, godot::Ref<Blackboard>(memnew(Blackboard)));
+    if (this->behaviour_tree != nullptr)
+    {
+        this->task = this->behaviour_tree->instantiate(this, godot::Ref<Blackboard>(memnew(Blackboard)));
+    }
 }
 
 void PlayerCharacter::_process(double delta)
@@ -15,7 +18,11 @@ void PlayerCharacter::_process(double delta)
 
 void PlayerCharacter::_physics_process(double delta)
 {
-    this->task->execute(delta);
+    if (this->task != nullptr)
+    {
+        this->task->execute(delta);
+    }
+    move_and_slide();
 }
 
 void PlayerCharacter::set_health_component(HealthComponent* health_component)
