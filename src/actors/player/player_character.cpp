@@ -7,7 +7,7 @@ void PlayerCharacter::_ready()
     this->blackboard = godot::Ref<Blackboard>(memnew(Blackboard));
     if (this->behaviour_tree != nullptr)
     {
-        this->task = this->behaviour_tree->instantiate(this, godot::Ref<Blackboard>(memnew(Blackboard)));
+        this->task = this->behaviour_tree->instantiate(this, this->blackboard);
     }
 }
 

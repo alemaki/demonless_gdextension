@@ -11,9 +11,6 @@
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 
-#include <doctest.h>
-#include "tests/test_utils/test_runner.hpp"
-
 #include "bt_register_types.h"
 
 #include "actors/player/player_character.hpp"
@@ -38,7 +35,7 @@ using namespace godot;
 void initialize_gdextension_module(ModuleInitializationLevel p_level)
 {
 	::initialize_behaviour_tree_module(p_level);
-	initialize_test_module(p_level);
+	::initialize_test_module(p_level);
 	
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
 	{

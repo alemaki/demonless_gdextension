@@ -3,7 +3,7 @@
 
 #include "components/area2d/hitbox.hpp"
 #include "components/area2d/hurtbox.hpp"
-#include "tests/test_utils/test_runner.hpp"
+#include "tests/test_utils/test_runner2d.hpp"
 #include "tests/test_utils/signal_watcher.hpp"
 
 TEST_SUITE("HitboxHurtboxInteractionTests")
