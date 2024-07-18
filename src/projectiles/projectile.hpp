@@ -7,9 +7,6 @@ class Projectile : public godot::Node2D
 {
     GDCLASS(Projectile, godot::Node2D);
 
-public:
-    virtual void _physics_process(double delta) override {};
-
 protected:
     static void _bind_methods();
 };

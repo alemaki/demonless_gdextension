@@ -4,7 +4,7 @@
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
-#include "tests/test_utils/test_runner2d.hpp"
+#include "tests/test_utils/test_runner.hpp"
 
 #include "behaviour/conditions/bt_node2d_in_range.hpp"
 

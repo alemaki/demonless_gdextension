@@ -4,13 +4,13 @@
 BTTask::Status BTEvaluateMovementInput::_tick(double delta)
 {
     PlayerCharacter* player = godot::Object::cast_to<PlayerCharacter>(this->get_actor());
-    TASK_FAIL_COND_MSG(player == nullptr, this->get_name() + ": actor is not a player character.");
+    TASK_FAIL_COND_COMP_MSG(player == nullptr, this->get_name() + ": actor is not a player character.");
 
     CharacterInputComponent* input_cp = player->get_input_component();
-    TASK_FAIL_COND_MSG(input_cp == nullptr, this->get_name() + ": actor doesn't have an input component.");
+    TASK_FAIL_COND_COMP_MSG(input_cp == nullptr, this->get_name() + ": actor doesn't have an input component.");
 
     player->set_velocity(input_cp->get_direction_input()*player->get_movement_speed());
-    TASK_SUCCEED_COND(true);
+    TASK_SUCCEED();
 }
 
 void BTEvaluateMovementInput::set_complain(bool complain)
