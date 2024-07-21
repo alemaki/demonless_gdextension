@@ -13,7 +13,7 @@ TEST_SUITE("TestLinearProjectile")
     {
         LinearProjectile* projectile = memnew(LinearProjectile);
 
-        CHECK(::vectors_almost_equal(projectile->get_direction(), godot::Vector2(0, 0)));
+        CHECK(::vectors_almost_eq(projectile->get_direction(), godot::Vector2(0, 0)));
         CHECK_EQ(projectile->get_speed(), doctest::Approx(0));
 
         godot::Vector2 direction = godot::Vector2(1, 1); // Vector2.RIGHT + Vector2.UP
@@ -21,7 +21,7 @@ TEST_SUITE("TestLinearProjectile")
         projectile->set_direction(direction);
         projectile->set_speed(speed);
 
-        CHECK(::vectors_almost_equal(projectile->get_direction(), direction.normalized()));
+        CHECK(::vectors_almost_eq(projectile->get_direction(), direction.normalized()));
         CHECK_EQ(projectile->get_speed(), doctest::Approx(speed));
 
         memfree(projectile);
@@ -38,7 +38,7 @@ TEST_SUITE("TestLinearProjectile")
         double delta = ::get_current_engine_delta();
         ::simulate(projectile);
         godot::Vector2 expected_position = godot::Vector2(100, 0)*delta;
-        CHECK(::vectors_almost_equal(projectile->get_position(), expected_position));
+        CHECK(::vectors_almost_eq(projectile->get_position(), expected_position));
 
         memfree(projectile);
     }

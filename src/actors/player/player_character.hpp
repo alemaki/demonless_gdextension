@@ -5,6 +5,7 @@
 #include "behaviour_tree/behaviour_tree.hpp"
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
+#include "components/movement/character_movement_component.hpp"
 #include "finite_state_machine/fsm.hpp"
 
 class PlayerCharacter : public godot::CharacterBody2D
@@ -13,13 +14,12 @@ class PlayerCharacter : public godot::CharacterBody2D
 
     HealthComponent* health_component = nullptr;
     CharacterInputComponent* input_component = nullptr;
+    CharacterMovementComponent* movement_component = nullptr;
     FSM* movement_fsm = nullptr;
     FSM* action_fsm = nullptr;
-    BehaviourTree* behaviour_tree = nullptr ;
+    BehaviourTree* decision_tree = nullptr ;
     godot::Ref<BTTask> task;
     godot::Ref<Blackboard> blackboard;
-
-    double movement_speed = 1;
     
 public:
     void _ready() override;
@@ -36,6 +36,11 @@ public:
     {
         return this->input_component;
     }
+    void set_movement_component(CharacterMovementComponent* movement_component);
+    _FORCE_INLINE_ CharacterMovementComponent* get_movement_component()
+    {
+        return this->movement_component;
+    }
     void set_movement_fsm(FSM* movement_fsm);
     _FORCE_INLINE_ FSM* get_movement_fsm() const
     {
@@ -46,15 +51,10 @@ public:
     {
         return this->action_fsm;
     }
-    void set_behaviour_tree(BehaviourTree* behaviour_tree);
-    _FORCE_INLINE_ BehaviourTree* get_behaviour_tree() const
+    void set_decision_tree(BehaviourTree* decision_tree);
+    _FORCE_INLINE_ BehaviourTree* get_decision_tree() const
     {
-        return this->behaviour_tree;
-    }
-    void set_movement_speed(double movement_speed);
-    _FORCE_INLINE_ double get_movement_speed() const
-    {
-        return this->movement_speed;
+        return this->decision_tree;
     }
 
 protected: 

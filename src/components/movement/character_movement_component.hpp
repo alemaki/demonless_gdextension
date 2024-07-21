@@ -4,33 +4,45 @@
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/variant/variant.hpp>
 #include <godot_cpp/variant/vector2.hpp>
+#include <godot_cpp/classes/character_body2d.hpp>
 
 class CharacterMovementComponent : public godot::Node
 {
     GDCLASS(CharacterMovementComponent, godot::Node);
 
 private:
-    godot::Variant character;
-    godot::Variant input_component;
+    float speed = 1;
+    float friction = 1;
 
-    float speed;
-    float friction;
+    godot::Vector2 current_velocity = godot::Vector2(0, 0);
+    godot::Vector2 target_velocity = godot::Vector2(0, 0);
 
-    godot::Vector2 current_velocity;
+    godot::CharacterBody2D* character = nullptr;
 
 public:
     void _physics_process(double delta) override;
-    void _ready() override;
-    
-    void set_character(godot::Variant character);
-    void set_input_component(godot::Variant input_component);
-    void set_speed(float speed);
-    void set_friction(float friction);
 
-    _FORCE_INLINE_ godot::Variant get_character() const;
-    _FORCE_INLINE_ godot::Variant get_input_component() const;
-    _FORCE_INLINE_ float get_speed() const;
-    _FORCE_INLINE_ float get_friction() const;
+    
+    void set_target_velocity(godot::Vector2 target_velocity);
+    _FORCE_INLINE_ godot::Vector2 get_target_velocity()
+    {
+        return this->target_velocity;
+    }
+    void set_speed(float speed);
+    _FORCE_INLINE_ float get_speed() const
+    {
+        return this->speed;
+    }
+    void set_friction(float friction);
+    _FORCE_INLINE_ float get_friction() const
+    {
+        return this->friction;
+    }
+    void set_character(godot::CharacterBody2D* character);
+    _FORCE_INLINE_ godot::CharacterBody2D* get_character() const
+    {
+        return this->character;
+    }
 
 protected:
     static void _bind_methods();
