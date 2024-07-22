@@ -61,7 +61,7 @@ TEST_SUITE("BTEvaluateMovementInput")
 
         godot::Vector2 expected_velocity = godot::Vector2(100, 0);
         CHECK_EQ(status, BTTask::Status::SUCCESS);
-        CHECK(::vectors_almost_eq(player->get_velocity(), expected_velocity));
+        CHECK_VECTORS_EQ(player->get_velocity(), expected_velocity);
 
         godot::Input::get_singleton()->action_release("ui_right");
     }
@@ -72,7 +72,7 @@ TEST_SUITE("BTEvaluateMovementInput")
         BTTask::Status status = task->execute(0.1);
 
         CHECK_EQ(status, BTTask::Status::FAILURE);
-        CHECK(::vectors_almost_eq(player->get_velocity(), godot::Vector2(0, 0)));
+        CHECK_VECTORS_EQ(player->get_velocity(), godot::Vector2(0, 0));
     }
 
     TEST_CASE_FIXTURE(BTEvaluateMovementInputFixture, "Actor is not a player character")

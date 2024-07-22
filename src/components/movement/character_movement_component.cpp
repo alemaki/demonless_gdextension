@@ -44,6 +44,6 @@ void CharacterMovementComponent::_bind_methods()
     ClassDB::bind_method(D_METHOD("get_character"), &CharacterMovementComponent::get_character);
 
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "friction"), "set_friction", "get_friction");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "friction"), "set_friction", "get_friction");
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "character", PROPERTY_HINT_NODE_TYPE, "CharacterBody2D"), "set_character", "get_character");
 }

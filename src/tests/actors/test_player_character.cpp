@@ -57,8 +57,8 @@ TEST_SUITE("PlayerCharacter")
 
         godot::Vector2 expected_position = godot::Vector2(100, 0)*delta;
         godot::Vector2 expected_velocity = godot::Vector2(100, 0);
-        CHECK(::vectors_almost_eq(player->get_velocity(), expected_velocity));
-        CHECK(::vectors_almost_eq(player->get_position(), expected_position));
+        CHECK_VECTORS_EQ(player->get_velocity(), expected_velocity);
+        CHECK_VECTORS_EQ(player->get_position(), expected_position);
 
         godot::Input::get_singleton()->action_release("ui_right");
     }
