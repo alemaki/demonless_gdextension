@@ -51,7 +51,7 @@ TEST_SUITE("BTEvaluateMovementInput")
 
     TEST_CASE_FIXTURE(BTEvaluateMovementInputFixture, "Player velocity changes on input")
     {
-        godot::Input::get_singleton()->action_press("ui_right");
+        godot::Input::get_singleton()->action_press("move_right");
         double delta = ::get_current_engine_delta();
         ::simulate(input_component);
         
@@ -63,7 +63,7 @@ TEST_SUITE("BTEvaluateMovementInput")
         CHECK_EQ(status, BTTask::Status::SUCCESS);
         CHECK_VECTORS_EQ(player->get_velocity(), expected_velocity);
 
-        godot::Input::get_singleton()->action_release("ui_right");
+        godot::Input::get_singleton()->action_release("move_right");
     }
 
     TEST_CASE_FIXTURE(BTEvaluateMovementInputFixture, "Actor without input component")

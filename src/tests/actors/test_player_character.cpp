@@ -50,7 +50,7 @@ TEST_SUITE("PlayerCharacter")
 {
     TEST_CASE_FIXTURE(PlayerCharacterFixture, "Player moves based on input")
     {
-        godot::Input::get_singleton()->action_press("ui_right");
+        godot::Input::get_singleton()->action_press("move_right");
 
         double delta = ::get_current_engine_delta();
         ::simulate(::get_scene_root());
@@ -60,6 +60,6 @@ TEST_SUITE("PlayerCharacter")
         CHECK_VECTORS_EQ(player->get_velocity(), expected_velocity);
         CHECK_VECTORS_EQ(player->get_position(), expected_position);
 
-        godot::Input::get_singleton()->action_release("ui_right");
+        godot::Input::get_singleton()->action_release("move_right");
     }
 }

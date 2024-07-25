@@ -25,12 +25,12 @@ TEST_SUITE("TestCaracterInputComponent")
         godot::InputMap* input_map = godot::InputMap::get_singleton();
 
         REQUIRE_NE(input_map, nullptr);
-        REQUIRE(input_map->has_action("ui_attack"));
-        REQUIRE(input_map->has_action("ui_block"));
-        REQUIRE(input_map->has_action("ui_right"));
-        REQUIRE(input_map->has_action("ui_left"));
-        REQUIRE(input_map->has_action("ui_down"));
-        REQUIRE(input_map->has_action("ui_up"));
+        REQUIRE(input_map->has_action("attack"));
+        REQUIRE(input_map->has_action("block"));
+        REQUIRE(input_map->has_action("move_right"));
+        REQUIRE(input_map->has_action("move_left"));
+        REQUIRE(input_map->has_action("move_down"));
+        REQUIRE(input_map->has_action("move_up"));
     }
 
     TEST_CASE_FIXTURE(CharacterInputComponentFixture, "Test directional input")
@@ -39,32 +39,32 @@ TEST_SUITE("TestCaracterInputComponent")
         simulate(character_input_component);
         CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 0));
 
-        godot::Input::get_singleton()->action_press("ui_right");
+        godot::Input::get_singleton()->action_press("move_right");
         simulate(character_input_component);
         CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(1, 0));
 
-        godot::Input::get_singleton()->action_press("ui_left");
+        godot::Input::get_singleton()->action_press("move_left");
         simulate(character_input_component);
         CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 0));
 
-        godot::Input::get_singleton()->action_release("ui_right");
-        godot::Input::get_singleton()->action_release("ui_left");
+        godot::Input::get_singleton()->action_release("move_right");
+        godot::Input::get_singleton()->action_release("move_left");
 
-        godot::Input::get_singleton()->action_press("ui_up");
+        godot::Input::get_singleton()->action_press("move_up");
         simulate(character_input_component);
         CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, -1));
-        godot::Input::get_singleton()->action_release("ui_up");
+        godot::Input::get_singleton()->action_release("move_up");
 
-        godot::Input::get_singleton()->action_press("ui_down");
+        godot::Input::get_singleton()->action_press("move_down");
         simulate(character_input_component);
         CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 1));
 
-        godot::Input::get_singleton()->action_press("ui_right");
+        godot::Input::get_singleton()->action_press("move_right");
         simulate(character_input_component);
         CHECK_EQ(character_input_component->get_direction_input(), (godot::Vector2(0, 1) + godot::Vector2(1, 0)).normalized());
 
-        godot::Input::get_singleton()->action_release("ui_right");
-        godot::Input::get_singleton()->action_release("ui_down");
+        godot::Input::get_singleton()->action_release("move_right");
+        godot::Input::get_singleton()->action_release("move_down");
     }
 
     TEST_CASE_FIXTURE(CharacterInputComponentFixture, "Test Character input component")
@@ -76,19 +76,19 @@ TEST_SUITE("TestCaracterInputComponent")
         CHECK_FALSE(character_input_component->is_attack_pressed());
         CHECK_FALSE(character_input_component->is_block_pressed());
 
-        godot::Input::get_singleton()->action_press("ui_attack");
+        godot::Input::get_singleton()->action_press("attack");
         simulate(character_input_component);
         CHECK(character_input_component->is_attack_pressed());
 
-        godot::Input::get_singleton()->action_press("ui_block");
+        godot::Input::get_singleton()->action_press("block");
         simulate(character_input_component);
         CHECK(character_input_component->is_block_pressed());
 
-        godot::Input::get_singleton()->action_release("ui_attack");
+        godot::Input::get_singleton()->action_release("attack");
         simulate(character_input_component);
         CHECK_FALSE(character_input_component->is_attack_pressed());
 
-        godot::Input::get_singleton()->action_release("ui_block");
+        godot::Input::get_singleton()->action_release("block");
         simulate(character_input_component);
         CHECK_FALSE(character_input_component->is_block_pressed());
     }
