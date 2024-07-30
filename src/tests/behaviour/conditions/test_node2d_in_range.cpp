@@ -6,7 +6,7 @@
 
 #include "tests/test_utils/test_runner.hpp"
 
-#include "behaviour/conditions/bt_node2d_in_range.hpp"
+#include "actor_behaviour/conditions/bt_node2d_in_range.hpp"
 
 struct BTNode2DInRangeFixture
 {

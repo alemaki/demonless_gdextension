@@ -15,11 +15,11 @@
 
 #include "actors/player/player_character.hpp"
 
-#include "behaviour/actions/bt_shoot_linear_projectile.hpp"
+#include "actor_behaviour/actions/bt_shoot_linear_projectile.hpp"
 
-#include "behaviour/conditions/bt_node2d_in_range.hpp"
+#include "actor_behaviour/conditions/bt_node2d_in_range.hpp"
 
-#include "behaviour/player/actions/bt_evaluate_movement_input.hpp"
+#include "actor_behaviour/player/actions/bt_evaluate_movement_input.hpp"
 
 #include "components/area2d/hitbox.hpp"
 #include "components/area2d/hurtbox.hpp"

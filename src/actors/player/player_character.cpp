@@ -1,6 +1,6 @@
 #include "player_character.hpp"
 
-
+#include <godot_cpp/classes/engine.hpp>
 
 void PlayerCharacter::_ready()
 {
@@ -8,6 +8,14 @@ void PlayerCharacter::_ready()
     if (this->decision_tree != nullptr)
     {
         this->task = this->decision_tree->instantiate(this, this->blackboard);
+    }
+    this->blackboard->set_var("PlayerActionFSM", this->action_fsm);
+    this->blackboard->set_var("PlayerMovementFSM", this->movement_fsm);
+
+    if (godot::Engine::get_singleton()->is_editor_hint())
+    {
+        this->set_process(false);
+        this->set_physics_process(false);
     }
 }
 

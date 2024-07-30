@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include <doctest.h>
 
-#include "behaviour/actions/bt_shoot_linear_projectile.hpp"
+#include "actor_behaviour/actions/bt_shoot_linear_projectile.hpp"
 
 TEST_SUITE("BTShootLinearProjectile")
 {

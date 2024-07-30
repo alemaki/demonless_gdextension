@@ -6,7 +6,7 @@
 #include "tests/test_utils/test_runner.hpp"
 #include "tests/test_utils/test_utils.hpp"
 
-#include "behaviour/player/actions/bt_evaluate_movement_input.hpp"
+#include "actor_behaviour/player/actions/bt_evaluate_movement_input.hpp"
 #include "actors/player/player_character.hpp"
 
 struct BTEvaluateMovementInputFixture
