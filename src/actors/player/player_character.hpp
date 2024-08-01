@@ -18,8 +18,8 @@ class PlayerCharacter : public godot::CharacterBody2D
     FSM* movement_fsm = nullptr;
     FSM* action_fsm = nullptr;
     BehaviourTree* decision_tree = nullptr ;
-    godot::Ref<BTTask> task;
-    godot::Ref<Blackboard> blackboard;
+    godot::Ref<BTTask> task = nullptr ;
+    godot::Ref<Blackboard> blackboard = nullptr ;
     
 public:
     void _ready() override;

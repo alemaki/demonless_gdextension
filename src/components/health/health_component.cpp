@@ -63,8 +63,6 @@ void HealthComponent::_bind_methods()
 
     ClassDB::bind_method(D_METHOD("take_damage"), &HealthComponent::take_damage);
     ClassDB::bind_method(D_METHOD("heal"), &HealthComponent::heal);
-
-
     ClassDB::bind_method(D_METHOD("set_current_hp", "current_hp"), &HealthComponent::set_current_hp);
     ClassDB::bind_method(D_METHOD("set_max_hp", "max_hp"), &HealthComponent::set_max_hp);
     ClassDB::bind_method(D_METHOD("get_current_hp"), &HealthComponent::get_current_hp);
