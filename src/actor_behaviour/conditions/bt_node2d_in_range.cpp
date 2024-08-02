@@ -1,8 +1,6 @@
 #include "bt_node2d_in_range.hpp"
 
 #include <godot_cpp/classes/node2d.hpp>
-#include <godot_cpp/classes/scene_tree.hpp>
-#include <godot_cpp/variant/utility_functions.hpp>
 
 BTTask::Status BTNode2DInRange::_tick(double delta)
 {

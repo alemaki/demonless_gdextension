@@ -21,6 +21,10 @@ void PlayerCharacter::_ready()
 
 void PlayerCharacter::_process(double delta)
 {
+    this->blackboard->set_var("is_attack_pressed", input_component->is_attack_pressed());
+    this->blackboard->set_var("is_block_pressed", input_component->is_block_pressed());
+    this->blackboard->set_var("direction_input", input_component->get_direction_input());
+
     if (this->task != nullptr)
     {
         this->task->execute(delta);
