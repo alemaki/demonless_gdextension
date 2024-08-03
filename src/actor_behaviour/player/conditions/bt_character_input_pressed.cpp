@@ -30,6 +30,11 @@ void BTCharacterInputPressed::set_check_direction_pressed(bool check_direction_p
     this->check_direction_pressed = check_direction_pressed;
 }
 
+void BTCharacterInputPressed::set_complain(bool complain)
+{
+    this->complain = complain;
+}
+
 void BTCharacterInputPressed::_bind_methods()
 {
     using namespace godot;
