@@ -16,17 +16,7 @@ BTTask::Status BTEvaluateMovementInput::_tick(double delta)
     TASK_SUCCEED();
 }
 
-void BTEvaluateMovementInput::set_complain(bool complain)
-{
-    this->complain = complain;
-}
-
 void BTEvaluateMovementInput::_bind_methods()
 {
     using namespace godot;
-
-    ClassDB::bind_method(D_METHOD("set_complain", "complain"), &BTEvaluateMovementInput::set_complain);
-    ClassDB::bind_method(D_METHOD("get_complain"), &BTEvaluateMovementInput::get_complain);
-
-    ADD_PROPERTY(PropertyInfo(Variant::BOOL, "complain"), "set_complain", "get_complain");
 }

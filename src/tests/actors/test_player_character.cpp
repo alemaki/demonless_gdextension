@@ -26,7 +26,7 @@ struct PlayerCharacterFixture
                                behaviour_tree(memnew(BehaviourTree))
     {
         BehaviourTree* behaviour_tree = memnew(BehaviourTree);
-        task->set_complain(false);
+        task->set_complain_enabled(false);
         behaviour_tree->add_task_by_ref(task);
         player->add_child(behaviour_tree);
         player->set_decision_tree(behaviour_tree);

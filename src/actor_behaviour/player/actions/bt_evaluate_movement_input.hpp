@@ -7,16 +7,9 @@
 class BTEvaluateMovementInput : public BTAction
 {
     GDCLASS(BTEvaluateMovementInput, BTAction);
-    bool complain = true;
+
 protected:
     virtual BTTask::Status _tick(double delta) override;
-
-public:
-    void set_complain(bool complain);
-    _FORCE_INLINE_ bool get_complain() const
-    {
-        return this->complain;
-    }
 
 protected:
     static void _bind_methods();

@@ -15,7 +15,7 @@ struct BTCharacterInputPressedFixture
                                        actor(memnew(godot::Node)),
                                        blackboard(memnew(Blackboard))
     {
-        task->set_complain(false);
+        task->set_complain_enabled(false);
         task->set_check_attack_pressed(false);
         task->set_check_block_pressed(false);
         task->set_check_direction_pressed(false);

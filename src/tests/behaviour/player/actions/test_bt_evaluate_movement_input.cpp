@@ -24,7 +24,7 @@ struct BTEvaluateMovementInputFixture
                                        blackboard(memnew(Blackboard))
     {
         BehaviourTree* behaviour_tree = memnew(BehaviourTree);
-        task->set_complain(false);
+        task->set_complain_enabled(false);
         task->initialize(player, blackboard);
         player->add_child(input_component);
         player->set_input_component(input_component);

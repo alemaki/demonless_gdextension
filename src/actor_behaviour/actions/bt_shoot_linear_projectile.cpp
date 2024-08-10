@@ -26,11 +26,6 @@ BTTask::Status BTShootLinearProjectile::_tick(double delta)
     return BTTask::Status::SUCCESS;
 }
 
-void BTShootLinearProjectile::set_linear_projectile_scene_path(const godot::String& linear_projectile_scene_path)
-{
-    this->linear_projectile_scene_path = linear_projectile_scene_path;
-}
-
 void BTShootLinearProjectile::_bind_methods()
 {
     using namespace godot;

@@ -16,11 +16,7 @@ protected:
     virtual BTTask::Status _tick(double delta) override;
     virtual void _setup() override;
 public:
-    void set_linear_projectile_scene_path(const godot::String& linear_projectile_scene_path);
-    _FORCE_INLINE_ godot::String get_linear_projectile_scene_path()
-    {
-        return linear_projectile_scene_path;
-    }
+    CREATE_GETTER_SETTER_DEFAULT(const godot::String&, linear_projectile_scene_path);
 
 protected:
     static void _bind_methods();

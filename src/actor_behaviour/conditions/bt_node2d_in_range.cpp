@@ -14,16 +14,6 @@ BTTask::Status BTNode2DInRange::_tick(double delta)
     return BTTask::Status::FAILURE;
 }
 
-void BTNode2DInRange::set_range(double range)
-{
-    this->range = range;
-}
-
-void BTNode2DInRange::set_node_name(const godot::String& node_name)
-{
-    this->node_name = node_name;
-}
-
 void BTNode2DInRange::_bind_methods()
 {
     using namespace godot;
