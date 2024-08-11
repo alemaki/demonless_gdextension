@@ -26,35 +26,17 @@ public:
     void _process(double delta) override;
     void _physics_process(double delta) override;
 
-    void set_health_component(HealthComponent* health_component);
-    _FORCE_INLINE_ HealthComponent* get_health_component() const
-    {
-        return this->health_component;
-    }
-    void set_input_component(CharacterInputComponent* input_component);
-    _FORCE_INLINE_ CharacterInputComponent* get_input_component() const
-    {
-        return this->input_component;
-    }
+    CREATE_GETTER_SETTER_DEFAULT(HealthComponent*, health_component);
+    CREATE_GETTER_SETTER_DEFAULT(CharacterInputComponent*, input_component);
+    CREATE_GETTER_SETTER_DEFAULT(FSM*, movement_fsm);
+    CREATE_GETTER_SETTER_DEFAULT(FSM*, action_fsm);
+    CREATE_GETTER_SETTER_DEFAULT(BehaviourTree*, decision_tree);
+
+    
     void set_movement_component(CharacterMovementComponent* movement_component);
     _FORCE_INLINE_ CharacterMovementComponent* get_movement_component()
     {
         return this->movement_component;
-    }
-    void set_movement_fsm(FSM* movement_fsm);
-    _FORCE_INLINE_ FSM* get_movement_fsm() const
-    {
-        return this->movement_fsm;
-    }
-    void set_action_fsm(FSM* action_fsm);
-    _FORCE_INLINE_ FSM* get_action_fsm() const
-    {
-        return this->action_fsm;
-    }
-    void set_decision_tree(BehaviourTree* decision_tree);
-    _FORCE_INLINE_ BehaviourTree* get_decision_tree() const
-    {
-        return this->decision_tree;
     }
 
 protected: 

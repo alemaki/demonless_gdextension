@@ -10,26 +10,11 @@ void CharacterMovementComponent::_physics_process(double delta)
     character->move_and_slide();
 }
 
-void CharacterMovementComponent::set_target_velocity(godot::Vector2 target_velocity)
-{
-    this->target_velocity = target_velocity;
-}
 
-void CharacterMovementComponent::set_speed(float speed)
+void CharacterMovementComponent::set_friction(double friction)
 {
-    speed = godot::Math::clamp<float>(speed, 0, speed);
-    this->speed = speed;
-}
-
-void CharacterMovementComponent::set_friction(float friction)
-{
-    friction = godot::Math::clamp<float>(friction, 0, 1);
+    friction = godot::Math::clamp<double>(friction, 0, 1);
     this->friction = friction;
-}
-
-void CharacterMovementComponent::set_character(godot::CharacterBody2D* character)
-{
-    this->character = character;
 }
 
 void CharacterMovementComponent::_bind_methods()

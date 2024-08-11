@@ -4,6 +4,8 @@
 #include <godot_cpp/variant/vector2.hpp>
 #include "projectiles/projectile.hpp"
 
+#include "utils/utils.hpp"
+
 class LinearProjectile : public Projectile
 {
     GDCLASS(LinearProjectile, Projectile);
@@ -17,9 +19,12 @@ public:
     virtual void _physics_process(double delta) override;
 
     void set_direction(godot::Vector2 direction);
-    godot::Vector2 get_direction() const;
-    void set_speed(float speed);
-    float get_speed() const;
+    _FORCE_INLINE_ godot::Vector2 get_direction() const
+    {
+        return this->direction;
+    }
+
+    CREATE_GETTER_SETTER_DEFAULT(double, speed);
 
 protected:
     static void _bind_methods();

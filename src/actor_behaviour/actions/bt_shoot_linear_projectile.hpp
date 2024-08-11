@@ -16,7 +16,7 @@ protected:
     virtual BTTask::Status _tick(double delta) override;
     virtual void _setup() override;
 public:
-    CREATE_GETTER_SETTER_DEFAULT(const godot::String&, linear_projectile_scene_path);
+    CREATE_GETTER_SETTER_STRING_DEFAULT(linear_projectile_scene_path);
 
 protected:
     static void _bind_methods();

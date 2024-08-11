@@ -16,7 +16,7 @@ protected:
 
 public:
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, range)
-    CREATE_GETTER_SETTER_DEFAULT(const godot::String&, node_name);
+    CREATE_GETTER_SETTER_STRING_DEFAULT(node_name);
 
 protected:
     static void _bind_methods();

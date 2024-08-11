@@ -36,16 +36,6 @@ void PlayerCharacter::_physics_process(double delta)
 
 }
 
-void PlayerCharacter::set_health_component(HealthComponent* health_component)
-{
-    this->health_component = health_component;
-}
-
-void PlayerCharacter::set_input_component(CharacterInputComponent* input_component)
-{
-    this->input_component = input_component;
-}
-
 void PlayerCharacter::set_movement_component(CharacterMovementComponent* movement_component)
 {
     this->movement_component = movement_component;
@@ -53,21 +43,6 @@ void PlayerCharacter::set_movement_component(CharacterMovementComponent* movemen
     {
         this->movement_component->set_character(this);
     }
-}
-
-void PlayerCharacter::set_movement_fsm(FSM* movement_fsm)
-{
-    this->movement_fsm = movement_fsm;
-}
-
-void PlayerCharacter::set_action_fsm(FSM* action_fsm)
-{
-    this->action_fsm = action_fsm;
-}
-
-void PlayerCharacter::set_decision_tree(BehaviourTree* decision_tree)
-{
-    this->decision_tree = decision_tree;
 }
 
 void PlayerCharacter::_bind_methods()
