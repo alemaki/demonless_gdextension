@@ -30,8 +30,6 @@ void BTShootLinearProjectile::_bind_methods()
 {
     using namespace godot;
 
-    ClassDB::bind_method(D_METHOD("set_linear_projectile_scene_path", "linear_projectile_scene_path"), &BTShootLinearProjectile::set_linear_projectile_scene_path);
-    ClassDB::bind_method(D_METHOD("get_linear_projectile_scene_path"), &BTShootLinearProjectile::get_linear_projectile_scene_path);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTShootLinearProjectile, STRING, linear_projectile_scene_path);
 
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "projectile_scene"), "set_linear_projectile_scene_path", "get_linear_projectile_scene_path");
 }

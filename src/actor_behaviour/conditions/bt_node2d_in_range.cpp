@@ -18,12 +18,7 @@ void BTNode2DInRange::_bind_methods()
 {
     using namespace godot;
 
-    ClassDB::bind_method(D_METHOD("set_range", "range"), &BTNode2DInRange::set_range);
-    ClassDB::bind_method(D_METHOD("get_range"), &BTNode2DInRange::get_range);
-    ClassDB::bind_method(D_METHOD("set_node_name", "node_name"), &BTNode2DInRange::set_node_name);
-    ClassDB::bind_method(D_METHOD("get_node_name"), &BTNode2DInRange::get_node_name);
-
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "range"), "set_range", "get_range");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "node_name"), "set_node_name", "get_node_name");
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTNode2DInRange, FLOAT, range);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTNode2DInRange, STRING, node_name);
 
 }

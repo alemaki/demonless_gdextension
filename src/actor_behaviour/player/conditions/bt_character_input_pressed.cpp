@@ -1,6 +1,7 @@
 #include "bt_character_input_pressed.hpp"
 
 #include "actors/player/player_character.hpp"
+#include "utils/utils.hpp"
 
 BTTask::Status BTCharacterInputPressed::_tick(double delta)
 {
@@ -19,14 +20,7 @@ void BTCharacterInputPressed::_bind_methods()
 {
     using namespace godot;
 
-    ClassDB::bind_method(D_METHOD("set_check_attack_pressed", "check_attack_pressed"), &BTCharacterInputPressed::set_check_attack_pressed);
-    ClassDB::bind_method(D_METHOD("get_check_attack_pressed"), &BTCharacterInputPressed::get_check_attack_pressed);
-    ClassDB::bind_method(D_METHOD("set_check_block_pressed", "check_block_pressed"), &BTCharacterInputPressed::set_check_block_pressed);
-    ClassDB::bind_method(D_METHOD("get_check_block_pressed"), &BTCharacterInputPressed::get_check_block_pressed);
-    ClassDB::bind_method(D_METHOD("set_check_direction_pressed", "check_direction_pressed"), &BTCharacterInputPressed::set_check_direction_pressed);
-    ClassDB::bind_method(D_METHOD("get_check_direction_pressed"), &BTCharacterInputPressed::get_check_direction_pressed);
-
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "check_attack_pressed"), "set_check_attack_pressed", "get_check_attack_pressed");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "check_block_pressed"), "set_check_block_pressed", "get_check_block_pressed");
-    ADD_PROPERTY(PropertyInfo(Variant::STRING, "check_direction_pressed"), "set_check_direction_pressed", "get_check_direction_pressed");
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTCharacterInputPressed, STRING, check_attack_pressed);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTCharacterInputPressed, STRING, check_block_pressed);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTCharacterInputPressed, STRING, check_direction_pressed);
 }

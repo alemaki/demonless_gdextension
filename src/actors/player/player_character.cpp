@@ -49,23 +49,11 @@ void PlayerCharacter::_bind_methods()
 {
     using namespace godot;
 
-    ClassDB::bind_method(D_METHOD("set_health_component", "health_component"), &PlayerCharacter::set_health_component);
-    ClassDB::bind_method(D_METHOD("get_health_component"), &PlayerCharacter::get_health_component);
-    ClassDB::bind_method(D_METHOD("set_movement_component", "movement_component"), &PlayerCharacter::set_movement_component);
-    ClassDB::bind_method(D_METHOD("get_movement_component"), &PlayerCharacter::get_movement_component);
-    ClassDB::bind_method(D_METHOD("set_input_component", "input_component"), &PlayerCharacter::set_input_component);
-    ClassDB::bind_method(D_METHOD("get_input_component"), &PlayerCharacter::get_input_component);
-    ClassDB::bind_method(D_METHOD("set_movement_fsm", "movement_fsm"), &PlayerCharacter::set_movement_fsm);
-    ClassDB::bind_method(D_METHOD("get_movement_fsm"), &PlayerCharacter::get_movement_fsm);
-    ClassDB::bind_method(D_METHOD("set_action_fsm", "action_fsm"), &PlayerCharacter::set_action_fsm);
-    ClassDB::bind_method(D_METHOD("get_action_fsm"), &PlayerCharacter::get_action_fsm);
-    ClassDB::bind_method(D_METHOD("set_decision_tree", "decision_tree"), &PlayerCharacter::set_decision_tree);
-    ClassDB::bind_method(D_METHOD("get_decision_tree"), &PlayerCharacter::get_decision_tree);
-
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "health_component", PropertyHint::PROPERTY_HINT_NODE_TYPE, "HealthComponent"), "set_health_component", "get_health_component");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_component", PropertyHint::PROPERTY_HINT_NODE_TYPE, "CharacterMovementComponent"), "set_movement_component", "get_movement_component");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "input_component", PropertyHint::PROPERTY_HINT_NODE_TYPE, "CharacterInputComponent"), "set_input_component", "get_input_component");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_fsm", PropertyHint::PROPERTY_HINT_NODE_TYPE, "FSM"), "set_movement_fsm", "get_movement_fsm");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "action_fsm", PropertyHint::PROPERTY_HINT_NODE_TYPE, "FSM"), "set_action_fsm", "get_action_fsm");
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "decision_tree", PropertyHint::PROPERTY_HINT_NODE_TYPE, "BehaviourTree"), "set_decision_tree", "get_decision_tree");
+    BIND_GETTER_SETTER_PROPERTY_OBJECT(PlayerCharacter, health_component, health_component, PropertyHint::PROPERTY_HINT_NODE_TYPE, "HealthComponent", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, HealthComponent);
+    BIND_GETTER_SETTER_PROPERTY_OBJECT(PlayerCharacter, movement_component, movement_component, PropertyHint::PROPERTY_HINT_NODE_TYPE, "CharacterMovementComponent", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, CharacterMovementComponent);
+    BIND_GETTER_SETTER_PROPERTY_OBJECT(PlayerCharacter, input_component, input_component, PropertyHint::PROPERTY_HINT_NODE_TYPE, "CharacterInputComponent", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, CharacterInputComponent);
+    BIND_GETTER_SETTER_PROPERTY_OBJECT(PlayerCharacter, movement_fsm, movement_fsm, PropertyHint::PROPERTY_HINT_NODE_TYPE, "FSM", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, FSM);
+    BIND_GETTER_SETTER_PROPERTY_OBJECT(PlayerCharacter, action_fsm, action_fsm, PropertyHint::PROPERTY_HINT_NODE_TYPE, "FSM", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, FSM);
+    BIND_GETTER_SETTER_PROPERTY_OBJECT(PlayerCharacter, decision_tree, decision_tree, PropertyHint::PROPERTY_HINT_NODE_TYPE, "BehaviourTree", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, BehaviourTree);
+    
 }

@@ -1,6 +1,8 @@
 #include "health_bar.hpp"
 #include <godot_cpp/variant/utility_functions.hpp>
 
+#include "utils/utils.hpp"
+
 HealthBar::HealthBar()
 {
     this->set_show_percentage(false);
@@ -32,8 +34,5 @@ void HealthBar::_bind_methods()
 {
     using namespace godot;
 
-    ClassDB::bind_method(D_METHOD("set_health_component", "health_component"), &HealthBar::set_health_component);
-    ClassDB::bind_method(D_METHOD("get_health_component"), &HealthBar::get_health_component);
-
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "health_component"), "set_health_component", "get_health_component");
+    BIND_GETTER_SETTER_PROPERTY_OBJECT(HealthBar, health_component, health_component, PropertyHint::PROPERTY_HINT_NODE_TYPE, "HealthComponent", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, HealthComponent);
 }
