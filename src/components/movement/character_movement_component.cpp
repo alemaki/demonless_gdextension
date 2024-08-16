@@ -10,6 +10,10 @@ void CharacterMovementComponent::_physics_process(double delta)
     character->move_and_slide();
 }
 
+void CharacterMovementComponent::set_target_direction(godot::Vector2 direction)
+{
+    this->target_velocity = direction.normalized()*this->speed;
+}
 
 void CharacterMovementComponent::set_friction(double friction)
 {
@@ -21,14 +25,10 @@ void CharacterMovementComponent::_bind_methods()
 {
     using namespace godot;
 
-    ClassDB::bind_method(D_METHOD("set_speed", "speed"), &CharacterMovementComponent::set_speed);
-    ClassDB::bind_method(D_METHOD("get_speed"), &CharacterMovementComponent::get_speed);
-    ClassDB::bind_method(D_METHOD("set_friction", "friction"), &CharacterMovementComponent::set_friction);
-    ClassDB::bind_method(D_METHOD("get_friction"), &CharacterMovementComponent::get_friction);
-    ClassDB::bind_method(D_METHOD("set_character", "character"), &CharacterMovementComponent::set_character);
-    ClassDB::bind_method(D_METHOD("get_character"), &CharacterMovementComponent::get_character);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(CharacterMovementComponent, FLOAT, speed);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(CharacterMovementComponent, FLOAT, friction);
+    
+    BIND_GETTER_SETTER_DEFAULT(CharacterMovementComponent, character);
 
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed"), "set_speed", "get_speed");
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "friction"), "set_friction", "get_friction");
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "character", PROPERTY_HINT_NODE_TYPE, "CharacterBody2D"), "set_character", "get_character");
 }

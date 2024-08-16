@@ -28,6 +28,8 @@ public:
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, speed);
     CREATE_GETTER_SETTER_DEFAULT(godot::CharacterBody2D*, character);
 
+    void set_target_direction(godot::Vector2 direction);
+
     void set_friction(double friction);
     _FORCE_INLINE_ double get_friction() const
     {

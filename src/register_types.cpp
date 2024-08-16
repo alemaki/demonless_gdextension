@@ -21,8 +21,6 @@
 
 #include "actor_behaviour/player/actions/bt_evaluate_movement_input.hpp"
 
-#include "actor_behaviour/player/conditions/bt_character_input_pressed.hpp"
-
 #include "components/area2d/hitbox.hpp"
 #include "components/area2d/hurtbox.hpp"
 #include "components/health/health_component.hpp"
@@ -62,8 +60,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 
 		/* Player behavior */
 		ClassDB::register_class<BTEvaluateMovementInput>();
-
-		ClassDB::register_class<BTCharacterInputPressed>();
+		
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
 	{
