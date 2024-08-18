@@ -10,14 +10,14 @@ class CharacterInputComponent : public godot::Node
 protected:
     bool attack_pressed = false;
     bool block_pressed = false;
-    godot::Vector2 direction_input = godot::Vector2(0, 0);
+    godot::Vector3 direction_input = godot::Vector3(0, 0, 0);
 
     void evaluate_input();
     
 public:
     CharacterInputComponent();
 
-    _FORCE_INLINE_ godot::Vector2 get_direction_input() const
+    _FORCE_INLINE_ godot::Vector3 get_direction_input() const
     {
         return this->direction_input;
     }

@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include <doctest.h>
-#include <godot_cpp/classes/area2d.hpp>
+#include <godot_cpp/classes/area3d.hpp>
 #include <godot_cpp/classes/input.hpp>
 
 #include "tests/test_utils/test_runner.hpp"
@@ -55,8 +55,8 @@ TEST_SUITE("PlayerCharacter")
         double delta = ::get_current_engine_delta();
         ::simulate(::get_scene_root());
 
-        godot::Vector2 expected_position = godot::Vector2(100, 0)*delta;
-        godot::Vector2 expected_velocity = godot::Vector2(100, 0);
+        godot::Vector3 expected_position = godot::Vector3(100, 0, 0)*delta;
+        godot::Vector3 expected_velocity = godot::Vector3(100, 0, 0);
         CHECK_VECTORS_EQ(player->get_velocity(), expected_velocity);
         CHECK_VECTORS_EQ(player->get_position(), expected_position);
 

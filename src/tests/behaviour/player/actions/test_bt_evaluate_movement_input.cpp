@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include <doctest.h>
-#include <godot_cpp/classes/area2d.hpp>
+#include <godot_cpp/classes/area3d.hpp>
 #include <godot_cpp/classes/input.hpp>
 
 #include "tests/test_utils/test_runner.hpp"
@@ -59,7 +59,7 @@ TEST_SUITE("BTEvaluateMovementInput")
 
         ::simulate(player);
 
-        godot::Vector2 expected_velocity = godot::Vector2(100, 0);
+        godot::Vector3 expected_velocity = godot::Vector3(100, 0, 0);
         CHECK_EQ(status, BTTask::Status::SUCCESS);
         CHECK_VECTORS_EQ(player->get_velocity(), expected_velocity);
 
@@ -72,12 +72,12 @@ TEST_SUITE("BTEvaluateMovementInput")
         BTTask::Status status = task->execute(0.1);
 
         CHECK_EQ(status, BTTask::Status::FAILURE);
-        CHECK_VECTORS_EQ(player->get_velocity(), godot::Vector2(0, 0));
+        CHECK_VECTORS_EQ(player->get_velocity(), godot::Vector3(0, 0, 0));
     }
 
     TEST_CASE_FIXTURE(BTEvaluateMovementInputFixture, "Actor is not a player character")
     {
-        godot::Node* non_player_actor = memnew(godot::Node2D);
+        godot::Node* non_player_actor = memnew(godot::Node3D);
 
         task->initialize(non_player_actor, blackboard);
         BTTask::Status status = task->execute(0.1);

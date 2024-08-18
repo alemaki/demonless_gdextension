@@ -10,7 +10,7 @@ void CharacterMovementComponent::_physics_process(double delta)
     character->move_and_slide();
 }
 
-void CharacterMovementComponent::set_target_direction(godot::Vector2 direction)
+void CharacterMovementComponent::set_target_direction(godot::Vector3 direction)
 {
     this->target_velocity = direction.normalized()*this->speed;
 }
@@ -30,5 +30,5 @@ void CharacterMovementComponent::_bind_methods()
     
     BIND_GETTER_SETTER_DEFAULT(CharacterMovementComponent, character);
 
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "character", PROPERTY_HINT_NODE_TYPE, "CharacterBody2D"), "set_character", "get_character");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "character", PROPERTY_HINT_NODE_TYPE, "CharacterBody3D"), "set_character", "get_character");
 }

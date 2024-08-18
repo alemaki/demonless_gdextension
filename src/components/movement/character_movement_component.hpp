@@ -3,8 +3,8 @@
 
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/variant/variant.hpp>
-#include <godot_cpp/variant/vector2.hpp>
-#include <godot_cpp/classes/character_body2d.hpp>
+#include <godot_cpp/variant/vector3.hpp>
+#include <godot_cpp/classes/character_body3d.hpp>
 
 #include "utils/utils.hpp"
 
@@ -16,19 +16,19 @@ private:
     double speed = 1;
     double friction = 1;
 
-    godot::Vector2 current_velocity = godot::Vector2(0, 0);
-    godot::Vector2 target_velocity = godot::Vector2(0, 0);
+    godot::Vector3 current_velocity = godot::Vector3(0, 0, 0);
+    godot::Vector3 target_velocity = godot::Vector3(0, 0, 0);
 
-    godot::CharacterBody2D* character = nullptr;
+    godot::CharacterBody3D* character = nullptr;
 
 public:
     void _physics_process(double delta) override;
 
-    CREATE_GETTER_SETTER_DEFAULT(godot::Vector2, target_velocity);
+    CREATE_GETTER_SETTER_DEFAULT(godot::Vector3, target_velocity);
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, speed);
-    CREATE_GETTER_SETTER_DEFAULT(godot::CharacterBody2D*, character);
+    CREATE_GETTER_SETTER_DEFAULT(godot::CharacterBody3D*, character);
 
-    void set_target_direction(godot::Vector2 direction);
+    void set_target_direction(godot::Vector3 direction);
 
     void set_friction(double friction);
     _FORCE_INLINE_ double get_friction() const

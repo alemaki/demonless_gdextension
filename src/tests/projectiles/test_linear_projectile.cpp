@@ -13,10 +13,10 @@ TEST_SUITE("TestLinearProjectile")
     {
         LinearProjectile* projectile = memnew(LinearProjectile);
 
-        CHECK_VECTORS_EQ(projectile->get_direction(), godot::Vector2(0, 0));
+        CHECK_VECTORS_EQ(projectile->get_direction(), godot::Vector3(0, 0, 0));
         CHECK_EQ(projectile->get_speed(), doctest::Approx(0));
 
-        godot::Vector2 direction = godot::Vector2(1, 1); // Vector2.RIGHT + Vector2.UP
+        godot::Vector3 direction = godot::Vector3(1, 0, 1); // Vector3.RIGHT + Vector3.FORWARD
         float speed = 100.0;
         projectile->set_direction(direction);
         projectile->set_speed(speed);
@@ -31,13 +31,13 @@ TEST_SUITE("TestLinearProjectile")
     {
         LinearProjectile* projectile = memnew(LinearProjectile);
 
-        projectile->set_direction(godot::Vector2(1, 0)); // Vector2.RIGHT
+        projectile->set_direction(godot::Vector3(1, 0, 0)); // Vector3.RIGHT
         projectile->set_speed(100.0);
         projectile->set_physics_process(true);
 
         double delta = ::get_current_engine_delta();
         ::simulate(projectile);
-        godot::Vector2 expected_position = godot::Vector2(100, 0)*delta;
+        godot::Vector3 expected_position = godot::Vector3(100, 0, 0)*delta;
         CHECK_VECTORS_EQ(projectile->get_position(), expected_position);
 
         memfree(projectile);

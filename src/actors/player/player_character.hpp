@@ -1,16 +1,16 @@
 #ifndef PLAYER_CHARACTER_HPP
 #define PLAYER_CHARACTER_HPP
 
-#include <godot_cpp/classes/character_body2d.hpp>
+#include <godot_cpp/classes/character_body3d.hpp>
 #include "behaviour_tree/behaviour_tree.hpp"
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
 #include "components/movement/character_movement_component.hpp"
 #include "finite_state_machine/fsm.hpp"
 
-class PlayerCharacter : public godot::CharacterBody2D
+class PlayerCharacter : public godot::CharacterBody3D
 {
-    GDCLASS(PlayerCharacter, CharacterBody2D);
+    GDCLASS(PlayerCharacter, CharacterBody3D);
 
     HealthComponent* health_component = nullptr;
     CharacterInputComponent* input_component = nullptr;

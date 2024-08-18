@@ -35,33 +35,33 @@ TEST_SUITE("TestCaracterInputComponent")
 
     TEST_CASE_FIXTURE(CharacterInputComponentFixture, "Test directional input")
     {
-        CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 0));
+        CHECK_VECTORS_EQ(character_input_component->get_direction_input(), godot::Vector3(0, 0, 0));
         simulate(character_input_component);
-        CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 0));
+        CHECK_VECTORS_EQ(character_input_component->get_direction_input(), godot::Vector3(0, 0, 0));
 
         godot::Input::get_singleton()->action_press("move_right");
         simulate(character_input_component);
-        CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(1, 0));
+        CHECK_VECTORS_EQ(character_input_component->get_direction_input(), godot::Vector3(1, 0, 0));
 
         godot::Input::get_singleton()->action_press("move_left");
         simulate(character_input_component);
-        CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 0));
+        CHECK_VECTORS_EQ(character_input_component->get_direction_input(), godot::Vector3(0, 0, 0));
 
         godot::Input::get_singleton()->action_release("move_right");
         godot::Input::get_singleton()->action_release("move_left");
 
         godot::Input::get_singleton()->action_press("move_up");
         simulate(character_input_component);
-        CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, -1));
+        CHECK_VECTORS_EQ(character_input_component->get_direction_input(), godot::Vector3(0, 0, -1));
         godot::Input::get_singleton()->action_release("move_up");
 
         godot::Input::get_singleton()->action_press("move_down");
         simulate(character_input_component);
-        CHECK_EQ(character_input_component->get_direction_input(), godot::Vector2(0, 1));
+        CHECK_VECTORS_EQ(character_input_component->get_direction_input(), godot::Vector3(0, 0, 1));
 
         godot::Input::get_singleton()->action_press("move_right");
         simulate(character_input_component);
-        CHECK_EQ(character_input_component->get_direction_input(), (godot::Vector2(0, 1) + godot::Vector2(1, 0)).normalized());
+        CHECK_VECTORS_EQ(character_input_component->get_direction_input(), (godot::Vector3(0, 0, 1) + godot::Vector3(1, 0, 0)).normalized());
 
         godot::Input::get_singleton()->action_release("move_right");
         godot::Input::get_singleton()->action_release("move_down");

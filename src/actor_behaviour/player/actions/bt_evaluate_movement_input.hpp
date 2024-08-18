@@ -2,7 +2,6 @@
 #define BT_EVALUATE_MOVEMENT_INPUT
 
 #include "behaviour_tree/tasks/bt_action.hpp"
-#include "projectiles/linear_projectile.hpp"
 
 class BTEvaluateMovementInput : public BTAction
 {

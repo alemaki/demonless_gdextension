@@ -7,10 +7,10 @@
 struct CharacterMovementComponentFixture
 {
     CharacterMovementComponent* movement_component;
-    godot::CharacterBody2D* character;
+    godot::CharacterBody3D* character;
 
     CharacterMovementComponentFixture() : movement_component(memnew(CharacterMovementComponent)),
-                                          character(memnew(godot::CharacterBody2D)) {}
+                                          character(memnew(godot::CharacterBody3D)) {}
     ~CharacterMovementComponentFixture()
     {
         memdelete(movement_component);
@@ -40,11 +40,11 @@ TEST_SUITE("CharacterMovementComponentTests")
         movement_component->set_friction(1.5);
         CHECK_EQ(movement_component->get_friction(), 1);
 
-        godot::Vector2 target_velocity(50, 0);
+        godot::Vector3 target_velocity(50, 0, 0);
         movement_component->set_target_velocity(target_velocity);
         CHECK_VECTORS_EQ(movement_component->get_target_velocity(), target_velocity);
 
-        godot::Vector2 negative_velocity(-50, -50);
+        godot::Vector3 negative_velocity(-50, -50, -50);
         movement_component->set_target_velocity(negative_velocity);
         CHECK_VECTORS_EQ(movement_component->get_target_velocity(), negative_velocity);
 
@@ -58,15 +58,15 @@ TEST_SUITE("CharacterMovementComponentTests")
     TEST_CASE_FIXTURE(CharacterMovementComponentFixture, "Test friction")
     {
         ::get_scene_root()->add_child(character);
-        godot::Vector2 initial_velocity(0, 0);
+        godot::Vector3 initial_velocity(0, 0, 0);
         character->set_velocity(initial_velocity);
         movement_component->set_character(character);
-        movement_component->set_target_velocity(godot::Vector2(100, 0));
+        movement_component->set_target_velocity(godot::Vector3(100, 0, 0));
         movement_component->set_friction(0.1);
 
         ::simulate(movement_component, 1);
         double delta = ::get_current_engine_delta();
-        CHECK_VECTORS_EQ(character->get_velocity(), godot::Vector2(100, 0)*movement_component->get_friction());
-        CHECK_VECTORS_EQ(character->get_position(), godot::Vector2(100, 0)*movement_component->get_friction()*delta);
+        CHECK_VECTORS_EQ(character->get_velocity(), godot::Vector3(100, 0, 0)*movement_component->get_friction());
+        CHECK_VECTORS_EQ(character->get_position(), godot::Vector3(100, 0, 0)*movement_component->get_friction()*delta);
     }
 }

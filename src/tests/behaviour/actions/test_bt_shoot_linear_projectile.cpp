@@ -18,7 +18,7 @@ TEST_CASE("BTShootLinearProjectile")
 
     SUBCASE("Creates projectile")
     {
-        godot::Node2D* mock_actor = memnew(godot::Node2D);
+        godot::Node3D* mock_actor = memnew(godot::Node3D);
 
         task->initialize(mock_actor, memnew(Blackboard));
         auto status = task->execute(0.1);

@@ -16,9 +16,9 @@ BTTask::Status BTShootLinearProjectile::_tick(double delta)
 
     TASK_FAIL_COND_MSG(projectile == nullptr, "Cannot duplicate linear projectile.");
 
-    godot::Node2D* actor = godot::Object::cast_to<godot::Node2D>(this->get_actor());
+    godot::Node3D* actor = godot::Object::cast_to<godot::Node3D>(this->get_actor());
     projectile->set_position(actor->get_position());
-    projectile->set_direction(godot::Vector2(1, 0));
+    projectile->set_direction(godot::Vector3(1, 0, 0));
 
     /* TODO: should bullet be actor's child. */
     actor->add_child(projectile);

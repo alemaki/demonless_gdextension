@@ -13,7 +13,8 @@ CharacterInputComponent::CharacterInputComponent()
 void CharacterInputComponent::evaluate_input()
 {
     godot::Input* input = godot::Input::get_singleton();
-    this->direction_input = input->get_vector("move_left", "move_right", "move_up", "move_down");
+    godot::Vector2 direction_input= input->get_vector("move_left", "move_right", "move_up", "move_down");
+    this->direction_input = {direction_input.x, 0, direction_input.y};
 
     this->attack_pressed = input->is_action_pressed("attack");
 

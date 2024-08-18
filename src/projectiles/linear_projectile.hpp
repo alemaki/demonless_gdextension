@@ -1,7 +1,6 @@
 #ifndef LINEAR_PROJECTILE_HPP
 #define LINEAR_PROJECTILE_HPP
 
-#include <godot_cpp/variant/vector2.hpp>
 #include "projectiles/projectile.hpp"
 
 #include "utils/utils.hpp"
@@ -13,13 +12,13 @@ class LinearProjectile : public Projectile
 protected:
 
     float speed = 0;
-    godot::Vector2 direction = godot::Vector2(0, 0);
+    godot::Vector3 direction = godot::Vector3(0, 0, 0);
 
 public:
     virtual void _physics_process(double delta) override;
 
-    void set_direction(godot::Vector2 direction);
-    _FORCE_INLINE_ godot::Vector2 get_direction() const
+    void set_direction(godot::Vector3 direction);
+    _FORCE_INLINE_ godot::Vector3 get_direction() const
     {
         return this->direction;
     }

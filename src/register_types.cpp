@@ -17,12 +17,12 @@
 
 #include "actor_behaviour/actions/bt_shoot_linear_projectile.hpp"
 
-#include "actor_behaviour/conditions/bt_node2d_in_range.hpp"
+#include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
 #include "actor_behaviour/player/actions/bt_evaluate_movement_input.hpp"
 
-#include "components/area2d/hitbox.hpp"
-#include "components/area2d/hurtbox.hpp"
+#include "components/area3d/hitbox.hpp"
+#include "components/area3d/hurtbox.hpp"
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
 #include "components/movement/character_movement_component.hpp"
@@ -56,7 +56,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		/* Behaviour */
 		ClassDB::register_class<BTShootLinearProjectile>();
 
-		ClassDB::register_class<BTNode2DInRange>();
+		ClassDB::register_class<BTNode3DInRange>();
 
 		/* Player behavior */
 		ClassDB::register_class<BTEvaluateMovementInput>();
