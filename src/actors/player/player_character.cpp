@@ -9,8 +9,14 @@ void PlayerCharacter::_ready()
     {
         this->task = this->decision_tree->instantiate(this, this->blackboard);
     }
-    this->blackboard->set_var("PlayerActionFSM", this->action_fsm);
-    this->blackboard->set_var("PlayerMovementFSM", this->movement_fsm);
+    if (this->action_fsm != nullptr)
+    {
+        this->blackboard->set_var(this->action_fsm->get_name(), this->action_fsm);
+    }
+    if (this->movement_fsm != nullptr)
+    {
+        this->blackboard->set_var(this->movement_fsm->get_name(), this->movement_fsm);
+    }
 
     if (godot::Engine::get_singleton()->is_editor_hint())
     {
@@ -21,9 +27,12 @@ void PlayerCharacter::_ready()
 
 void PlayerCharacter::_process(double delta)
 {
-    this->blackboard->set_var("is_attack_pressed", input_component->is_attack_pressed());
-    this->blackboard->set_var("is_block_pressed", input_component->is_block_pressed());
-    this->blackboard->set_var("direction_input", input_component->get_direction_input());
+    if (input_component != nullptr)
+    {
+        this->blackboard->set_var("is_attack_pressed", input_component->is_attack_pressed());
+        this->blackboard->set_var("is_block_pressed", input_component->is_block_pressed());
+        this->blackboard->set_var("direction_input", input_component->get_direction_input());
+    }
 
     if (this->task != nullptr)
     {
@@ -33,7 +42,8 @@ void PlayerCharacter::_process(double delta)
 
 void PlayerCharacter::_physics_process(double delta)
 {
-
+    godot::UtilityFunctions::print(this->get_velocity());
+    godot::UtilityFunctions::print(this->get_position());
 }
 
 void PlayerCharacter::set_movement_component(CharacterMovementComponent* movement_component)
