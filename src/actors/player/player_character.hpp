@@ -1,6 +1,7 @@
 #ifndef PLAYER_CHARACTER_HPP
 #define PLAYER_CHARACTER_HPP
 
+#include <godot_cpp/classes/animation_player.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
 #include "behaviour_tree/behaviour_tree.hpp"
 #include "components/health/health_component.hpp"
@@ -17,9 +18,10 @@ class PlayerCharacter : public godot::CharacterBody3D
     CharacterMovementComponent* movement_component = nullptr;
     FSM* movement_fsm = nullptr;
     FSM* action_fsm = nullptr;
-    BehaviourTree* decision_tree = nullptr ;
-    godot::Ref<BTTask> task = nullptr ;
-    godot::Ref<Blackboard> blackboard = nullptr ;
+    BehaviourTree* decision_tree = nullptr;
+    AnimationPlayer* animation_player = nullptr;
+    godot::Ref<BTTask> task = nullptr;
+    godot::Ref<Blackboard> blackboard = nullptr;
     
 public:
     void _ready() override;
@@ -31,6 +33,7 @@ public:
     CREATE_GETTER_SETTER_DEFAULT(FSM*, movement_fsm);
     CREATE_GETTER_SETTER_DEFAULT(FSM*, action_fsm);
     CREATE_GETTER_SETTER_DEFAULT(BehaviourTree*, decision_tree);
+    CREATE_GETTER_SETTER_DEFAULT(AnimationPlayer*, animation_player);
 
     
     void set_movement_component(CharacterMovementComponent* movement_component);

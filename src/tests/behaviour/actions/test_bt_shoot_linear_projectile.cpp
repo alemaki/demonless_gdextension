@@ -10,6 +10,7 @@ TEST_CASE("BTShootLinearProjectile")
 {
     godot::Ref<BTShootLinearProjectile> task = memnew(BTShootLinearProjectile);
     task->set_linear_projectile_scene_path("res://gdextension/src/tests/mock_objects/projectiles/MockLinearProjectile.tscn");
+    task->set_complain_enabled(false);
 
     SUBCASE("Set and get scene path expected behavior")
     {
