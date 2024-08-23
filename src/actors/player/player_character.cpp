@@ -64,5 +64,4 @@ void PlayerCharacter::_bind_methods()
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, movement_fsm, PropertyHint::PROPERTY_HINT_NODE_TYPE, "FSM", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, FSM);
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, action_fsm, PropertyHint::PROPERTY_HINT_NODE_TYPE, "FSM", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, FSM);
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, decision_tree, PropertyHint::PROPERTY_HINT_NODE_TYPE, "BehaviourTree", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, BehaviourTree);
-    BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, animation_player, PropertyHint::PROPERTY_HINT_NODE_TYPE, "AnimationPlayer", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, AnimationPlayer);
 }

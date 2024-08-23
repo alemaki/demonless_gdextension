@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include <doctest.h>
 
+#include <godot_cpp/classes/animation.hpp>
 #include <godot_cpp/classes/animation_library.hpp>
 #include <godot_cpp/classes/animation_player.hpp>
 #include <godot_cpp/classes/node3d.hpp>
@@ -17,7 +18,8 @@ struct BTPlayAnimationFixture
     godot::Node3D* actor;
     godot::Ref<Blackboard> blackboard;
 
-    BTPlayAnimationFixture() : task(memnew(BTPlayAnimation)),
+    BTPlayAnimationFixture() : animation_player(memnew(AnimationPlayer)),
+                               task(memnew(BTPlayAnimation)),
                                actor(memnew(godot::Node3D)),
                                blackboard(memnew(Blackboard))
 
@@ -28,9 +30,15 @@ struct BTPlayAnimationFixture
 
         task->initialize(actor, blackboard);
         blackboard->set_var("AnimationPlayer", animation_player);
+        
+        godot::Ref<godot::AnimationLibrary> animation_library = memnew(godot::AnimationLibrary);
+        REQUIRE_EQ(animation_library->add_animation("first", memnew(godot::Animation)), OK);
+        REQUIRE_EQ(animation_library->add_animation("second", memnew(godot::Animation)), OK);
 
-        animation_player->add_animation_library("first", memnew(godot::AnimationLibrary()));
-        animation_player->add_animation_library("second", memnew(godot::AnimationLibrary()));
+        REQUIRE_EQ(animation_player->add_animation_library("", animation_library), OK);
+
+        REQUIRE(animation_player->has_animation("first"));
+        REQUIRE(animation_player->has_animation("second"));
     }
     ~BTPlayAnimationFixture()
     {
@@ -43,7 +51,7 @@ TEST_SUITE("BTNode3DInRange")
 {
     TEST_CASE_FIXTURE(BTPlayAnimationFixture, "Set and get basic")
     {
-        CHECK_EQ(task->get_animation_player_name(), "AnimationPlayer.");
+        CHECK_EQ(task->get_animation_player_name(), "AnimationPlayer");
         CHECK_EQ(task->get_play_animation(), "first");
     }
 
@@ -68,7 +76,7 @@ TEST_SUITE("BTNode3DInRange")
         CHECK_EQ(animation_player->get_current_animation(), "first");
 
         task->set_play_animation("second");
-        BTTask::Status status = task->execute(0.1);
+        status = task->execute(0.1);
         CHECK_EQ(status, BTTask::Status::SUCCESS);
         CHECK_EQ(animation_player->get_current_animation(), "second");
     }

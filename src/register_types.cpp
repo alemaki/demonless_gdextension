@@ -15,6 +15,7 @@
 
 #include "actors/player/player_character.hpp"
 
+#include "actor_behaviour/actions/bt_play_animation.hpp"
 #include "actor_behaviour/actions/bt_shoot_linear_projectile.hpp"
 
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
@@ -54,6 +55,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<HealthBar>();
 		
 		/* Behaviour */
+		ClassDB::register_class<BTPlayAnimation>();
 		ClassDB::register_class<BTShootLinearProjectile>();
 
 		ClassDB::register_class<BTNode3DInRange>();
