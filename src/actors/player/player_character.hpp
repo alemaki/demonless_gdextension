@@ -19,6 +19,7 @@ class PlayerCharacter : public godot::CharacterBody3D
     FSM* movement_fsm = nullptr;
     FSM* action_fsm = nullptr;
     BehaviourTree* decision_tree = nullptr;
+    godot::Node3D* mesh_instance = nullptr;
     godot::Ref<BTTask> task = nullptr;
     godot::Ref<Blackboard> blackboard = nullptr;
     
@@ -32,6 +33,7 @@ public:
     CREATE_GETTER_SETTER_DEFAULT(FSM*, movement_fsm);
     CREATE_GETTER_SETTER_DEFAULT(FSM*, action_fsm);
     CREATE_GETTER_SETTER_DEFAULT(BehaviourTree*, decision_tree);
+    CREATE_GETTER_SETTER_DEFAULT(godot::Node3D*, mesh_instance)
 
     
     void set_movement_component(CharacterMovementComponent* movement_component);

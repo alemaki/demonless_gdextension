@@ -17,6 +17,14 @@ void PlayerCharacter::_ready()
     {
         this->blackboard->set_var(this->movement_fsm->get_name(), this->movement_fsm);
     }
+    if (this->mesh_instance != nullptr)
+    {
+        godot::AnimationPlayer* animation_player = godot::Object::cast_to<AnimationPlayer>(this->mesh_instance->find_child("AnimationPlayer", true));
+        if (animation_player != nullptr)
+        {
+            this->blackboard->set_var("player_animation_player", animation_player);
+        } 
+    }
 
     if (godot::Engine::get_singleton()->is_editor_hint())
     {
@@ -64,4 +72,5 @@ void PlayerCharacter::_bind_methods()
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, movement_fsm, PropertyHint::PROPERTY_HINT_NODE_TYPE, "FSM", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, FSM);
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, action_fsm, PropertyHint::PROPERTY_HINT_NODE_TYPE, "FSM", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, FSM);
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, decision_tree, PropertyHint::PROPERTY_HINT_NODE_TYPE, "BehaviourTree", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, BehaviourTree);
+    BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, mesh_instance, PropertyHint::PROPERTY_HINT_NODE_TYPE, "Node3D", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, Node3D);
 }
