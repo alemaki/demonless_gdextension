@@ -20,6 +20,7 @@
 
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
+#include "actor_behaviour/player/actions/bt_set_target_direction.hpp"
 #include "actor_behaviour/player/actions/bt_evaluate_movement_input.hpp"
 
 #include "components/area3d/hitbox.hpp"
@@ -62,6 +63,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 
 		/* Player behavior */
 		ClassDB::register_class<BTEvaluateMovementInput>();
+		ClassDB::register_class<BTSetTargetDirection>();
 		
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
