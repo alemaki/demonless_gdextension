@@ -13,6 +13,10 @@ BTTask::Status BTEvaluateMovementInput::_tick(double delta)
     TASK_FAIL_COND_COMP_MSG(movement_cp == nullptr, "Player doesn't have a movement component.");
 
     movement_cp->set_target_direction(input_cp->get_direction_input());
+    if (!(input_cp->get_direction_input().is_zero_approx()))
+    {
+        player->look_at(player->get_position() - input_cp->get_direction_input());
+    }
     TASK_SUCCEED();
 }
 

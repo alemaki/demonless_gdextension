@@ -17,5 +17,5 @@ void BTSetTargetDirection::_bind_methods()
 {
     using namespace godot;
 
-    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTSetTargetDirection, VECTOR2, target_direction);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTSetTargetDirection, VECTOR2, target_direction); 
 }
