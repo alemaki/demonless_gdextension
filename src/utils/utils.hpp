@@ -6,4 +6,4 @@
 
 
 
-#endif /* SRC_UTILS_HPP*/
+#endif /* SRC_UTILS_HPP */
