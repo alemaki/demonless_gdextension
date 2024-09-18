@@ -15,6 +15,7 @@ private:
 protected:
     virtual BTTask::Status _tick(double delta) override;
     virtual void _setup() override;
+
 public:
     CREATE_GETTER_SETTER_STRING_DEFAULT(linear_projectile_scene_path);
 

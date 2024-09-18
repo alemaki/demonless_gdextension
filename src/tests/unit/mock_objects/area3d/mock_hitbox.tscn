@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dgskcble0i0bl"]
+
+[node name="MockHitbox" type="Hitbox"]

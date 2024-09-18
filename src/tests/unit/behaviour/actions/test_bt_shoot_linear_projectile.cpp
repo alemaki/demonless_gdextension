@@ -8,13 +8,15 @@ TEST_SUITE("BTShootLinearProjectile")
 
 TEST_CASE("BTShootLinearProjectile")
 {
+#define MOCK_LINEAR_PROJECTILE_PATH "res://gdextension/src/tests/mock_objects/projectiles/mock_linear_projectile.tscn"
+
     godot::Ref<BTShootLinearProjectile> task = memnew(BTShootLinearProjectile);
-    task->set_linear_projectile_scene_path("res://gdextension/src/tests/mock_objects/projectiles/MockLinearProjectile.tscn");
+    task->set_linear_projectile_scene_path(MOCK_LINEAR_PROJECTILE_PATH);
     task->set_complain_enabled(false);
 
     SUBCASE("Set and get scene path expected behavior")
     {
-        CHECK_EQ(task->get_linear_projectile_scene_path(), "res://gdextension/src/tests/mock_objects/projectiles/MockLinearProjectile.tscn");
+        CHECK_EQ(task->get_linear_projectile_scene_path(), MOCK_LINEAR_PROJECTILE_PATH);
     }
 
     SUBCASE("Creates projectile")

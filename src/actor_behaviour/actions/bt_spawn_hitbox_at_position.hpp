@@ -15,12 +15,13 @@ class BTSpawnHitboxAtPosition : public BTAction
     godot::String path_to_attack_hitbox;
     godot::StringName hitbox_var;
 
-protected:
+public:
     CREATE_GETTER_SETTER_DEFAULT(godot::StringName, var_global_position);
     CREATE_GETTER_SETTER_DEFAULT(godot::StringName, var_look_at_pos);
     CREATE_GETTER_SETTER_STRING_DEFAULT(path_to_attack_hitbox);
     CREATE_GETTER_SETTER_DEFAULT(godot::StringName, hitbox_var);
 
+protected:
     virtual void _setup() override;
     virtual BTTask::Status _tick(double delta) override;
 
