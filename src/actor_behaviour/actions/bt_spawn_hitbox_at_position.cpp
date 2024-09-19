@@ -15,7 +15,6 @@ BTTask::Status BTSpawnHitboxAtPosition::_tick(double delta)
     Hitbox* hitbox = godot::Object::cast_to<Hitbox>(this->hitbox->duplicate());
     ERR_FAIL_COND_V(hitbox == nullptr, BTTask::Status::FAILURE);
 
-    this->get_blackboard()->set_var(this->hitbox_var, hitbox);
     this->get_actor()->add_child(hitbox);
 
     if (this->get_blackboard()->has_var(this->var_global_position))
@@ -26,6 +25,12 @@ BTTask::Status BTSpawnHitboxAtPosition::_tick(double delta)
     {
         hitbox->look_at(this->get_blackboard()->get_var(this->var_look_at_pos));
     }
+
+    if (!(this->hitbox_var.is_empty()))
+    {
+        this->get_blackboard()->set_var(this->hitbox_var, hitbox);
+    }
+
     TASK_SUCCEED();
 }
 

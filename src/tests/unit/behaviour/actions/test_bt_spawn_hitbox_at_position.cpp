@@ -3,6 +3,8 @@
 
 #include "actor_behaviour/actions/bt_spawn_hitbox_at_position.hpp"
 
+#include "tests/test_utils/test_utils.hpp"
+
 TEST_SUITE("BTSpawnHitboxAtPosition")
 {
 #define MOCK_HITBOX_PATH "res://gdextension/src/tests/mock_objects/area3d/mock_hitbox.tscn"
@@ -26,6 +28,8 @@ TEST_SUITE("BTSpawnHitboxAtPosition")
         godot::Node3D* mock_actor = memnew(godot::Node3D);
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
 
+        ::get_scene_root()->add_child(mock_actor);
+
         godot::Vector3 global_position(1, 2, 3);
         blackboard->set_var("global_position", global_position);
         task->set_var_global_position("global_position");
@@ -42,7 +46,7 @@ TEST_SUITE("BTSpawnHitboxAtPosition")
         memdelete(mock_actor);
     }
 
-    TEST_CASE("Fails when hitbox_var is not set")
+    TEST_CASE("Succeeds when hitbox_var is not set")
     {
         godot::Ref<BTSpawnHitboxAtPosition> task = memnew(BTSpawnHitboxAtPosition);
         task->set_complain_enabled(false);
@@ -52,9 +56,10 @@ TEST_SUITE("BTSpawnHitboxAtPosition")
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
 
         task->initialize(mock_actor, blackboard);
+
         auto status = task->execute(0.1);
 
-        CHECK_EQ(status, BTTask::Status::FAILURE);
+        CHECK_EQ(status, BTTask::Status::SUCCESS);
 
         memdelete(mock_actor);
     }
@@ -69,6 +74,8 @@ TEST_SUITE("BTSpawnHitboxAtPosition")
         godot::Node3D* mock_actor = memnew(godot::Node3D);
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
 
+        ::get_scene_root()->add_child(mock_actor);
+
         godot::Vector3 look_at_position(5, 0, 0);
         blackboard->set_var("look_at_position", look_at_position);
         task->set_var_look_at_pos("look_at_position");
@@ -79,6 +86,8 @@ TEST_SUITE("BTSpawnHitboxAtPosition")
         CHECK_EQ(status, BTTask::Status::SUCCESS);
         Hitbox* hitbox = godot::Object::cast_to<Hitbox>(mock_actor->get_child(0));
         REQUIRE(hitbox != nullptr);
+
+        mock_actor->look_at(look_at_position);
 
         CHECK_EQ(hitbox->get_rotation(), mock_actor->get_rotation());
 

@@ -15,6 +15,7 @@
 
 #include "actors/player/player_character.hpp"
 
+#include "actor_behaviour/actions/bt_spawn_hitbox_at_position.hpp"
 #include "actor_behaviour/actions/bt_play_animation.hpp"
 #include "actor_behaviour/actions/bt_shoot_linear_projectile.hpp"
 
@@ -56,6 +57,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<HealthBar>();
 		
 		/* Behaviour */
+		ClassDB::register_class<BTSpawnHitboxAtPosition>();
 		ClassDB::register_class<BTPlayAnimation>();
 		ClassDB::register_class<BTShootLinearProjectile>();
 
