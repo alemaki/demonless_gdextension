@@ -1,17 +1,18 @@
-#ifndef BT_DESPAWN_HITBOX_AT_POSITION
-#define BT_DESPAWN_HITBOX_AT_POSITION
+#ifndef BT_DESPAWN_HITBOX
+#define BT_DESPAWN_HITBOX
 
 #include "behaviour_tree/tasks/bt_action.hpp"
 
-class BTDespawnHitboxAtPosition : public BTAction
+class BTDespawnHitbox : public BTAction
 {
-    GDCLASS(BTDespawnHitboxAtPosition, BTAction);
+    GDCLASS(BTDespawnHitbox, BTAction);
 
     godot::StringName var_hitbox;
 
-protected:
+public:
     CREATE_GETTER_SETTER_DEFAULT(godot::StringName, var_hitbox);
 
+protected:
     virtual BTTask::Status _tick(double delta) override;
 
 public:
@@ -21,4 +22,4 @@ protected:
 
 };
 
-#endif // BT_DESPAWN_HITBOX_AT_POSITION
+#endif // BT_DESPAWN_HITBOX

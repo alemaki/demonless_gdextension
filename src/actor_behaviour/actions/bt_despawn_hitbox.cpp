@@ -1,7 +1,7 @@
 #include "bt_despawn_hitbox.hpp"
 #include "components/area3d/hitbox.hpp"
 
-BTTask::Status BTDespawnHitboxAtPosition::_tick(double delta)
+BTTask::Status BTDespawnHitbox::_tick(double delta)
 {
     godot::Variant var = this->get_blackboard()->get_var(this->var_hitbox, Variant(), this->is_complain_enabled());
     Hitbox* hitbox = godot::Object::cast_to<Hitbox>(var);
@@ -11,7 +11,7 @@ BTTask::Status BTDespawnHitboxAtPosition::_tick(double delta)
     TASK_SUCCEED();
 }
 
-void BTDespawnHitboxAtPosition::_bind_methods()
+void BTDespawnHitbox::_bind_methods()
 {
-    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTDespawnHitboxAtPosition, STRING_NAME, var_hitbox);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTDespawnHitbox, STRING_NAME, var_hitbox);
 }
