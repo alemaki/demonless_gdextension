@@ -1,11 +1,11 @@
 #ifndef CHARACTER_INPUT_COMPONENT
 #define CHARACTER_INPUT_COMPONENT
 
-#include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/node3d.hpp>
 
-class CharacterInputComponent : public godot::Node
+class CharacterInputComponent : public godot::Node3D
 {
-    GDCLASS(CharacterInputComponent, godot::Node);
+    GDCLASS(CharacterInputComponent, godot::Node3D);
 
 protected:
     bool attack_pressed = false;
@@ -29,6 +29,8 @@ public:
     {
         return this->block_pressed;
     }
+
+    godot::Vector3 get_mouse_casted_position();
 
     void _process(double delta) override;
     void _ready() override;

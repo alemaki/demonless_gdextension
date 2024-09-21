@@ -1,7 +1,10 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include <doctest.h>
+#include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_map.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
+#include <godot_cpp/classes/window.hpp>
 
 #include "components/input/character_input_component.hpp"
 
