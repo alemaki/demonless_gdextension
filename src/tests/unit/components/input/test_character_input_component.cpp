@@ -95,4 +95,29 @@ TEST_SUITE("TestCaracterInputComponent")
         simulate(character_input_component);
         CHECK_FALSE(character_input_component->is_block_pressed());
     }
+
+    TEST_CASE_FIXTURE(CharacterInputComponentFixture, "Test mouse casted position")
+    {
+        godot::Camera3D* camera = memnew(godot::Camera3D);
+
+        godot::Viewport* viewport = ::get_scene_root()->get_viewport();
+        REQUIRE(viewport != nullptr);
+        viewport->add_child(camera);
+
+        get_scene_root()->add_child(character_input_component);
+        
+        camera->set_position(godot::Vector3(0, 10, 0));
+        camera->look_at(godot::Vector3(0, 0, 0), godot::Vector3(0, 0, -1)); // up from camera should be -1 by Z axis
+
+        godot::Vector2 viewport_size = viewport->get_visible_rect().get_size();
+        godot::Input::get_singleton()->warp_mouse(viewport_size / 2);
+        
+        ::simulate(get_scene_root());
+        
+        godot::Vector3 result = character_input_component->get_mouse_casted_position();
+        
+        CHECK_VECTORS_EQ(result, godot::Vector3(0, 0, 0));
+
+        memdelete(camera);
+    }
 }
