@@ -3,7 +3,7 @@
 
 BTTask::Status BTDespawnHitbox::_tick(double delta)
 {
-    godot::Variant var = this->get_blackboard()->get_var(this->var_hitbox, Variant(), this->is_complain_enabled());
+    godot::Variant var = this->get_blackboard()->get_var(this->hitbox_var, Variant(), this->is_complain_enabled());
     Hitbox* hitbox = godot::Object::cast_to<Hitbox>(var);
     TASK_FAIL_COND(hitbox == nullptr);
     this->get_actor()->remove_child(hitbox);
@@ -13,5 +13,5 @@ BTTask::Status BTDespawnHitbox::_tick(double delta)
 
 void BTDespawnHitbox::_bind_methods()
 {
-    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTDespawnHitbox, STRING_NAME, var_hitbox);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTDespawnHitbox, STRING_NAME, hitbox_var);
 }

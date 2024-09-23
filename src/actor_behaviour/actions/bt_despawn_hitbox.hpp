@@ -7,10 +7,10 @@ class BTDespawnHitbox : public BTAction
 {
     GDCLASS(BTDespawnHitbox, BTAction);
 
-    godot::StringName var_hitbox;
+    godot::StringName hitbox_var;
 
 public:
-    CREATE_GETTER_SETTER_DEFAULT(godot::StringName, var_hitbox);
+    CREATE_GETTER_SETTER_DEFAULT(godot::StringName, hitbox_var);
 
 protected:
     virtual BTTask::Status _tick(double delta) override;

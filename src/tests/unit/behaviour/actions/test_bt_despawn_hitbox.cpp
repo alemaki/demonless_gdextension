@@ -10,15 +10,15 @@ TEST_SUITE("BTDespawnHitbox")
     TEST_CASE("Set and get hitbox variable name")
     {
         godot::Ref<BTDespawnHitbox> task = memnew(BTDespawnHitbox);
-        task->set_var_hitbox("hitbox_var");
+        task->set_hitbox_var("hitbox_var");
 
-        CHECK_EQ(task->get_var_hitbox(), godot::StringName("hitbox_var"));
+        CHECK_EQ(task->get_hitbox_var(), godot::StringName("hitbox_var"));
     }
 
     TEST_CASE("Despawn hitbox successfully")
     {
         godot::Ref<BTDespawnHitbox> task = memnew(BTDespawnHitbox);
-        task->set_var_hitbox("hitbox_var");
+        task->set_hitbox_var("hitbox_var");
         task->set_complain_enabled(false);
 
         godot::Node3D* mock_actor = memnew(godot::Node3D);
@@ -44,7 +44,7 @@ TEST_SUITE("BTDespawnHitbox")
     TEST_CASE("Fails if hitbox is not found")
     {
         godot::Ref<BTDespawnHitbox> task = memnew(BTDespawnHitbox);
-        task->set_var_hitbox("hitbox_var");
+        task->set_hitbox_var("hitbox_var");
         task->set_complain_enabled(false);
     
         godot::Node3D* mock_actor = memnew(godot::Node3D);
@@ -62,7 +62,7 @@ TEST_SUITE("BTDespawnHitbox")
     TEST_CASE("Fails if hitbox is not castable")
     {
         godot::Ref<BTDespawnHitbox> task = memnew(BTDespawnHitbox);
-        task->set_var_hitbox("hitbox_var");
+        task->set_hitbox_var("hitbox_var");
         task->set_complain_enabled(false);
 
         godot::Node3D* mock_actor = memnew(godot::Node3D);
