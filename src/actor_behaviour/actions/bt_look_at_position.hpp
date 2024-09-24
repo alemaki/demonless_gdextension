@@ -1,5 +1,5 @@
-#ifndef BT_LOOK_AT_POSITION
-#define BT_LOOK_AT_POSITION
+#ifndef BT_LOOK_AT_POSITION_HPP
+#define BT_LOOK_AT_POSITION_HPP
 
 #include "behaviour_tree/tasks/bt_action.hpp"
 
@@ -24,4 +24,4 @@ protected:
 
 };
 
-#endif // BT_LOOK_AT_POSITION
+#endif // BT_LOOK_AT_POSITION_HPP

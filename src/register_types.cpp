@@ -16,12 +16,14 @@
 #include "actors/player/player_character.hpp"
 
 #include "actor_behaviour/actions/bt_despawn_hitbox.hpp"
+#include "actor_behaviour/actions/bt_look_at_position.hpp"
 #include "actor_behaviour/actions/bt_spawn_hitbox_at_position.hpp"
 #include "actor_behaviour/actions/bt_play_animation.hpp"
 #include "actor_behaviour/actions/bt_shoot_linear_projectile.hpp"
 
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
+#include "actor_behaviour/player/actions/bt_save_mouse_position.hpp"
 #include "actor_behaviour/player/actions/bt_set_target_direction.hpp"
 #include "actor_behaviour/player/actions/bt_evaluate_movement_input.hpp"
 
@@ -62,12 +64,14 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<BTSpawnHitboxAtPosition>();
 		ClassDB::register_class<BTPlayAnimation>();
 		ClassDB::register_class<BTShootLinearProjectile>();
+		ClassDB::register_class<BTLookAtPosition>();
 
 		ClassDB::register_class<BTNode3DInRange>();
 
 		/* Player behavior */
 		ClassDB::register_class<BTEvaluateMovementInput>();
 		ClassDB::register_class<BTSetTargetDirection>();
+		ClassDB::register_class<BTSaveMousePosition>();
 		
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)

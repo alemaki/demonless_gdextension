@@ -1,5 +1,5 @@
-#ifndef BT_SET_TARGET_DIRECTION
-#define BT_SET_TARGET_DIRECTION
+#ifndef BT_SET_TARGET_DIRECTION_HPP
+#define BT_SET_TARGET_DIRECTION_HPP
 
 #include "behaviour_tree/tasks/bt_action.hpp"
 
@@ -21,4 +21,4 @@ protected:
 
 };
 
-#endif // BT_SET_TARGET_DIRECTION
+#endif // BT_SET_TARGET_DIRECTION_HPP

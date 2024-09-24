@@ -29,9 +29,9 @@ TEST_SUITE("BTLookAtPosition")
 
         godot::Node3D* actor = memnew(godot::Node3D);
         godot::Vector3 initial_position(0, 0, 0);
-        actor->set_global_position(initial_position);
-
         ::get_scene_root()->add_child(actor);
+
+        actor->set_global_position(initial_position);
 
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
         blackboard->set_var("target_pos", godot::Vector3(1, 0, 1));
@@ -53,7 +53,7 @@ TEST_SUITE("BTLookAtPosition")
         task->set_look_at_position_var("target_pos");
         task->set_complain_enabled(false);
 
-        godot::Node* actor = memnew(godot::Node); // Invalid actor type
+        godot::Node* actor = memnew(godot::Node);
 
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
 
@@ -72,9 +72,10 @@ TEST_SUITE("BTLookAtPosition")
         task->set_complain_enabled(false);
 
         godot::Node3D* actor = memnew(godot::Node3D);
+        ::get_scene_root()->add_child(actor);
+
         actor->set_global_position(godot::Vector3(0, 0, 0));
 
-        ::get_scene_root()->add_child(actor);
 
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
 

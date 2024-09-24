@@ -1,5 +1,5 @@
-#ifndef BT_DESPAWN_HITBOX
-#define BT_DESPAWN_HITBOX
+#ifndef BT_DESPAWN_HITBOX_HPP
+#define BT_DESPAWN_HITBOX_HPP
 
 #include "behaviour_tree/tasks/bt_action.hpp"
 
@@ -22,4 +22,4 @@ protected:
 
 };
 
-#endif // BT_DESPAWN_HITBOX
+#endif // BT_DESPAWN_HITBOX_HPP

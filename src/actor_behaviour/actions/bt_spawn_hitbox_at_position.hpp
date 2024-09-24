@@ -1,5 +1,5 @@
-#ifndef BT_SPAWN_HITBOX_AT_POSITION
-#define BT_SPAWN_HITBOX_AT_POSITION
+#ifndef BT_SPAWN_HITBOX_AT_POSITION_HPP
+#define BT_SPAWN_HITBOX_AT_POSITION_HPP
 
 #include "behaviour_tree/tasks/bt_action.hpp"
 #include "components/area3d/hitbox.hpp"
@@ -32,4 +32,4 @@ protected:
 
 };
 
-#endif // BT_SPAWN_HITBOX_AT_POSITION
+#endif // BT_SPAWN_HITBOX_AT_POSITION_HPP

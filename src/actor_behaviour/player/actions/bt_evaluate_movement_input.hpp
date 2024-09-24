@@ -1,5 +1,5 @@
-#ifndef BT_EVALUATE_MOVEMENT_INPUT
-#define BT_EVALUATE_MOVEMENT_INPUT
+#ifndef BT_EVALUATE_MOVEMENT_INPUT_HPP
+#define BT_EVALUATE_MOVEMENT_INPUT_HPP
 
 #include "behaviour_tree/tasks/bt_action.hpp"
 
@@ -15,4 +15,4 @@ protected:
 
 };
 
-#endif // BT_EVALUATE_MOVEMENT_INPUT
+#endif // BT_EVALUATE_MOVEMENT_INPUT_HPP
