@@ -28,7 +28,7 @@ struct HitboxBlockerFixture
     }
 };
 
-TEST_SUITE("ProjectileDetectorHitboxTests")
+TEST_SUITE("HitboxBlockerHitboxTests")
 {
     TEST_CASE_FIXTURE(HitboxBlockerFixture, "Test hitbox and hitbox_blocker default interaction.")
     {
@@ -59,7 +59,7 @@ TEST_SUITE("ProjectileDetectorHitboxTests")
         SignalWatcher::watch_signals(hitbox);
         SignalWatcher::watch_signals(hitbox_blocker);
 
-        hitbox_blocker->emit_signal("hitbox_blocked", hitbox);
+        hitbox_blocker->emit_signal("area_entered", hitbox);
 
         CHECK_FALSE(SignalWatcher::signal_emitted(hitbox, "block_triggered"));
         CHECK_FALSE(SignalWatcher::signal_emitted(hitbox_blocker, "hitbox_blocked"));

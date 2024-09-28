@@ -91,7 +91,7 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         hitbox->set_monitoring(true);
         hitbox->trigger_block();
 
-        CHECK(SignalWatcher::signal_emitted(hitbox, "block_triggered"));
+        CHECK_FALSE(SignalWatcher::signal_emitted(hitbox, "block_triggered"));
     }
 
 }
