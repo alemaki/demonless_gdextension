@@ -3,22 +3,22 @@
 #include <godot_cpp/classes/node3d.hpp>
 
 #include "components/area3d/hitbox.hpp"
-#include "actor_behaviour/actions/bt_despawn_hitbox.hpp"
+#include "actor_behaviour/actions/bt_queue_free_node.hpp"
 
-TEST_SUITE("BTDespawnHitbox")
+TEST_SUITE("BTQueueFreeNode")
 {
     TEST_CASE("Set and get hitbox variable name")
     {
-        godot::Ref<BTDespawnHitbox> task = memnew(BTDespawnHitbox);
-        task->set_hitbox_var("hitbox_var");
+        godot::Ref<BTQueueFreeNode> task = memnew(BTQueueFreeNode);
+        task->set_var_node("hitbox_var");
 
-        CHECK_EQ(task->get_hitbox_var(), godot::StringName("hitbox_var"));
+        CHECK_EQ(task->get_var_node(), godot::StringName("hitbox_var"));
     }
 
-    TEST_CASE("Despawn hitbox successfully")
+    TEST_CASE("Despawn node successfully")
     {
-        godot::Ref<BTDespawnHitbox> task = memnew(BTDespawnHitbox);
-        task->set_hitbox_var("hitbox_var");
+        godot::Ref<BTQueueFreeNode> task = memnew(BTQueueFreeNode);
+        task->set_var_node("hitbox_var");
         task->set_complain_enabled(false);
 
         godot::Node3D* mock_actor = memnew(godot::Node3D);
@@ -36,15 +36,16 @@ TEST_SUITE("BTDespawnHitbox")
         CHECK_EQ(status, BTTask::Status::SUCCESS);
 
         CHECK_EQ(mock_actor->get_child_count(), 0);
+        REQUIRE_NE(mock_hitbox, nullptr);
         CHECK(mock_hitbox->is_queued_for_deletion());
 
         memdelete(mock_actor);
     }
 
-    TEST_CASE("Fails if hitbox is not found")
+    TEST_CASE("Fails if node is not found")
     {
-        godot::Ref<BTDespawnHitbox> task = memnew(BTDespawnHitbox);
-        task->set_hitbox_var("hitbox_var");
+        godot::Ref<BTQueueFreeNode> task = memnew(BTQueueFreeNode);
+        task->set_var_node("hitbox_var");
         task->set_complain_enabled(false);
     
         godot::Node3D* mock_actor = memnew(godot::Node3D);
@@ -59,16 +60,16 @@ TEST_SUITE("BTDespawnHitbox")
         memdelete(mock_actor);
     }
 
-    TEST_CASE("Fails if hitbox is not castable")
+    TEST_CASE("Fails if node is not castable")
     {
-        godot::Ref<BTDespawnHitbox> task = memnew(BTDespawnHitbox);
-        task->set_hitbox_var("hitbox_var");
+        godot::Ref<BTQueueFreeNode> task = memnew(BTQueueFreeNode);
+        task->set_var_node("hitbox_var");
         task->set_complain_enabled(false);
 
         godot::Node3D* mock_actor = memnew(godot::Node3D);
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
 
-        blackboard->set_var("hitbox_var", memnew(godot::Node3D));
+        blackboard->set_var("hitbox_var", memnew(godot::Resource));
 
         task->initialize(mock_actor, blackboard);
 

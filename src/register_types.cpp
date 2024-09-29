@@ -15,9 +15,9 @@
 
 #include "actors/player/player_character.hpp"
 
-#include "actor_behaviour/actions/bt_despawn_hitbox.hpp"
+#include "actor_behaviour/actions/bt_queue_free_node.hpp"
 #include "actor_behaviour/actions/bt_look_at_position.hpp"
-#include "actor_behaviour/actions/bt_spawn_hitbox_at_position.hpp"
+#include "actor_behaviour/actions/bt_spawn_node3d_at_position.hpp"
 #include "actor_behaviour/actions/bt_play_animation.hpp"
 #include "actor_behaviour/actions/bt_shoot_linear_projectile.hpp"
 
@@ -28,6 +28,7 @@
 #include "actor_behaviour/player/actions/bt_evaluate_movement_input.hpp"
 
 #include "components/area3d/hitbox.hpp"
+#include "components/area3d/hitbox_blocker.hpp"
 #include "components/area3d/hurtbox.hpp"
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
@@ -50,6 +51,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<HealthComponent>();
 		ClassDB::register_class<Hitbox>();
 		ClassDB::register_class<Hurtbox>();
+		ClassDB::register_class<HitboxBlocker>();
 		ClassDB::register_class<LinearProjectile>();
 		ClassDB::register_class<CharacterInputComponent>();
 		ClassDB::register_class<CharacterMovementComponent>();
@@ -60,8 +62,8 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<HealthBar>();
 		
 		/* Behaviour */
-		ClassDB::register_class<BTDespawnHitbox>();
-		ClassDB::register_class<BTSpawnHitboxAtPosition>();
+		ClassDB::register_class<BTQueueFreeNode>();
+		ClassDB::register_class<BTSpawnNode3DAtPosition>();
 		ClassDB::register_class<BTPlayAnimation>();
 		ClassDB::register_class<BTShootLinearProjectile>();
 		ClassDB::register_class<BTLookAtPosition>();

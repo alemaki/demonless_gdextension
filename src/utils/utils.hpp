@@ -5,5 +5,4 @@
 #include "behaviour_tree/utils/utils.hpp"
 
 
-
 #endif /* SRC_UTILS_HPP */
