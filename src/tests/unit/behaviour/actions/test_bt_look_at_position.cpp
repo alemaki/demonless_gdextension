@@ -1,11 +1,11 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
-#include <doctest.h>
+
+#include "tests/test_utils/test_macros.hpp"
 
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/viewport.hpp>
 
-#include "tests/test_utils/test_utils.hpp"
 #include "actor_behaviour/actions/bt_look_at_position.hpp"
 
 

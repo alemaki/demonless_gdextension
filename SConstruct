@@ -9,12 +9,22 @@ if not os.path.exists(variant_dir):
     os.makedirs(variant_dir)
 
 # Include necessary environment
-env = SConscript('godot-cpp/SConstruct')
+env = SConscript('behaviour_tree_GDE/godot-cpp/SConstruct')
 
 # Add include paths for compialtion
-env.Append(CPPPATH=['doctest/doctest'])
-env.Append(CPPPATH=['behaviour_tree'])
-env.Append(CPPPATH=['src'])
+include_paths = [
+     'behaviour_tree_GDE/tests/test_utils/doctest',
+     'behaviour_tree_GDE',
+     'src'
+]
+
+compilation_paths = [
+     'behaviour_tree_GDE',
+     'src'
+]
+
+for include_path in include_paths:
+    env.Append(CPPPATH=[include_path])
 
 # for libraries
 # env.Append(LIB="...")
@@ -29,9 +39,9 @@ def collect_cpp_files(root):
     return cpp_files
 
 # Collect all CPP files
-src = collect_cpp_files('doctest/doctest')
-src += collect_cpp_files('behaviour_tree')
-src += collect_cpp_files('src')
+src = []
+for compilation_path in compilation_paths:
+    src += collect_cpp_files(compilation_path)
 
 # Godot doesn't like ".obj"
 env['OBJSUFFIX'] = '.o'

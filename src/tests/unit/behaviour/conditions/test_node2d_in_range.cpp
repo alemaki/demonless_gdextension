@@ -1,10 +1,10 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include <doctest.h>
 
+#include "tests/test_utils/test_macros.hpp"
+
 #include <godot_cpp/classes/node3d.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
-
-#include "tests/test_utils/test_runner.hpp"
 
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 

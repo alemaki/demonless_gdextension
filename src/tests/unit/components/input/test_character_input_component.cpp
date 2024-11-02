@@ -1,5 +1,7 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
-#include <doctest.h>
+
+#include "tests/test_utils/test_macros.hpp"
+
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_map.hpp>
@@ -7,8 +9,6 @@
 #include <godot_cpp/classes/window.hpp>
 
 #include "components/input/character_input_component.hpp"
-
-#include "tests/test_utils/test_utils.hpp"
 
 struct CharacterInputComponentFixture
 {
