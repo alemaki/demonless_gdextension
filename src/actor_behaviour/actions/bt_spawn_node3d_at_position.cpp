@@ -36,6 +36,14 @@ BTTask::Status BTSpawnNode3DAtPosition::_tick(double delta)
     TASK_SUCCEED();
 }
 
+BTSpawnNode3DAtPosition::~BTSpawnNode3DAtPosition()
+{
+    if (this->node3d != nullptr)
+    {
+        memdelete(this->node3d);
+    }
+}
+
 void BTSpawnNode3DAtPosition::_bind_methods()
 {
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(BTSpawnNode3DAtPosition, STRING, path_to_node3d);

@@ -16,9 +16,9 @@ env.Append(CPPPATH=['doctest/doctest'])
 env.Append(CPPPATH=['behaviour_tree'])
 env.Append(CPPPATH=['src'])
 
-#for libraries
-#env.Append(LIB="...")
-#env.Append(LIBPATH="...")
+# for libraries
+# env.Append(LIB="...")
+# env.Append(LIBPATH="...")
 
 def collect_cpp_files(root):
     cpp_files = []
@@ -32,6 +32,9 @@ def collect_cpp_files(root):
 src = collect_cpp_files('doctest/doctest')
 src += collect_cpp_files('behaviour_tree')
 src += collect_cpp_files('src')
+
+# Godot doesn't like ".obj"
+env['OBJSUFFIX'] = '.o'
 
 if target == 'template_debug' or target == 'debug':
     env.Append(CPPDEFINES=['DEBUG'])

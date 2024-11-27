@@ -26,7 +26,8 @@ protected:
     virtual BTTask::Status _tick(double delta) override;
 
 public:
-
+    ~BTSpawnNode3DAtPosition();
+    
 protected:
     static void _bind_methods();
 
