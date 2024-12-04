@@ -1,3 +1,4 @@
 [submodule "behaviour_tree_GDE"]
 	path = behaviour_tree_GDE
 	url = https://github.com/alemaki/behaviour_tree_GDE.git
+	branch = main
