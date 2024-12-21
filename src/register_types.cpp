@@ -23,10 +23,6 @@
 
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
-#include "actor_behaviour/player/actions/bt_save_mouse_position.hpp"
-#include "actor_behaviour/player/actions/bt_set_target_direction.hpp"
-#include "actor_behaviour/player/actions/bt_evaluate_movement_input.hpp"
-
 #include "components/area3d/hitbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "components/area3d/hurtbox.hpp"
@@ -69,12 +65,6 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<BTLookAtPosition>();
 
 		ClassDB::register_class<BTNode3DInRange>();
-
-		/* Player behavior */
-		ClassDB::register_class<BTEvaluateMovementInput>();
-		ClassDB::register_class<BTSetTargetDirection>();
-		ClassDB::register_class<BTSaveMousePosition>();
-		
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
 	{

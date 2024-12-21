@@ -18,12 +18,8 @@ class PlayerCharacter : public godot::CharacterBody3D
     CharacterMovementComponent* movement_component = nullptr;
     FSM* movement_fsm = nullptr;
     FSM* action_fsm = nullptr;
-    BehaviourTree* decision_tree = nullptr;
-    BehaviourTree* action_tree = nullptr;
     godot::Node3D* mesh_instance = nullptr;
-    godot::Ref<BTTask> decision_task = nullptr;
-    godot::Ref<BTTask> action_task = nullptr;
-    godot::Ref<Blackboard> blackboard = nullptr;
+    godot::AnimationPlayer* animation_player = nullptr;
     
 public:
     void _ready() override;
@@ -34,8 +30,6 @@ public:
     CREATE_GETTER_SETTER_DEFAULT(CharacterInputComponent*, input_component);
     CREATE_GETTER_SETTER_DEFAULT(FSM*, movement_fsm);
     CREATE_GETTER_SETTER_DEFAULT(FSM*, action_fsm);
-    CREATE_GETTER_SETTER_DEFAULT(BehaviourTree*, decision_tree);
-    CREATE_GETTER_SETTER_DEFAULT(BehaviourTree*, action_tree);
     CREATE_GETTER_SETTER_DEFAULT(godot::Node3D*, mesh_instance)
 
     
