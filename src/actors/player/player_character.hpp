@@ -16,12 +16,21 @@ class PlayerCharacter : public godot::CharacterBody3D
     HealthComponent* health_component = nullptr;
     CharacterInputComponent* input_component = nullptr;
     CharacterMovementComponent* movement_component = nullptr;
-    FSM* movement_fsm = nullptr;
     FSM* action_fsm = nullptr;
+    FSM* movement_fsm = nullptr;
     godot::Node3D* mesh_instance = nullptr;
     godot::AnimationPlayer* animation_player = nullptr;
-    
+
+private:
+void process_action_state();
+    void process_movement_state();
+
+    void process_action();
+    void process_movement();
+
 public:
+    ~PlayerCharacter();
+
     void _ready() override;
     void _process(double delta) override;
     void _physics_process(double delta) override;
