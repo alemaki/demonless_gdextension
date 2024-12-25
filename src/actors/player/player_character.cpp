@@ -9,25 +9,32 @@ PlayerCharacter::~PlayerCharacter()
 
 void PlayerCharacter::_ready()
 {
-    this->action_fsm = memnew(FSM);
-    this->movement_fsm = memnew(FSM);
-
-    this->action_fsm->add_state("idle");
-    this->action_fsm->add_state("attack");
-    this->action_fsm->add_state("block");
-
-    this->movement_fsm->add_state("idle");
-    this->movement_fsm->add_state("move");
-
-    if (this->mesh_instance != nullptr)
-    {
-        this->animation_player = godot::Object::cast_to<AnimationPlayer>(this->mesh_instance->find_child("AnimationPlayer", true));
-    }
-
     if (godot::Engine::get_singleton()->is_editor_hint())
     {
         this->set_process(false);
         this->set_physics_process(false);
+        return;
+    }
+
+    this->action_fsm = memnew(FSM);
+    this->movement_fsm = memnew(FSM);
+
+    this->action_fsm->set_states(godot::Array::make(
+        "idle",
+        "attack", 
+        "block"
+    ));
+    this->action_fsm->set_initial_state("idle");
+
+    this->movement_fsm->set_states(godot::Array::make(
+        "idle",
+        "move"
+    ));
+    this->movement_fsm->set_initial_state("idle");
+
+    if (this->mesh_instance != nullptr)
+    {
+        this->animation_player = godot::Object::cast_to<AnimationPlayer>(this->mesh_instance->find_child("AnimationPlayer", true));
     }
 
     this->add_child(action_fsm);
@@ -74,6 +81,7 @@ void PlayerCharacter::_process(double delta)
     }
     this->process_action_state();
     this->process_movement_state();
+    this->process_movement();
 }
 
 void PlayerCharacter::process_action()
@@ -112,7 +120,6 @@ void PlayerCharacter::process_movement()
 void PlayerCharacter::_physics_process(double delta)
 {
     this->process_action();
-    this->process_movement();
 }
 
 void PlayerCharacter::set_movement_component(CharacterMovementComponent* movement_component)
