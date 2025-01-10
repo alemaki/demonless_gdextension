@@ -4,7 +4,6 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/mesh_instance3d.hpp>
 
-
 #include "tests/test_utils/test_macros.hpp"
 
 #include "actors/player/player_character.hpp"
@@ -14,8 +13,6 @@ struct PlayerCharacterFixture
     PlayerCharacter* player;
     CharacterInputComponent* input_component;
     CharacterMovementComponent* movement_component;
-    godot::Ref<Blackboard> blackboard;
-    BehaviourTree* behaviour_tree;
     godot::MeshInstance3D* mesh;
     godot::AnimationPlayer* animation_player;
 
@@ -23,8 +20,6 @@ struct PlayerCharacterFixture
         player(memnew(PlayerCharacter)),
         input_component(memnew(CharacterInputComponent)),
         movement_component(memnew(CharacterMovementComponent)),
-        blackboard(memnew(Blackboard)),
-        behaviour_tree(memnew(BehaviourTree)),
         mesh(memnew(MeshInstance3D)),
         animation_player(memnew(AnimationPlayer))
     {
