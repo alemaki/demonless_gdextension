@@ -59,8 +59,6 @@ void PlayerCharacter::process_action_state()
     }
 }
 
-
-
 void PlayerCharacter::process_movement_state()
 {
     ERR_FAIL_NULL(this->input_component);
