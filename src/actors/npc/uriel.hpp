@@ -15,4 +15,4 @@ protected:
     static void _bind_methods(){};
 };
 
-#endif URIEL_HPP
+#endif /* URIEL_HPP */

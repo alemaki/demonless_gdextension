@@ -63,8 +63,8 @@ void HealthComponent::_bind_methods()
 {
     using namespace godot;
 
-    ClassDB::bind_method(D_METHOD("take_damage"), &HealthComponent::take_damage);
-    ClassDB::bind_method(D_METHOD("heal"), &HealthComponent::heal);
+    ClassDB::bind_method(D_METHOD("take_damage", "amount"), &HealthComponent::take_damage);
+    ClassDB::bind_method(D_METHOD("heal", "amount"), &HealthComponent::heal);
 
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(HealthComponent, FLOAT, max_hp);
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(HealthComponent, FLOAT, current_hp);
