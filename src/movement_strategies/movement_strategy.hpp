@@ -25,6 +25,12 @@ protected:
 
     double time_remaining = 0;
 
+    /**
+     * @brief Relative contribution of this strategy when it is a child of a
+     * CompositeMovementStrategy. Ignored everywhere else.
+     */
+    double blend_weight = 1.0;
+
 private:
     /**
      * @brief Applies the movement strategy to the context based on delta time variable.
@@ -61,6 +67,7 @@ public:
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, duration);
     CREATE_GETTER_SETTER_BOOL_DEFAULT(never_ending);
     CREATE_GETTER_SETTER_BOOL_DEFAULT(only_duration);
+    CREATE_GETTER_SETTER_DEFAULT(double, blend_weight);
 
     /**
      * @brief Checks if the strategy is done if yes - applies the default linear behaviour implemented by

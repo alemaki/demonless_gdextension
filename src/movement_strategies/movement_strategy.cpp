@@ -63,5 +63,6 @@ void MovementStrategy::_bind_methods()
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(MovementStrategy, FLOAT, duration);
     BIND_GETTER_SETTER_PROPERTY_BOOL_DEFAULT(MovementStrategy, never_ending);
     BIND_GETTER_SETTER_PROPERTY_BOOL_DEFAULT(MovementStrategy, only_duration);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(MovementStrategy, FLOAT, blend_weight);
 
 }

@@ -20,7 +20,7 @@ void HealthComponent::recalculate_percentage()
 
 void HealthComponent::set_max_hp(double max_hp)
 {
-    max_hp = godot::Math::clamp<double>(max_hp, 0, max_hp);
+    max_hp = godot::Math::max<double>(0, max_hp);
     this->max_hp = max_hp;
     this->set_current_hp(this->current_hp);
 }
@@ -49,13 +49,13 @@ void HealthComponent::apply_amount(double amount)
 
 void HealthComponent::take_damage(double amount)
 {
-    amount = godot::Math::clamp<double>(amount, 0, amount);
+    amount = godot::Math::max<double>(0, amount);
     this->apply_amount(-amount);
 }
 
 void HealthComponent::heal(double amount)
 {
-    amount = godot::Math::clamp<double>(amount, 0, amount);
+    amount = godot::Math::max<double>(0, amount);
     this->apply_amount(amount);
 }
 
