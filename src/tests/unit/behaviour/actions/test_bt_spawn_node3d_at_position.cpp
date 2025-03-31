@@ -3,7 +3,7 @@
 
 #include "actor_behaviour/actions/bt_spawn_node3d_at_position.hpp"
 
-#include "tests/test_utils/test_utils.hpp"
+#include "utils/utils.hpp"
 
 TEST_SUITE("BTSpawnNode3DAtPosition")
 {
@@ -20,6 +20,7 @@ TEST_SUITE("BTSpawnNode3DAtPosition")
 
     TEST_CASE("Spawns node3d at given position and child of actor")
     {
+        ::clear_scene_root();
         godot::Ref<BTSpawnNode3DAtPosition> task = memnew(BTSpawnNode3DAtPosition);
         task->set_complain_enabled(false);
         task->set_path_to_node3d(MOCK_HITBOX_PATH);
@@ -49,6 +50,7 @@ TEST_SUITE("BTSpawnNode3DAtPosition")
 
     TEST_CASE("Spawns node3d at given position and not child of actor")
     {
+        ::clear_scene_root();
         godot::Ref<BTSpawnNode3DAtPosition> task = memnew(BTSpawnNode3DAtPosition);
         task->set_complain_enabled(false);
         task->set_path_to_node3d(MOCK_HITBOX_PATH);
@@ -69,12 +71,14 @@ TEST_SUITE("BTSpawnNode3DAtPosition")
 
         CHECK_EQ(status, BTTask::Status::SUCCESS);
         CHECK_EQ(mock_actor->get_child_count(), 0);
-        REQUIRE_NE(::get_scene_root()->get_child_count(), 1);
+        REQUIRE_GE(::get_scene_root()->get_child_count(), 2);
         Node3D* node3d = godot::Object::cast_to<Node3D>(::get_scene_root()->get_child(1));
         REQUIRE(node3d != nullptr);
-        CHECK(node3d->get_global_position().is_equal_approx(global_position));
+        REQUIRE(mock_actor != node3d);
+        CHECK_VECTORS_EQ(node3d->get_global_position(), global_position);
 
         memdelete(mock_actor);
+        memdelete(node3d);
     }
 
     TEST_CASE("Succeeds when node3d_var is not set")

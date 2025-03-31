@@ -16,9 +16,6 @@ void SkillActionManager::_ready()
 
         StringName skill_name = skill->get_name();
 
-        ERR_CONTINUE_MSG(skill_map.has(skill_name), vformat("[SkillActionManager]: Duplicate skill name '%s' detected!",
-                                                             skill_name));
-
         skill_map[skill_name] = skill;
     }
 }

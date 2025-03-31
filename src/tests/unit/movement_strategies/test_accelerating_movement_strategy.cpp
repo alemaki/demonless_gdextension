@@ -77,10 +77,12 @@ TEST_SUITE("AcceleratingMovementStrategy Tests")
         strat->set_max_speed(10.0);
 
         strat->apply(ctx, 0.5);
-        CHECK_EQ(ctx->get_position(), Vector3(0, 0, 1));
+        // v0=0, a=2: distance = v0*dt + 0.5*a*dt^2 = 0.5*2*0.5^2 = 0.25; speed becomes 1.0
+        CHECK_VECTORS_EQ(ctx->get_position(), Vector3(0, 0, 0.25));
 
         strat->apply(ctx, 1.0);
-        CHECK_EQ(ctx->get_position(), Vector3(0, 0, 5));
+        // v0=1, a=2: distance = 1*1 + 0.5*2*1^2 = 2.0; cumulative position = 0.25 + 2.0
+        CHECK_VECTORS_EQ(ctx->get_position(), Vector3(0, 0, 2.25));
     }
 
     TEST_CASE_FIXTURE(AcceleratingFixture, "is_done false while under max_speed (positive acceleration)")

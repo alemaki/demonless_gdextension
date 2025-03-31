@@ -75,7 +75,7 @@ TEST_SUITE("BTExecuteAttack")
 }
 
 //TODO: test target missing
-TEST_SUITE("[Error] BTExecuteAttack")
+TEST_SUITE("[errors] BTExecuteAttack")
 {
     TEST_CASE_FIXTURE(BTExecuteAttackFixture, "Test basic errors")
     {

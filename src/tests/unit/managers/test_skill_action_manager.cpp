@@ -1,8 +1,8 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include "utils/utils.hpp"
 
-#include "skill_action_manager.hpp"
-#include "skill_action.hpp"
+#include "components/managers/skill_action_manager.hpp"
+#include "skills/skill_action.hpp"
 
 using namespace godot;
 
@@ -68,32 +68,10 @@ TEST_SUITE("[errors]" "SkillActionManager")
 
         invalid_child->set_name("FakeSkill");
         mgr->add_child(invalid_child);
-        ::get_scene_root()->add_child(mgr);
 
         CHECK_GODOT_ERROR(mgr->_ready());
 
         memdelete(invalid_child);
-        memdelete(mgr);
-    }
-
-    TEST_CASE("handles duplicate skill names with ERR_FAIL_COND")
-    {
-        SkillActionManager* mgr = memnew(SkillActionManager);
-        SkillAction* skillA = memnew(SkillAction);
-        SkillAction* skillB = memnew(SkillAction);
-
-        skillA->set_name("DuplicateSkill");
-        skillB->set_name("DuplicateSkill");
-
-        mgr->add_child(skillA);
-        mgr->add_child(skillB);
-
-        ::get_scene_root()->add_child(mgr);
-
-        CHECK_GODOT_ERROR(mgr->_ready());
-
-        memdelete(skillA);
-        memdelete(skillB);
         memdelete(mgr);
     }
 

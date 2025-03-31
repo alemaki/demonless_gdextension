@@ -176,13 +176,15 @@ TEST_SUITE("CompositeMovementStrategy")
         ctx->set_speed(0.0);
 
         composite->apply(ctx, 1.0);
-        /* fast ramps 0 -> 2.0 this tick (displacement 2.0), slow ramps 0 -> 0.5 (displacement 0.5). */
-        CHECK_EQ(ctx->get_position(), Vector3(2.5, 0, 0));
+        /* fast ramps 0 -> 2.0 this tick (distance = 0*1 + 0.5*2*1^2 = 1.0),
+         * slow ramps 0 -> 0.5 (distance = 0*1 + 0.5*0.5*1^2 = 0.25). */
+        CHECK_EQ(ctx->get_position(), Vector3(1.25, 0, 0));
 
         composite->apply(ctx, 1.0);
-        /* fast continues its OWN ramp 2.0 -> 4.0 (displacement 4.0), slow continues 0.5 -> 1.0
-         * (displacement 1.0) - neither ramp was reset or clobbered by the other. */
-        CHECK_EQ(ctx->get_position(), Vector3(7.5, 0, 0));
+        /* fast continues its OWN ramp 2.0 -> 4.0 (distance = 2.0*1 + 0.5*2*1^2 = 3.0),
+         * slow continues 0.5 -> 1.0 (distance = 0.5*1 + 0.5*0.5*1^2 = 0.75) - neither
+         * ramp was reset or clobbered by the other. Cumulative = 1.25 + 3.75. */
+        CHECK_EQ(ctx->get_position(), Vector3(5.0, 0, 0));
 
         composite->remove_child(fast);
         composite->remove_child(slow);
