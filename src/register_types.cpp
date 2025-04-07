@@ -26,7 +26,6 @@
 #include "actor_behaviour/actions/bt_set_node_from_group.hpp"
 #include "actor_behaviour/actions/bt_set_position_away_from_target.hpp"
 #include "actor_behaviour/actions/bt_set_random_position.hpp"
-#include "actor_behaviour/actions/bt_spawn_node3d_at_position.hpp"
 
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
@@ -104,7 +103,6 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<BTSetNodeFromGroup>();
 		ClassDB::register_class<BTSetPositionAwayFromTarget>();
 		ClassDB::register_class<BTSetRandomPosition>();
-		ClassDB::register_class<BTSpawnNode3DAtPosition>();
 
 		/* Behaviour - Conditions*/
 		ClassDB::register_class<BTNode3DInRange>();
