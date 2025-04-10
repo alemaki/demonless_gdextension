@@ -104,7 +104,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<BTSetPositionAwayFromTarget>();
 		ClassDB::register_class<BTSetRandomPosition>();
 
-		/* Behaviour - Conditions*/
+		/* Behaviour - Conditions */
 		ClassDB::register_class<BTNode3DInRange>();
 
 		/* Skills */

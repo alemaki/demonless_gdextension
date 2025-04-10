@@ -1,14 +1,6 @@
 import os
-
-# Define build directories
-if 'target' not in ARGUMENTS:
-    ARGUMENTS['target'] = 'template_debug'
-
-if 'debug_symbols' not in ARGUMENTS:
-    ARGUMENTS['debug_symbols'] = 'yes'
-
-target = ARGUMENTS.get('target', "template_debug")
-debug_symbols = ARGUMENTS.get('debug_symbols', "yes")
+from SCons.Script import SConscript, Default
+env = None
 
 variant_dir = os.path.join('..', 'bin')
 
@@ -16,24 +8,21 @@ variant_dir = os.path.join('..', 'bin')
 if not os.path.exists(variant_dir):
     os.makedirs(variant_dir)
 
-# Include necessary environment from godot-cpp
-env = SConscript(os.path.join('behaviour_tree_GDE', 'godot-cpp', 'SConstruct'))
+env = SConscript(os.path.join('behaviour_tree_GDE', 'SConscript'))
 
 # Add include paths for compialtion
 include_paths = [
-     os.path.join('behaviour_tree_GDE'),
      os.path.join('src')
 ]
 
 test_utils_dir = os.path.join('behaviour_tree_GDE', 'tests', 'test_utils')
 
 compilation_paths = [
-     os.path.join('behaviour_tree_GDE'),
+     os.path.join('behaviour_tree_GDE', 'tests'), # the rest of behaviour_tree_GDE is its own static library
      os.path.join('src')
 ]
 
 exclude_compilation_paths = [
-     os.path.join('godot-cpp'), # built separately as static library
      test_utils_dir, # built separately as its own static library, see test_utils/SConscript
 ]
 
@@ -44,17 +33,6 @@ for include_path in include_paths:
 # for libraries
 # env.Append(LIB="...")
 # env.Append(LIBPATH="...")
-
-# Godot doesn't like ".obj"
-env['OBJSUFFIX'] = '.o'
-
-if target == 'template_debug':
-    env.Append(CPPDEFINES=['DEBUG'])
-    if debug_symbols == "yes":
-        pass
-        #env.Append(CXXFLAGS=['-g', '-O0'])  # Debug flags: No optimization, include debug symbols
-else:
-    env.Append(CPPDEFINES=['NDEBUG'])
 
 
 def collect_cpp_files(root, exclude_dirs):
