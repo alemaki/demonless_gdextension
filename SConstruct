@@ -18,7 +18,7 @@ include_paths = [
 test_utils_dir = os.path.join('behaviour_tree_GDE', 'tests', 'test_utils')
 
 compilation_paths = [
-     os.path.join('behaviour_tree_GDE', 'tests'), # the rest of behaviour_tree_GDE is its own static library
+     os.path.join('behaviour_tree_GDE', 'tests'), # the rest of behaviour_tree_GDE is its own static library, see behaviour_tree_GDE/SConscript
      os.path.join('src')
 ]
 

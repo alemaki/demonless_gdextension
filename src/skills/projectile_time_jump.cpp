@@ -4,7 +4,7 @@
 void ProjectileTimeJump::_step(double delta)
 {
     godot::Node* scene_root = ::get_scene_root();
-    godot::TypedArray<godot::Node> projectiles = get_all_children_of_type<Projectile>(scene_root);
+    godot::TypedArray<godot::Node> projectiles = get_all_children_of_type<Projectile>(scene_root, true);
     for (int i = 0, size = projectiles.size(); i < size; i++)
     {
         Projectile* projectile = godot::Object::cast_to<Projectile>(projectiles[i]);
