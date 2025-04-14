@@ -52,4 +52,4 @@ protected:
     static void _bind_methods();
 };
 
-#endif
+#endif /* WAVE_ATTACK_HPP */
