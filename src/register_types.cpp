@@ -29,9 +29,10 @@
 
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
-#include "attacks/wave_attack.hpp"
 #include "attacks/circle_wave_attack.hpp"
+#include "attacks/combo_attack_stage.hpp"
 #include "attacks/directional_wave_attack.hpp"
+#include "attacks/wave_attack.hpp"
 
 #include "components/area3d/hitbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
@@ -117,6 +118,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		/* Attacks */
 		ClassDB::register_class<WaveAttack>();
 		ClassDB::register_class<CircleWaveAttack>();
+		ClassDB::register_class<ComboAttackStage>();
 		ClassDB::register_class<DirectionalWaveAttack>();
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)

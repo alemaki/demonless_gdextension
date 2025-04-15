@@ -28,7 +28,7 @@ struct CircleWaveAttackFixture
 
 TEST_SUITE("TestCircleWaveAttack")
 {
-    TEST_CASE_FIXTURE(CircleWaveAttackFixture, "CircleWaveAttack basic")
+    TEST_CASE_FIXTURE(CircleWaveAttackFixture, "Basic")
     {
         attack->set_wave_cooldown(2.0);
         CHECK(attack->get_wave_cooldown() == doctest::Approx(2.0));

@@ -8,6 +8,7 @@
 class SkillAction : public godot::Node
 {
     GDCLASS(SkillAction, godot::Node)
+
 public:
     enum class SkillPhase
     {
