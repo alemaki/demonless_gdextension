@@ -78,4 +78,41 @@ TEST_SUITE("TestSkillAction")
 
         memdelete(action);
     }
+
+    TEST_CASE("Direction can only change while allowed or before starting")
+    {
+        SkillAction* action = memnew(SkillAction);
+
+        action->set_direction({1, 0, 0});
+        CHECK_VECTORS_EQ(action->get_direction(), godot::Vector3(1, 0, 0));
+
+        action->set_change_direction_allowed(false);
+        action->set_direction({0, 1, 0}); /* Should be able to change direction before start */
+        CHECK_VECTORS_EQ(action->get_direction(), godot::Vector3(0, 1, 0));
+
+        action->step(0.1);
+        action->set_direction({0, 0, 1});
+        CHECK_VECTORS_EQ(action->get_direction(), godot::Vector3(0, 1, 0));
+
+        action->reset();
+        action->set_direction({0, 0, 1});
+        CHECK_VECTORS_EQ(action->get_direction(), godot::Vector3(0, 0, 1));
+
+        action->set_change_direction_allowed(true);
+        action->step(0.1);
+        action->set_direction({0, 1, 0});
+        CHECK_VECTORS_EQ(action->get_direction(), godot::Vector3(0, 1, 0));
+
+        memdelete(action);
+    }
+}
+
+TEST_SUITE("[errors] TestSkillAction")
+{
+    TEST_CASE("set_direction fails on zero direction")
+    {
+        SkillAction* action = memnew(SkillAction);
+        CHECK_GODOT_ERROR(action->set_direction({0, 0, 0}));
+        memdelete(action);
+    }
 }
