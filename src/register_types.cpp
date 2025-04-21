@@ -30,7 +30,7 @@
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
 #include "attacks/circle_wave_attack.hpp"
-#include "attacks/combo_attack_stage.hpp"
+#include "attacks/melee_attack.hpp"
 #include "attacks/directional_wave_attack.hpp"
 #include "attacks/wave_attack.hpp"
 
@@ -50,6 +50,7 @@
 #include "movement_strategies/sequential_movement_strategy.hpp"
 #include "movement_strategies/seeking_movement_strategy.hpp"
 
+#include "skills/combo_skill_action.hpp"
 #include "skills/skill_action.hpp"
 #include "skills/projectile_time_jump.hpp"
 
@@ -111,6 +112,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		/* Skills */
 		ClassDB::register_class<SkillAction>();
 		ClassDB::register_class<ProjectileTimeJump>();
+		ClassDB::register_class<ComboSkillAction>();
 
 		/* Managers */
 		ClassDB::register_class<SkillActionManager>();
@@ -118,7 +120,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		/* Attacks */
 		ClassDB::register_class<WaveAttack>();
 		ClassDB::register_class<CircleWaveAttack>();
-		ClassDB::register_class<ComboAttackStage>();
+		ClassDB::register_class<MeleeAttack>();
 		ClassDB::register_class<DirectionalWaveAttack>();
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
