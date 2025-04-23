@@ -1,6 +1,10 @@
 import os
-from SCons.Script import SConscript, Default
+from SCons.Script import ARGUMENTS, SConscript, Default
 env = None
+
+# Default to building with debug symbols unless explicitly overridden with scons debug_symbols=no
+if 'debug_symbols' not in ARGUMENTS:
+    ARGUMENTS['debug_symbols'] = 'yes'
 
 variant_dir = os.path.join('..', 'bin')
 
