@@ -104,8 +104,8 @@ TEST_SUITE("TestComboSkillAction")
     {
         combo->step(1.0);
 
-        CHECK(stage1->is_finished());
-        CHECK(combo->is_finished());
+        CHECK(stage1->is_done());
+        CHECK(combo->is_done());
         /* stage2/stage3 were never touched */
         CHECK(stage2->is_none());
         CHECK(stage3->is_none());
@@ -120,15 +120,15 @@ TEST_SUITE("TestComboSkillAction")
         /* Crosses into the cancel window and then chains into stage2 */
         combo->step(0.2);
 
-        CHECK(stage1->is_finished());
+        CHECK(stage1->is_done());
         CHECK(stage2->is_none());
-        CHECK_FALSE(combo->is_finished());
+        CHECK_FALSE(combo->is_done());
 
         /* should not auto-chain into stage3 */
         combo->step(1.0);
 
-        CHECK(stage2->is_finished());
-        CHECK(combo->is_finished());
+        CHECK(stage2->is_done());
+        CHECK(combo->is_done());
         CHECK(stage3->is_none());
     }
 
@@ -140,7 +140,7 @@ TEST_SUITE("TestComboSkillAction")
         /* Crosses into the cancel window and then combo ends instead of chaining */
         combo->step(0.2);
 
-        CHECK(combo->is_finished());
+        CHECK(combo->is_done());
         CHECK(stage2->is_none());
     }
 
@@ -154,17 +154,17 @@ TEST_SUITE("TestComboSkillAction")
     TEST_CASE_FIXTURE(ComboSkillActionFixture, "reset() after a completed combo allows a second full run")
     {
         combo->step(1.0);
-        REQUIRE(combo->is_finished());
-        REQUIRE(stage1->is_finished());
+        REQUIRE(combo->is_done());
+        REQUIRE(stage1->is_done());
 
         combo->reset();
 
-        CHECK_FALSE(stage1->is_finished());
+        CHECK_FALSE(stage1->is_done());
         CHECK(stage1->is_none());
 
         combo->step(0.1);
 
-        CHECK_FALSE(combo->is_finished());
+        CHECK_FALSE(combo->is_done());
         CHECK_EQ(stage1->get_time_accumulated(), doctest::Approx(0.1));
     }
 
@@ -181,7 +181,7 @@ TEST_SUITE("TestComboSkillAction")
         /* Simulate an external interrupt */
         combo->reset();
 
-        CHECK(stage2->is_finished());
+        CHECK(stage2->is_done());
         /* current stage rewound back to stage1, freshly reset and ready to go again */
         CHECK(stage1->is_none());
     }

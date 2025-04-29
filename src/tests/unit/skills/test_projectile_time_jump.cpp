@@ -85,7 +85,7 @@ TEST_SUITE("ProjectileTimeJump")
         /* Also can run with an empty scene */
         jump->step(0.0);
 
-        CHECK(jump->is_finished());
+        CHECK(jump->is_done());
 
         memdelete(jump);
     }

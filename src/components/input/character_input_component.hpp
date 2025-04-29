@@ -26,6 +26,8 @@ public:
     }
 
     godot::Vector3 get_mouse_casted_position();
+    godot::Vector3 get_mouse_direction(godot::Vector3 relative_point);
+    godot::Vector3 get_mouse_direction(godot::Node3D* relative_node);
 
 protected:
     static void _bind_methods();

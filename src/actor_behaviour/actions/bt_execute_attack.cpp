@@ -19,7 +19,7 @@ BTTask::Status BTExecuteAttack::_tick(double delta)
     TASK_FAIL_COND_COMP_MSG(target == nullptr, "Target is not Node3D as expected");
     TASK_FAIL_COND_COMP_MSG(actor == nullptr, "Actor is not Node3D as expected");
 
-    TASK_SUCCEED_COND(attack->is_finished());
+    TASK_SUCCEED_COND(attack->is_done());
 
     godot::Vector3 direction = actor->get_global_position().direction_to(target->get_global_position());
     direction.y = 0; //TODO, fix this so it wont move upon the UP_VECTOR

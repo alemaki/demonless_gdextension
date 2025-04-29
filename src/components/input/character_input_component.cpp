@@ -28,6 +28,19 @@ godot::Vector3 CharacterInputComponent::get_mouse_casted_position()
     return ray_end;
 }
 
+godot::Vector3 CharacterInputComponent::get_mouse_direction(godot::Vector3 relative_point)
+{
+    godot::Vector3 result = (this->get_mouse_casted_position() - relative_point).normalized();
+    result.y = 0; /* TODO: make some better way to clean up the up direction. */
+    return result;
+}
+
+godot::Vector3 CharacterInputComponent::get_mouse_direction(godot::Node3D* relative_node)
+{
+    return get_mouse_direction(relative_node->get_global_position());
+}
+
+
 void CharacterInputComponent::_bind_methods()
 {
     using namespace godot;

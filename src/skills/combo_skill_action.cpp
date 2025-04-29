@@ -71,7 +71,7 @@ void ComboSkillAction::_step(double delta)
     SkillAction* action = this->get_current_skill_action();
     /* TODO: direction */
     action->step(delta);
-    if (action->is_cancellable() || action->is_finished())
+    if (action->is_cancellable() || action->is_done())
     {
         if (this->buffered_next_action)
         {
@@ -86,7 +86,7 @@ void ComboSkillAction::_step(double delta)
             action->reset();
             this->buffered_next_action = false;
         }
-        else if (action->is_finished() || this->buffered_cancel)
+        else if (action->is_done() || this->buffered_cancel)
         {
             this->end();
             this->buffered_cancel = false;

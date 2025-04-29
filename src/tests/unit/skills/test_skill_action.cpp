@@ -50,12 +50,12 @@ TEST_SUITE("TestSkillAction")
 
         action->step(1.0);
         CHECK(action->is_active());
-        CHECK_FALSE(action->is_finished());
+        CHECK_FALSE(action->is_done());
         CHECK(action->get_phase() == SkillAction::SkillPhase::Active);
         CHECK(action->get_time_accumulated() == doctest::Approx(1.0));
 
         action->step(1.5);
-        CHECK(action->is_finished());
+        CHECK(action->is_done());
         CHECK_FALSE(action->is_active());
         CHECK(action->get_phase() == SkillAction::SkillPhase::Ended);
         CHECK(action->get_time_accumulated() == doctest::Approx(2.5));
@@ -69,10 +69,10 @@ TEST_SUITE("TestSkillAction")
 
         action->step(0.5);
         CHECK(action->is_active());
-        CHECK_FALSE(action->is_finished());
+        CHECK_FALSE(action->is_done());
 
         action->end();
-        CHECK(action->is_finished());
+        CHECK(action->is_done());
         CHECK_FALSE(action->is_active());
         CHECK(action->get_phase() == SkillAction::SkillPhase::Ended);
 

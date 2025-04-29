@@ -59,7 +59,7 @@ public:
     {
         return (phase == SkillPhase::Active);
     }
-    _FORCE_INLINE_ bool is_finished() const
+    _FORCE_INLINE_ bool is_done() const
     {
         return (phase == SkillPhase::Ended);
     }

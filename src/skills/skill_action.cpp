@@ -18,7 +18,7 @@ void SkillAction::reset()
 
 void SkillAction::step(double delta)
 {
-    if (is_finished())
+    if (is_done())
     {
         return;
     }

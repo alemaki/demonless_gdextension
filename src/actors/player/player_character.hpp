@@ -13,6 +13,8 @@
 #include "components/area3d/hurtbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "finite_state_machine/fsm.hpp"
+#include "attacks/melee_attack.hpp"
+#include "skills/combo_skill_action.hpp"
 
 class PlayerCharacter : public godot::CharacterBody3D
 {
@@ -28,6 +30,8 @@ class PlayerCharacter : public godot::CharacterBody3D
     godot::AnimationPlayer* animation_player = nullptr;
     HitboxBlocker* hitbox_blocker = nullptr;
     godot::Timer* blocking_timer = nullptr;
+    
+    ComboSkillAction* combo_attack = nullptr;
 
     State* action_idle = nullptr;
     State* action_attacking = nullptr;
@@ -53,6 +57,11 @@ private:
     void _process_block_react(double delta);
     void _on_blocking_react_finished();
     void _exit_block_react();
+
+    void _enter_attacking();
+    void _process_attacking(double delta);
+    void _exit_attacking();
+
 
     void hitbox_blocked(const godot::Area3D* hitbox);
 
