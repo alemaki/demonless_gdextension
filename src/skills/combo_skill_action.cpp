@@ -45,6 +45,16 @@ bool ComboSkillAction::try_buffer_cancel()
     return false;
 }
 
+godot::StringName ComboSkillAction::get_animation() const
+{
+    SkillAction* action = this->get_current_skill_action();
+    if (!action)
+    {
+        return godot::StringName();
+    }
+    return action->get_animation();
+}
+
 void ComboSkillAction::_reset()
 {
     SkillAction* action = this->get_current_skill_action();
@@ -82,6 +92,7 @@ void ComboSkillAction::_step(double delta)
                 this->end();
                 return;
             }
+            this->emit_signal("action_changed");
             action = this->get_current_skill_action();
             action->reset();
             this->buffered_next_action = false;
@@ -114,5 +125,6 @@ SkillAction *ComboSkillAction::get_current_skill_action() const
 
 void ComboSkillAction::_bind_methods()
 {
+    ADD_SIGNAL(godot::MethodInfo("action_changed"));
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(ComboSkillAction, FLOAT, buffer_timespan_before_action_end);
 }

@@ -23,6 +23,8 @@ public:
     bool try_buffer_next_action();
     bool try_buffer_cancel();
 
+    godot::StringName get_animation() const override;
+
 private:
     void _reset() override;
     void _step(double delta) override;

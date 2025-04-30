@@ -23,6 +23,9 @@ TEST_SUITE("TestSkillAction")
         action->set_actor_source(dummy);
         CHECK(action->get_actor_source() == dummy);
 
+        action->set_animation("1");
+        CHECK_EQ(action->get_animation(), godot::StringName("1"));
+
         memdelete(dummy);
         memdelete(action);
     }
