@@ -22,6 +22,7 @@ protected:
     bool change_direction_allowed = false;
     godot::Vector3 direction = {1, 0, 0};
     SkillPhase phase = SkillPhase::None;
+    godot::StringName animation = godot::StringName();
     bool cancellable = true;
 
 protected:
@@ -36,6 +37,8 @@ public:
     /* TODO: make cancellable virtual check? */
     CREATE_GETTER_SETTER_BOOL_DEFAULT(cancellable);
     CREATE_GETTER_SETTER_BOOL_DEFAULT(change_direction_allowed);
+    void set_animation(const godot::StringName& value);
+    virtual godot::StringName get_animation() const;
 
     /* Can change direction only if allowed or before starting the action */
     void set_direction(const godot::Vector3 direction);

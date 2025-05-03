@@ -61,7 +61,7 @@ private:
     void _enter_attacking();
     void _process_attacking(double delta);
     void _exit_attacking();
-
+    void attack_combo_incremented();
 
     void hitbox_blocked(const godot::Area3D* hitbox);
 

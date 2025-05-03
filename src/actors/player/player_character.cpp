@@ -59,8 +59,8 @@ void PlayerCharacter::_ready()
     this->action_blocking_react->add_exit_callable(callable_mp(this, &PlayerCharacter::_exit_block_react));
 
     this->action_attacking->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_attacking));
-    this->action_attacking->add_enter_callable(callable_mp(this, &PlayerCharacter::_process_attacking));
-    this->action_attacking->add_enter_callable(callable_mp(this, &PlayerCharacter::_exit_attacking));
+    this->action_attacking->add_process_callable(callable_mp(this, &PlayerCharacter::_process_attacking));
+    this->action_attacking->add_exit_callable(callable_mp(this, &PlayerCharacter::_exit_attacking));
 
     if (this->mesh_instance != nullptr)
     {
@@ -77,6 +77,11 @@ void PlayerCharacter::_ready()
     utils::ensure_node(this->hitbox_blocker, this, "HitboxBlocker");
     utils::ensure_node(this->hurtbox, this, "Hurtbox");
     utils::ensure_node(this->combo_attack, this, "ComboAttack");
+
+    if (this->combo_attack)
+    {
+        this->combo_attack->connect("action_changed", callable_mp(this, &PlayerCharacter::attack_combo_incremented));
+    }
 
     if (this->hitbox_blocker)
     {
@@ -242,8 +247,11 @@ void PlayerCharacter::_exit_block_react()
 void PlayerCharacter::_enter_attacking()
 {
     ERR_FAIL_NULL(this->animation_player);
+    ERR_FAIL_NULL(this->combo_attack);
     this->movement_fsm->transition_to_state(this->movement_idle);
-    this->animation_player->play("Idle");
+    this->combo_attack->reset();
+    this->animation_player->play(this->combo_attack->get_animation());
+
 }
 
 void PlayerCharacter::_process_attacking(double delta)
@@ -252,6 +260,10 @@ void PlayerCharacter::_process_attacking(double delta)
     ERR_FAIL_NULL(this->input_component);
     this->combo_attack->set_direction(this->input_component->get_mouse_direction(this->get_global_position()));
     this->combo_attack->step(delta);
+    if (this->input_component->is_attack_pressed())
+    {
+        this->combo_attack->try_buffer_next_action();
+    }
     if (this->input_component->is_block_pressed() && this->combo_attack->is_cancellable())
     {
         this->action_fsm->transition_to_state(this->action_blocking);
@@ -265,6 +277,12 @@ void PlayerCharacter::_process_attacking(double delta)
 void PlayerCharacter::_exit_attacking()
 {
     /* Nothing to do now. */
+}
+
+void PlayerCharacter::attack_combo_incremented()
+{
+    ERR_FAIL_NULL(this->animation_player);
+    this->animation_player->play(this->combo_attack->get_animation());
 }
 
 void PlayerCharacter::hitbox_blocked(const godot::Area3D* hitbox)
