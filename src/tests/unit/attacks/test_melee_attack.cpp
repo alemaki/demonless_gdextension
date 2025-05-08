@@ -8,7 +8,7 @@ struct MeleeAttackFixture
 {
     MeleeAttack* attack = memnew(MeleeAttack);
     godot::Node3D* dummy_source = memnew(godot::Node3D);
-
+    Hitbox* hitbox = memnew(Hitbox);
     MeleeAttackFixture()
     {
         ::get_scene_root()->add_child(dummy_source);
@@ -16,8 +16,12 @@ struct MeleeAttackFixture
         attack->set_duration(1);
         attack->set_early_cancel_endpoint(0.3);
         attack->set_late_cancel_startpoint(0.7);
+        attack->set_hit_startpoint(0.4);
+        attack->set_hit_endpoint(0.6);
         attack->set_direction({1, 0, 0});
         attack->reset();
+        attack->add_child(hitbox);
+        hitbox->set_name("Hitbox");
         ::get_scene_root()->add_child(attack);
     }
 
@@ -79,16 +83,66 @@ TEST_SUITE("TestComboStageAttack")
         attack->step(2);
         CHECK_FALSE(attack->is_cancellable());
     }
+
+    TEST_CASE_FIXTURE(MeleeAttackFixture, "Attack activates the hitbox in set window")
+    {
+        /* Hitbox shouldn't be active */
+        CHECK_FALSE(hitbox->is_monitoring());
+
+        /* 0.1 sec */
+        attack->step(0.1);
+        CHECK_FALSE(hitbox->is_monitoring());
+
+        /* 0.2 sec */
+        attack->step(0.1);
+        CHECK_FALSE(hitbox->is_monitoring());
+
+        /* 0.4 sec */
+        attack->step(0.2);
+        CHECK(hitbox->is_monitoring());
+
+        /* 0.5 sec */
+        attack->step(0.1);
+        CHECK(hitbox->is_monitoring());
+
+        /* 0.599 sec */
+        attack->step(0.099);
+        CHECK(hitbox->is_monitoring());
+
+        /* 0.6499 sec (gets into end window) */
+        attack->step(0.05);
+        CHECK_FALSE(hitbox->is_monitoring());
+
+        /* 0.8 sec */
+        attack->step(0.151);
+        CHECK_FALSE(hitbox->is_monitoring());
+
+        /* 1 sec */
+        attack->step(2);
+        CHECK_FALSE(hitbox->is_monitoring());
+    }
 }
 
 TEST_SUITE("[errors] TestComboStageAttack")
 {
-    TEST_CASE("_step fails when actor_source is null")
+    TEST_CASE_FIXTURE(MeleeAttackFixture, "_step fails when actor_source is null")
     {
         MeleeAttack* attack = memnew(MeleeAttack);
-        attack->set_direction({1, 0, 0});
-        CHECK_GODOT_ERROR(attack->step(0.1)); // actor_source is null
+        attack->set_actor_source(nullptr);
+        CHECK_GODOT_ERROR(attack->step(0.1)); // actor_source is null;
+    }
 
-        memdelete(attack);
+    TEST_CASE_FIXTURE(MeleeAttackFixture, "_step fails when hitbox is null")
+    {
+        MeleeAttack* attack = memnew(MeleeAttack);
+        attack->set_hitbox(nullptr);
+        CHECK_GODOT_ERROR(attack->step(0.1)); // hitbox is null
+    }
+
+    TEST_CASE_FIXTURE(MeleeAttackFixture, "set_directino fails when zero vector passed")
+    {
+        MeleeAttack* attack = memnew(MeleeAttack);
+        CHECK_GODOT_ERROR(attack->set_direction({0, 0, 0}));
+        CHECK_GODOT_ERROR(attack->step(0.1)); // hitbox is null
     }
 }
