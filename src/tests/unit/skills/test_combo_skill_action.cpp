@@ -2,29 +2,27 @@
 #include <doctest.h>
 
 #include "skills/combo_skill_action.hpp"
-#include "attacks/melee_attack.hpp"
+#include "skills/skill_action.hpp"
 #include "utils/utils.hpp"
 
 struct ComboSkillActionFixture
 {
     ComboSkillAction* combo = memnew(ComboSkillAction);
     godot::Node3D* dummy_source = memnew(godot::Node3D);
-    MeleeAttack* stage1 = memnew(MeleeAttack);
-    MeleeAttack* stage2 = nullptr;
-    MeleeAttack* stage3 = nullptr;
+    SkillAction* stage1 = memnew(SkillAction);
+    SkillAction* stage2 = nullptr;
+    SkillAction* stage3 = nullptr;
 
     ComboSkillActionFixture()
     {
         ::get_scene_root()->add_child(dummy_source);
 
         stage1->set_duration(1);
-        stage1->set_early_cancel_endpoint(0.2);
-        stage1->set_late_cancel_startpoint(0.8);
         stage1->set_actor_source(dummy_source);
         stage1->set_direction({1, 0, 0});
 
-        stage2 = godot::Object::cast_to<MeleeAttack>(stage1->duplicate());
-        stage3 = godot::Object::cast_to<MeleeAttack>(stage1->duplicate());
+        stage2 = godot::Object::cast_to<SkillAction>(stage1->duplicate());
+        stage3 = godot::Object::cast_to<SkillAction>(stage1->duplicate());
 
         combo->add_child(stage1);
         combo->add_child(stage2);
@@ -69,12 +67,12 @@ TEST_SUITE("TestComboSkillAction")
     {
         ComboSkillAction* combo = memnew(ComboSkillAction);
         godot::Node3D* dummy_source = memnew(godot::Node3D);
-        MeleeAttack* stage1 = memnew(MeleeAttack);
+        SkillAction* stage1 = memnew(SkillAction);
         stage1->set_actor_source(dummy_source);
         stage1->set_duration(1);
 
-        MeleeAttack* stage2 = godot::Object::cast_to<MeleeAttack>(stage1->duplicate());
-        MeleeAttack* stage3 = godot::Object::cast_to<MeleeAttack>(stage1->duplicate());
+        SkillAction* stage2 = godot::Object::cast_to<SkillAction>(stage1->duplicate());
+        SkillAction* stage3 = godot::Object::cast_to<SkillAction>(stage1->duplicate());
         stage2->set_duration(2);
         stage3->set_duration(3);
 
@@ -116,7 +114,7 @@ TEST_SUITE("TestComboSkillAction")
         combo->step(0.6);
         CHECK_FALSE(stage1->is_cancellable());
         CHECK(combo->try_buffer_next_action());
-
+        stage1->set_cancellable(true);
         /* Crosses into the cancel window and then chains into stage2 */
         combo->step(0.2);
 
@@ -136,7 +134,7 @@ TEST_SUITE("TestComboSkillAction")
     {
         combo->step(0.6);
         CHECK(combo->try_buffer_next_action());
-
+        stage1->set_cancellable(true);
         combo->step(0.2);
 
         CHECK(stage1->is_done());
@@ -168,7 +166,7 @@ TEST_SUITE("TestComboSkillAction")
     {
         combo->step(0.6);
         CHECK(combo->try_buffer_cancel());
-
+        stage1->set_cancellable(true);
         /* Crosses into the cancel window and then combo ends instead of chaining */
         combo->step(0.2);
 
@@ -204,7 +202,7 @@ TEST_SUITE("TestComboSkillAction")
     {
         combo->step(0.6);
         CHECK(combo->try_buffer_next_action());
-        combo->step(0.2);
+        combo->step(0.4);
         REQUIRE(stage2->is_none());
 
         combo->step(0.3);
@@ -224,7 +222,7 @@ TEST_SUITE("TestComboSkillAction")
         combo->step(0.6);
         CHECK(combo->try_buffer_next_action());
         CHECK_FALSE(::SignalObserver::signal_emitted(combo, "action_changed"));
-        combo->step(0.2);
+        combo->step(0.4);
         CHECK(::SignalObserver::signal_emitted(combo, "action_changed"));
         CHECK_EQ(::SignalObserver::get_signal_emitted_count(combo, "action_changed"), 1);
 
@@ -247,7 +245,7 @@ TEST_SUITE("TestComboSkillAction")
         combo->step(0.6);
         CHECK_EQ(combo->get_animation(), godot::StringName("1"));
         CHECK(combo->try_buffer_next_action());
-        combo->step(0.2);
+        combo->step(0.4);
         CHECK_EQ(combo->get_animation(), godot::StringName("2"));
 
         combo->step(0.9);

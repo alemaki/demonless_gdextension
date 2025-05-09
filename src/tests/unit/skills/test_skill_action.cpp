@@ -15,6 +15,7 @@ TEST_SUITE("TestSkillAction")
         action->set_duration(3.5);
         CHECK(action->get_duration() == doctest::Approx(3.5));
 
+        action->set_cancellable(true);
         CHECK(action->is_cancellable());
         action->set_cancellable(false);
         CHECK_FALSE(action->is_cancellable());

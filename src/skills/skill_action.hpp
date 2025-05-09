@@ -23,7 +23,7 @@ protected:
     godot::Vector3 direction = {1, 0, 0};
     SkillPhase phase = SkillPhase::None;
     godot::StringName animation = godot::StringName();
-    bool cancellable = true;
+    bool cancellable = false;
 
 protected:
     godot::Node3D* actor_source = nullptr;
