@@ -45,6 +45,7 @@ void DirectionalWaveAttack::_step(double delta)
             projectile_cpy->get_movement_context()->set_target(this->target);
             projectile_cpy->set_position(this->actor_source->get_position());
             projectile_cpy->set_direction(dir);
+            projectile_cpy->set_actor_source(this->actor_source);
         }
     }
 
