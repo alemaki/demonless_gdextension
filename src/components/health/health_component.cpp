@@ -47,9 +47,10 @@ void HealthComponent::apply_amount(double amount)
     this->recalculate_percentage();
 }
 
-void HealthComponent::take_damage(double amount)
+void HealthComponent::take_damage(const godot::Ref<DamageInfo> damage_info)
 {
-    amount = godot::Math::max<double>(0, amount);
+    ERR_FAIL_NULL_MSG(damage_info, vformat("%s: null damage info recieved", this->get_name()));
+    double amount = godot::Math::max<double>(0, damage_info->get_damage());
     this->apply_amount(-amount);
 }
 

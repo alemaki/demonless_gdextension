@@ -5,18 +5,19 @@
 #include "utils/utils.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "components/area3d/hurtbox.hpp"
+#include "attacks/damage_info.hpp"
 
 class Hitbox : public godot::Area3D
 {
     GDCLASS(Hitbox, godot::Area3D);
 
-    double damage;
+    godot::Ref<DamageInfo> damage_info = memnew(DamageInfo);
 
 protected:
     void _on_area_entered(godot::Area3D* area3d);
 
 public:
-    CREATE_GETTER_SETTER_DEFAULT(double, damage);
+    CREATE_GETTER_SETTER_DEFAULT(godot::Ref<DamageInfo>, damage_info);
 
     virtual void _ready() override;
 

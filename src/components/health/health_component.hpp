@@ -3,6 +3,7 @@
 
 
 #include <godot_cpp/classes/node.hpp>
+#include "attacks/damage_info.hpp"
 
 class HealthComponent : public godot::Node
 {
@@ -33,7 +34,7 @@ public:
         return this->percentage;
     }
 
-    void take_damage(double amount);
+    void take_damage(const godot::Ref<DamageInfo> damage_info);
     void heal(double amount);
 
 

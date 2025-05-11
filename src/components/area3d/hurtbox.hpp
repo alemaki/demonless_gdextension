@@ -2,6 +2,7 @@
 #define HURTBOX_HPP
 
 #include <godot_cpp/classes/area3d.hpp>
+#include "attacks/damage_info.hpp"
 
 class Hurtbox : public godot::Area3D
 {
