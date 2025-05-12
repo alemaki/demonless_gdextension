@@ -7,6 +7,7 @@
 
 #include "behaviour_tree/behaviour_tree.hpp"
 #include "components/area3d/hurtbox.hpp"
+#include "components/area3d/hitbox.hpp"
 #include "components/health/health_component.hpp"
 #include "utils/utils.hpp"
 
@@ -37,6 +38,8 @@ public:
 
     void _ready() override;
     void _physics_process(double delta) override;
+private:
+    void hurtbox_hit(const godot::Area3D* _hitbox);
 
 protected:
     static void _bind_methods();

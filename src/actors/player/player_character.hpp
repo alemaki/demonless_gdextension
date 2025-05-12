@@ -5,6 +5,7 @@
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
 #include <godot_cpp/classes/timer.hpp>
+#include "attacks/melee_attack.hpp"
 #include "behaviour_tree/behaviour_tree.hpp"
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
@@ -13,7 +14,6 @@
 #include "components/area3d/hurtbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "finite_state_machine/fsm.hpp"
-#include "attacks/melee_attack.hpp"
 #include "skills/combo_skill_action.hpp"
 
 class PlayerCharacter : public godot::CharacterBody3D

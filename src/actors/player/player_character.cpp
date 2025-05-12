@@ -295,8 +295,8 @@ void PlayerCharacter::_on_hurtbox_hit(const godot::Area3D* _hitbox)
     ERR_FAIL_NULL(this->health_component);
     const Hitbox* hitbox = godot::Object::cast_to<Hitbox>(_hitbox);
     ERR_FAIL_NULL(hitbox);
-    godot::UtilityFunctions::print(vformat("Character took damage: %d", hitbox->get_damage()));
-    this->health_component->take_damage(hitbox->get_damage());
+    LOG_DEBUG(vformat("Player took damage: %d", hitbox->get_damage_info()->get_damage()));
+    this->health_component->take_damage(hitbox->get_damage_info());
 }
 
 void PlayerCharacter::_process(double delta)

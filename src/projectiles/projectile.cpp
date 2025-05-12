@@ -58,7 +58,7 @@ void Projectile::_ready()
 
     if (this->hitbox)
     {
-        this->hitbox->set_damage(this->damage);
+        this->hitbox->get_damage_info()->set_source(this->actor_source);
         this->hitbox->connect("hit_hurtbox", callable_mp(this, &Projectile::_hit_hurtbox));
         this->hitbox->connect("hit_blocker", callable_mp(this, &Projectile::_hit_blocker));
     }
@@ -100,12 +100,18 @@ void Projectile::_physics_process(double delta)
     this->move_and_slide();
 }
 
+void Projectile::set_actor_source(godot::Node *actor_source)
+{
+    this->actor_source = actor_source;
+    if (this->hitbox)
+    {
+        this->hitbox->get_damage_info()->set_source(actor_source);
+    }
+}
 
 void Projectile::_bind_methods()
 {
     using namespace godot;
-
-    BIND_GETTER_SETTER_PROPERTY_DEFAULT(Projectile, Variant::FLOAT ,damage);
 
     BIND_GETTER_SETTER_DEFAULT(Projectile, lifespan_timer);
     ClassDB::bind_method(D_METHOD("_on_timeout"), &Projectile::_on_timeout);

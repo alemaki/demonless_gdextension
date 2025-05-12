@@ -18,8 +18,7 @@ protected:
     MovementStrategy* movement_strategy = nullptr;
     godot::Timer* lifespan_timer = nullptr;
     Hitbox* hitbox = nullptr;
-
-    double damage = 1;
+    godot::Node* actor_source = nullptr;
 
     virtual void _hit_hurtbox(Hurtbox* hurtbox);
     virtual void _hit_blocker(HitboxBlocker* hitbox_blocker);
@@ -34,10 +33,15 @@ public:
 
     CREATE_GETTER_SETTER_DEFAULT(godot::Timer*, lifespan_timer);
     CREATE_GETTER_SETTER_DEFAULT(Hitbox*, hitbox);
-    CREATE_GETTER_SETTER_DEFAULT(double, damage);
+    
+    void set_actor_source(godot::Node* actor_source);
+    _FORCE_INLINE_ godot::Node* get_actor_source() const
+    {
+        return this->actor_source;
+    }
 
     void set_movement_context(godot::Ref<MovementContext> movement_context);
-    godot::Ref<MovementContext> get_movement_context() const
+    _FORCE_INLINE_ godot::Ref<MovementContext> get_movement_context() const
     {
         return this->movement_context;
     }

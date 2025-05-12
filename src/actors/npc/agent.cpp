@@ -14,12 +14,25 @@ void Agent::_ready()
     {
         this->beh_task = this->behaviour_tree->instantiate(this, this->blackboard);
     }
+
+    if (this->health_component && this->hurtbox)
+    {
+        this->hurtbox->connect("hurtbox_hit", callable_mp(this, &Agent::hurtbox_hit));
+    }
 }
 
 void Agent::_physics_process(double delta)
 {
     ERR_FAIL_NULL(this->beh_task);
     this->beh_task->execute(delta);
+}
+
+void Agent::hurtbox_hit(const godot::Area3D *_hitbox)
+{
+    ERR_FAIL_NULL_MSG(this->health_component, vformat("%s: no health_component to take damage from hurtbox", this->get_name()));
+    const Hitbox* hitbox = godot::Object::cast_to<Hitbox>(_hitbox);
+    LOG_DEBUG(vformat("%s: Took damage: %d", this->get_name(), hitbox->get_damage_info()->get_damage()));
+    this->health_component->take_damage(hitbox->get_damage_info());
 }
 
 void Agent::_bind_methods()
