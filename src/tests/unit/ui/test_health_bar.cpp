@@ -3,6 +3,7 @@
 
 #include <godot_cpp/variant/utility_functions.hpp>
 #include "ui/health_bar.hpp"
+#include "attacks/damage_info.hpp"
 
 TEST_SUITE("TestHealthBar")
 {
@@ -19,7 +20,10 @@ TEST_SUITE("TestHealthBar")
         health_component->set_current_hp(75);
         CHECK_EQ(health_bar->get_value(), doctest::Approx(75));
 
-        health_component->take_damage(25);
+        godot::Ref<DamageInfo> damage_info;
+        damage_info.instantiate();
+        damage_info->set_damage(25);
+        health_component->take_damage(damage_info);
         CHECK_EQ(health_bar->get_value(), doctest::Approx(50));
 
         health_component->heal(10);

@@ -68,6 +68,38 @@ TEST_SUITE("TestProjectile")
         godot::Vector3 expected_position = godot::Vector3(100, 0, 0) * delta;
         CHECK_VECTORS_EQ(projectile->get_position(), expected_position);
     }
+
+    TEST_CASE_FIXTURE(Fixture, "actor_source set before entering the tree still reaches the hitbox's damage_info")
+    {
+        godot::Node* source = memnew(godot::Node);
+
+        /* projectile is already inside the tree from the fixture, so re-run the scenario
+           on a fresh projectile that hasn't had _ready() called yet. */
+        Projectile* fresh_projectile = memnew(Projectile);
+        Hitbox* fresh_hitbox = memnew(Hitbox);
+        fresh_projectile->set_hitbox(fresh_hitbox);
+        fresh_projectile->add_child(fresh_hitbox);
+
+        fresh_projectile->set_actor_source(source);
+        CHECK_EQ(fresh_hitbox->get_damage_info()->get_source(), nullptr);
+
+        ::get_scene_root()->add_child(fresh_projectile);
+        CHECK_EQ(fresh_hitbox->get_damage_info()->get_source(), source);
+
+        memdelete(fresh_projectile);
+        memdelete(source);
+    }
+
+    TEST_CASE_FIXTURE(Fixture, "actor_source set after entering the tree updates the hitbox's damage_info immediately")
+    {
+        godot::Node* source = memnew(godot::Node);
+
+        projectile->set_actor_source(source);
+        CHECK_EQ(hitbox->get_damage_info()->get_source(), source);
+        CHECK_EQ(projectile->get_actor_source(), source);
+
+        memdelete(source);
+    }
 }
 
 // TODO: needs more testing.

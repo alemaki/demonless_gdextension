@@ -95,4 +95,35 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         hitbox_blocker_signal.push_back(hitbox);
         CHECK_EQ(hitbox_blocker_signal, SignalObserver::get_signal_emitted_arguments(hitbox_blocker, "hitbox_blocked"));
     }
+
+    TEST_CASE_FIXTURE(HitboxFixture, "Hitbox has a non-null damage_info by default and it is settable.")
+    {
+        REQUIRE_FALSE(hitbox->get_damage_info().is_null());
+
+        godot::Ref<DamageInfo> damage_info;
+        damage_info.instantiate();
+        damage_info->set_damage(42);
+
+        hitbox->set_damage_info(damage_info);
+        CHECK_EQ(hitbox->get_damage_info(), damage_info);
+        CHECK_EQ(hitbox->get_damage_info()->get_damage(), 42);
+    }
+
+    TEST_CASE("Duplicated hitboxes each get their own damage_info, not a shared one.")
+    {
+        Hitbox* original = memnew(Hitbox);
+        original->get_damage_info()->set_damage(10);
+
+        Hitbox* copy = godot::Object::cast_to<Hitbox>(original->duplicate());
+        REQUIRE(copy != nullptr);
+
+        copy->get_damage_info()->set_damage(99);
+
+        CHECK_EQ(original->get_damage_info()->get_damage(), 10);
+        CHECK_EQ(copy->get_damage_info()->get_damage(), 99);
+        CHECK_NE(original->get_damage_info(), copy->get_damage_info());
+
+        memdelete(original);
+        memdelete(copy);
+    }
 }

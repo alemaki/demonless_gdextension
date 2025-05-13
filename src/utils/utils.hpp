@@ -62,7 +62,7 @@ inline void ensure_node(T*& member_ptr, const godot::Node* owner, const godot::N
 template <typename T>
 void ensure_node_silent(T*& member_ptr, const godot::Node* owner, const godot::NodePath& path)
 {
-     if (member_ptr)
+    if (member_ptr)
     {
         return;
     }
