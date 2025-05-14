@@ -13,6 +13,7 @@
 
 #include "bt_register_types.h"
 
+#include "actors/combatant.hpp"
 #include "actors/npc/agent.hpp"
 #include "actors/npc/enemy.hpp"
 #include "actors/npc/uriel.hpp"
@@ -30,8 +31,9 @@
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
 #include "attacks/circle_wave_attack.hpp"
-#include "attacks/melee_attack.hpp"
+#include "attacks/damage_info.hpp"
 #include "attacks/directional_wave_attack.hpp"
+#include "attacks/melee_attack.hpp"
 #include "attacks/wave_attack.hpp"
 
 #include "components/area3d/hitbox.hpp"
@@ -88,6 +90,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<StickyCamera>();
 
 		/* Actors */
+		ClassDB::register_class<Combatant>();
 		ClassDB::register_class<Agent>();
 		ClassDB::register_class<Enemy>();
 		ClassDB::register_class<Uriel>();
@@ -118,6 +121,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<SkillActionManager>();
 
 		/* Attacks */
+		ClassDB::register_class<DamageInfo>();
 		ClassDB::register_class<WaveAttack>();
 		ClassDB::register_class<CircleWaveAttack>();
 		ClassDB::register_class<MeleeAttack>();

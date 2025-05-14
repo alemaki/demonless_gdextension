@@ -16,6 +16,8 @@ void PlayerCharacter::_ready()
 {
     DISABLE_EDITOR_PROCESSING();
 
+    Combatant::_ready();
+
     this->action_fsm = memnew(FSM);
     this->movement_fsm = memnew(FSM);
 
@@ -73,9 +75,7 @@ void PlayerCharacter::_ready()
     this->movement_fsm->initialize();
     this->action_fsm->initialize();
 
-    utils::ensure_node(this->health_component, this, "HealthComponent");
     utils::ensure_node(this->hitbox_blocker, this, "HitboxBlocker");
-    utils::ensure_node(this->hurtbox, this, "Hurtbox");
     utils::ensure_node(this->combo_attack, this, "ComboAttack");
 
     if (this->combo_attack)
@@ -87,11 +87,6 @@ void PlayerCharacter::_ready()
     {
         this->hitbox_blocker->connect("hitbox_blocked", callable_mp(this, &PlayerCharacter::hitbox_blocked));
         this->hitbox_blocker->set_blocker_enabled(false);
-    }
-
-    if (this->hurtbox)
-    {
-        hurtbox->connect("hurtbox_hit", callable_mp(this, &PlayerCharacter::_on_hurtbox_hit));
     }
 }
 
@@ -290,15 +285,6 @@ void PlayerCharacter::hitbox_blocked(const godot::Area3D* hitbox)
     this->action_fsm->transition_to_state(this->action_blocking_react);
 }
 
-void PlayerCharacter::_on_hurtbox_hit(const godot::Area3D* _hitbox)
-{
-    ERR_FAIL_NULL(this->health_component);
-    const Hitbox* hitbox = godot::Object::cast_to<Hitbox>(_hitbox);
-    ERR_FAIL_NULL(hitbox);
-    LOG_DEBUG(vformat("Player took damage: %d", hitbox->get_damage_info()->get_damage()));
-    this->health_component->take_damage(hitbox->get_damage_info());
-}
-
 void PlayerCharacter::_process(double delta)
 {
     this->process_movement_state();
@@ -325,7 +311,6 @@ void PlayerCharacter::_bind_methods()
 {
     using namespace godot;
 
-    BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, health_component, PROPERTY_HINT_NODE_TYPE, "HealthComponent", PROPERTY_USAGE_DEFAULT, HealthComponent);
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, movement_component, PROPERTY_HINT_NODE_TYPE, "CharacterMovementComponent", PROPERTY_USAGE_DEFAULT, CharacterMovementComponent);
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, input_component, PROPERTY_HINT_NODE_TYPE, "CharacterInputComponent", PROPERTY_USAGE_DEFAULT, CharacterInputComponent);
     BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(PlayerCharacter, mesh_instance, PROPERTY_HINT_NODE_TYPE, "Node3D", PROPERTY_USAGE_DEFAULT, Node3D);
