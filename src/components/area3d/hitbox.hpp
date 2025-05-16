@@ -11,7 +11,7 @@ class Hitbox : public godot::Area3D
 {
     GDCLASS(Hitbox, godot::Area3D);
 
-    godot::Ref<DamageInfo> damage_info = memnew(DamageInfo);
+    godot::Ref<DamageInfo> damage_info = nullptr;
 
 protected:
     void _on_area_entered(godot::Area3D* area3d);

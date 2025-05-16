@@ -48,7 +48,7 @@ void MeleeAttack::_end()
 void MeleeAttack::_ready()
 {
     utils::ensure_node(this->hitbox, this, "Hitbox");
-    if (this->hitbox)
+    if (this->hitbox && !(IS_EDITOR))
     {
         this->hitbox->set_monitoring(false);
         this->hitbox->set_visible(false);

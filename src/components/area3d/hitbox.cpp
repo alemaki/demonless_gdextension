@@ -37,7 +37,6 @@ void Hitbox::_bind_methods()
 
     BIND_GETTER_SETTER_DEFAULT(Hitbox, damage_info);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "damage_info", PROPERTY_HINT_RESOURCE_TYPE, "DamageInfo", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE, "DamageInfo"), "set_damage_info", "get_damage_info");
-
     ADD_SIGNAL(MethodInfo("hit_hurtbox", PropertyInfo(Variant::OBJECT, "hurtbox", PROPERTY_HINT_NONE, "Area3D")));
     ADD_SIGNAL(MethodInfo("hit_blocker", PropertyInfo(Variant::OBJECT, "hitbox_blocker", PROPERTY_HINT_NONE, "Area3D")));
 }

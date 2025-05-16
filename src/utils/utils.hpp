@@ -7,12 +7,14 @@
 
 #define VECTOR_UP godot::Vector3(0, 1, 0)
 
+#define IS_EDITOR godot::Engine::get_singleton()->is_editor_hint()
+
 #define DISABLE_PROCESSING() /**************************************************************************************************************************************************/\
 set_process(false);                                                                                                                                                              \
 set_physics_process(false)
 
 #define DISABLE_EDITOR_PROCESSING() /******************************************************************************************************************************************/\
-if (godot::Engine::get_singleton()->is_editor_hint())                                                                                                                           \
+if (IS_EDITOR)                                                                                                                                                                  \
 {                                                                                                                                                                               \
     DISABLE_PROCESSING();                                                                                                                                                       \
     return;                                                                                                                                                                     \
