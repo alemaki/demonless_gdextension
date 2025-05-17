@@ -10,7 +10,7 @@ TEST_SUITE("TestDamageInfo")
         godot::Ref<DamageInfo> damage_info;
         damage_info.instantiate();
 
-        CHECK_EQ(damage_info->get_damage(), 0);
+        CHECK_EQ(damage_info->get_damage(), 1);
         CHECK_EQ(damage_info->get_source(), nullptr);
 
         damage_info->set_damage(15);

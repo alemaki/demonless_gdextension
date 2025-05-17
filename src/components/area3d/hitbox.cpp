@@ -23,11 +23,21 @@ void Hitbox::_on_area_entered(godot::Area3D* area3d)
 
 void Hitbox::_ready()
 {
-    if (this->damage_info.is_null())
+    if (this->damage_info.is_null() && !IS_EDITOR)
     {
         this->damage_info.instantiate();
     }
     this->connect("area_entered", callable_mp(this, &Hitbox::_on_area_entered));
+}
+
+godot::PackedStringArray Hitbox::_get_configuration_warnings() const
+{
+    godot::PackedStringArray warnings = Area3D::_get_configuration_warnings();
+    if (this->damage_info.is_null())
+    {
+        warnings.push_back("No DamageInfo assigned. A default one will be created at runtime.");
+    }
+    return warnings;
 }
 
 void Hitbox::_bind_methods()

@@ -21,6 +21,7 @@ void Combatant::_on_hurtbox_hit(const godot::Area3D* _hitbox)
 void Combatant::on_hit(const Hitbox* hitbox)
 {
     ERR_FAIL_NULL_MSG(this->health_component, vformat("%s: no health_component to take damage from hurtbox", this->get_name()));
+    ERR_FAIL_COND_MSG(hitbox->get_damage_info().is_null(), vformat("%s: hitbox has no damage_info", this->get_name()));
     LOG_DEBUG(vformat("%s: Took damage: %d", this->get_name(), hitbox->get_damage_info()->get_damage()));
     this->health_component->take_damage(hitbox->get_damage_info());
 }

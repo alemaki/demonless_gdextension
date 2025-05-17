@@ -39,6 +39,7 @@ TEST_SUITE("TestCombatant")
     TEST_CASE_FIXTURE(CombatantFixture, "A hurtbox hit applies damage to the health_component")
     {
         Hitbox* hitbox = memnew(Hitbox);
+        hitbox->set_damage_info(memnew(DamageInfo));
         hitbox->get_damage_info()->set_damage(30);
 
         hurtbox->emit_signal("hurtbox_hit", hitbox);
@@ -62,11 +63,21 @@ TEST_SUITE("[errors] TestCombatant")
         CHECK_GODOT_ERROR(::get_scene_root()->add_child(combatant));
 
         Hitbox* hitbox = memnew(Hitbox);
+        hitbox->set_damage_info(memnew(DamageInfo));
         hitbox->get_damage_info()->set_damage(10);
 
         CHECK_GODOT_ERROR(hurtbox->emit_signal("hurtbox_hit", hitbox));
 
         memdelete(hitbox);
         memdelete(combatant);
+    }
+
+    TEST_CASE_FIXTURE(CombatantFixture, "A hurtbox hit with a hitbox missing damage_info errors instead of crashing")
+    {
+        Hitbox* hitbox = memnew(Hitbox);
+
+        CHECK_GODOT_ERROR(hurtbox->emit_signal("hurtbox_hit", hitbox));
+
+        memdelete(hitbox);
     }
 }

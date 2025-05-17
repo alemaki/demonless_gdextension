@@ -20,6 +20,7 @@ public:
     CREATE_GETTER_SETTER_DEFAULT(godot::Ref<DamageInfo>, damage_info);
 
     virtual void _ready() override;
+    virtual godot::PackedStringArray _get_configuration_warnings() const override;
 
 protected:
     static void _bind_methods();

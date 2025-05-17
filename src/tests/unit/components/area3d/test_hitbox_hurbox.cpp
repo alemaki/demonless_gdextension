@@ -109,9 +109,24 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         CHECK_EQ(hitbox->get_damage_info()->get_damage(), 42);
     }
 
+    TEST_CASE("A hitbox without a DamageInfo reports a configuration warning until it enters the tree.")
+    {
+        Hitbox* hitbox = memnew(Hitbox);
+        CHECK(hitbox->get_damage_info().is_null());
+        CHECK_FALSE(hitbox->_get_configuration_warnings().is_empty());
+
+        ::get_scene_root()->add_child(hitbox);
+
+        CHECK_FALSE(hitbox->get_damage_info().is_null());
+        CHECK(hitbox->_get_configuration_warnings().is_empty());
+
+        memdelete(hitbox);
+    }
+
     TEST_CASE("Duplicated hitboxes each get their own damage_info, not a shared one.")
     {
         Hitbox* original = memnew(Hitbox);
+        original->set_damage_info(memnew(DamageInfo));
         original->get_damage_info()->set_damage(10);
 
         Hitbox* copy = godot::Object::cast_to<Hitbox>(original->duplicate());

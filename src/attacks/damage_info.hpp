@@ -10,7 +10,7 @@ class DamageInfo : public godot::Resource
     GDCLASS(DamageInfo, godot::Resource)
 
 private:
-    double damage = 0;
+    double damage = 1;
     godot::Node* source = nullptr;
 
 public:

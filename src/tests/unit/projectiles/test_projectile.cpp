@@ -14,6 +14,7 @@ struct Fixture
     {
         projectile = memnew(Projectile);
         hitbox = memnew(Hitbox);
+        hitbox->set_damage_info(memnew(DamageInfo));
         movement_context.instantiate();
         timer = memnew(godot::Timer);
         projectile->set_hitbox(hitbox);
@@ -77,11 +78,12 @@ TEST_SUITE("TestProjectile")
            on a fresh projectile that hasn't had _ready() called yet. */
         Projectile* fresh_projectile = memnew(Projectile);
         Hitbox* fresh_hitbox = memnew(Hitbox);
+        fresh_hitbox->set_damage_info(memnew(DamageInfo));
         fresh_projectile->set_hitbox(fresh_hitbox);
         fresh_projectile->add_child(fresh_hitbox);
 
         fresh_projectile->set_actor_source(source);
-        CHECK_EQ(fresh_hitbox->get_damage_info()->get_source(), nullptr);
+        CHECK_EQ(fresh_hitbox->get_damage_info()->get_source(), source);
 
         ::get_scene_root()->add_child(fresh_projectile);
         CHECK_EQ(fresh_hitbox->get_damage_info()->get_source(), source);
