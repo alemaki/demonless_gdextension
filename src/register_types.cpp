@@ -32,6 +32,7 @@
 
 #include "attacks/circle_wave_attack.hpp"
 #include "attacks/damage_info.hpp"
+#include "attacks/damage_profile.hpp"
 #include "attacks/directional_wave_attack.hpp"
 #include "attacks/melee_attack.hpp"
 #include "attacks/wave_attack.hpp"
@@ -122,6 +123,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 
 		/* Attacks */
 		ClassDB::register_class<DamageInfo>();
+		ClassDB::register_class<DamageProfile>();
 		ClassDB::register_class<WaveAttack>();
 		ClassDB::register_class<CircleWaveAttack>();
 		ClassDB::register_class<MeleeAttack>();

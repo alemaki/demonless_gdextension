@@ -1,8 +1,8 @@
 #ifndef DAMAGE_INFO_HPP
 #define DAMAGE_INFO_HPP
 
-#include "godot_cpp/classes/resource.hpp"
-#include "godot_cpp/classes/node.hpp"
+#include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/classes/node.hpp>
 #include "utils/utils.hpp"
 
 class DamageInfo : public godot::Resource

@@ -1,5 +1,5 @@
 #include "bt_set_position_away_from_target.hpp"
-#include "godot_cpp/classes/node3d.hpp"
+#include <godot_cpp/classes/node3d.hpp>
 
 BTTask::Status BTSetPositionAwayFromTarget::_tick(double delta)
 {

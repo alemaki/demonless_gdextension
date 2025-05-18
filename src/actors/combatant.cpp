@@ -7,23 +7,16 @@ void Combatant::_ready()
 
     if (this->hurtbox)
     {
-        this->hurtbox->connect("hurtbox_hit", callable_mp(this, &Combatant::_on_hurtbox_hit));
+        this->hurtbox->connect("hurtbox_hit", callable_mp(this, &Combatant::on_hit));
     }
 }
 
-void Combatant::_on_hurtbox_hit(const godot::Area3D* _hitbox)
-{
-    const Hitbox* hitbox = godot::Object::cast_to<Hitbox>(_hitbox);
-    ERR_FAIL_NULL(hitbox);
-    this->on_hit(hitbox);
-}
-
-void Combatant::on_hit(const Hitbox* hitbox)
+void Combatant::on_hit(const godot::Ref<DamageInfo>& damage_info)
 {
     ERR_FAIL_NULL_MSG(this->health_component, vformat("%s: no health_component to take damage from hurtbox", this->get_name()));
-    ERR_FAIL_COND_MSG(hitbox->get_damage_info().is_null(), vformat("%s: hitbox has no damage_info", this->get_name()));
-    LOG_DEBUG(vformat("%s: Took damage: %d", this->get_name(), hitbox->get_damage_info()->get_damage()));
-    this->health_component->take_damage(hitbox->get_damage_info());
+    ERR_FAIL_COND_MSG(damage_info.is_null(), vformat("%s: damage_info is null", this->get_name()));
+    LOG_DEBUG(vformat("%s: Took %d damage.", this->get_name(), damage_info->get_damage()));
+    this->health_component->take_damage(damage_info);
 }
 
 void Combatant::_bind_methods()

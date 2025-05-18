@@ -1,5 +1,5 @@
 #include "circle_wave_attack.hpp"
-#include "godot_cpp/variant/utility_functions.hpp"
+#include <godot_cpp/variant/utility_functions.hpp>
 
 void CircleWaveAttack::_step(double delta)
 {

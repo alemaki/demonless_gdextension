@@ -1,5 +1,5 @@
 #include "wave_attack.hpp"
-#include "godot_cpp/variant/utility_functions.hpp"
+#include <godot_cpp/variant/utility_functions.hpp>
 
 void WaveAttack::set_direction(const godot::Vector3 direction)
 {

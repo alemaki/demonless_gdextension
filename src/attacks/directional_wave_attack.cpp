@@ -1,5 +1,5 @@
 #include "directional_wave_attack.hpp"
-#include "godot_cpp/variant/utility_functions.hpp"
+#include <godot_cpp/variant/utility_functions.hpp>
 
 void DirectionalWaveAttack::_step(double delta)
 {

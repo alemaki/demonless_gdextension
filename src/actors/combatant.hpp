@@ -21,10 +21,7 @@ protected:
     Hurtbox* hurtbox = nullptr;
     HealthComponent* health_component = nullptr;
 
-    virtual void on_hit(const Hitbox* hitbox);
-
-private:
-    void _on_hurtbox_hit(const godot::Area3D* hitbox);
+    virtual void on_hit(const godot::Ref<DamageInfo>& damage_info);
 
 public:
     CREATE_GETTER_SETTER_DEFAULT(Hurtbox*, hurtbox);

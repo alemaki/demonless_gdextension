@@ -1,7 +1,7 @@
 #ifndef WAVE_ATTACK_HPP
 #define WAVE_ATTACK_HPP
 
-#include "godot_cpp/classes/packed_scene.hpp"
+#include <godot_cpp/classes/packed_scene.hpp>
 #include "projectiles/projectile.hpp"
 #include "skills/skill_action.hpp"
 

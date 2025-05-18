@@ -58,10 +58,7 @@ void Projectile::_ready()
 
     if (this->hitbox)
     {
-        if (this->hitbox->get_damage_info().is_valid())
-        {
-            this->hitbox->get_damage_info()->set_source(this->actor_source);
-        }
+        this->hitbox->set_actor_source(this->actor_source);
         this->hitbox->connect("hit_hurtbox", callable_mp(this, &Projectile::_hit_hurtbox));
         this->hitbox->connect("hit_blocker", callable_mp(this, &Projectile::_hit_blocker));
     }
@@ -106,9 +103,9 @@ void Projectile::_physics_process(double delta)
 void Projectile::set_actor_source(godot::Node *actor_source)
 {
     this->actor_source = actor_source;
-    if (this->hitbox && this->hitbox->get_damage_info().is_valid())
+    if (this->hitbox)
     {
-        this->hitbox->get_damage_info()->set_source(actor_source);
+        this->hitbox->set_actor_source(actor_source);
     }
 }
 
