@@ -25,7 +25,6 @@ TEST_SUITE("BTQueueFreeNode")
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
 
         Hitbox* mock_hitbox = memnew(Hitbox);
-        mock_hitbox->set_damage_info(memnew(DamageInfo));
         mock_actor->add_child(mock_hitbox);
 
         blackboard->set_var("hitbox_var", mock_hitbox);

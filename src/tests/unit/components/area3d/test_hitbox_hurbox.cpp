@@ -49,9 +49,12 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         hitbox_signal.push_back(hurtbox);
         CHECK_EQ(hitbox_signal, SignalObserver::get_signal_emitted_arguments(hitbox, "hit_hurtbox"));
 
-        godot::Array hurtbox_signal;
-        hurtbox_signal.push_back(hitbox);
-        CHECK_EQ(hurtbox_signal, SignalObserver::get_signal_emitted_arguments(hurtbox, "hurtbox_hit"));
+        godot::Array hurtbox_signal_args = SignalObserver::get_signal_emitted_arguments(hurtbox, "hurtbox_hit");
+        REQUIRE_EQ(hurtbox_signal_args.size(), 1);
+        godot::Ref<DamageInfo> emitted_damage_info = hurtbox_signal_args[0];
+        REQUIRE_FALSE(emitted_damage_info.is_null());
+        CHECK_EQ(emitted_damage_info->get_damage(), hitbox->get_damage_profile()->get_base_damage());
+        CHECK_EQ(emitted_damage_info->get_source(), hitbox->get_actor_source());
     }
 
     TEST_CASE_FIXTURE(HitboxFixture, "Test hitbox and hurtbox won't emmit signal when touched by other area3D objects.")
@@ -96,49 +99,63 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         CHECK_EQ(hitbox_blocker_signal, SignalObserver::get_signal_emitted_arguments(hitbox_blocker, "hitbox_blocked"));
     }
 
-    TEST_CASE_FIXTURE(HitboxFixture, "Hitbox has a non-null damage_info by default and it is settable.")
+    TEST_CASE_FIXTURE(HitboxFixture, "Hitbox has a non-null damage_profile by default and it is settable.")
     {
-        REQUIRE_FALSE(hitbox->get_damage_info().is_null());
+        REQUIRE_FALSE(hitbox->get_damage_profile().is_null());
 
-        godot::Ref<DamageInfo> damage_info;
-        damage_info.instantiate();
-        damage_info->set_damage(42);
+        godot::Ref<DamageProfile> damage_profile;
+        damage_profile.instantiate();
+        damage_profile->set_base_damage(42);
 
-        hitbox->set_damage_info(damage_info);
-        CHECK_EQ(hitbox->get_damage_info(), damage_info);
-        CHECK_EQ(hitbox->get_damage_info()->get_damage(), 42);
+        hitbox->set_damage_profile(damage_profile);
+        CHECK_EQ(hitbox->get_damage_profile(), damage_profile);
+        CHECK_EQ(hitbox->get_damage_profile()->get_base_damage(), 42);
     }
 
-    TEST_CASE("A hitbox without a DamageInfo reports a configuration warning until it enters the tree.")
+    TEST_CASE("A hitbox without a DamageProfile reports a configuration warning until it enters the tree.")
     {
         Hitbox* hitbox = memnew(Hitbox);
-        CHECK(hitbox->get_damage_info().is_null());
+        CHECK(hitbox->get_damage_profile().is_null());
         CHECK_FALSE(hitbox->_get_configuration_warnings().is_empty());
 
         ::get_scene_root()->add_child(hitbox);
 
-        CHECK_FALSE(hitbox->get_damage_info().is_null());
+        CHECK_FALSE(hitbox->get_damage_profile().is_null());
         CHECK(hitbox->_get_configuration_warnings().is_empty());
 
         memdelete(hitbox);
     }
 
-    TEST_CASE("Duplicated hitboxes each get their own damage_info, not a shared one.")
+    TEST_CASE("Duplicated hitboxes each get their own damage_profile, not a shared one.")
     {
         Hitbox* original = memnew(Hitbox);
-        original->set_damage_info(memnew(DamageInfo));
-        original->get_damage_info()->set_damage(10);
+        original->set_damage_profile(memnew(DamageProfile));
+        original->get_damage_profile()->set_base_damage(10);
 
         Hitbox* copy = godot::Object::cast_to<Hitbox>(original->duplicate());
         REQUIRE(copy != nullptr);
 
-        copy->get_damage_info()->set_damage(99);
+        copy->get_damage_profile()->set_base_damage(99);
 
-        CHECK_EQ(original->get_damage_info()->get_damage(), 10);
-        CHECK_EQ(copy->get_damage_info()->get_damage(), 99);
-        CHECK_NE(original->get_damage_info(), copy->get_damage_info());
+        CHECK_EQ(original->get_damage_profile()->get_base_damage(), 10);
+        CHECK_EQ(copy->get_damage_profile()->get_base_damage(), 99);
+        CHECK_NE(original->get_damage_profile(), copy->get_damage_profile());
 
         memdelete(original);
         memdelete(copy);
+    }
+
+    TEST_CASE("A hitbox without a damage_profile errors instead of crashing when it hits a hurtbox.")
+    {
+        Hitbox* hitbox = memnew(Hitbox);
+        Hurtbox* hurtbox = memnew(Hurtbox);
+        ::get_scene_root()->add_child(hitbox);
+        ::get_scene_root()->add_child(hurtbox);
+        hitbox->set_damage_profile(nullptr);
+
+        CHECK_GODOT_ERROR(hitbox->emit_signal("area_entered", hurtbox));
+
+        memdelete(hitbox);
+        memdelete(hurtbox);
     }
 }

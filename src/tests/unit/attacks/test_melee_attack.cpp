@@ -11,7 +11,6 @@ struct MeleeAttackFixture
     Hitbox* hitbox = memnew(Hitbox);
     MeleeAttackFixture()
     {
-        hitbox->set_damage_info(memnew(DamageInfo));
         ::get_scene_root()->add_child(dummy_source);
         attack->set_actor_source(dummy_source);
         attack->set_duration(1);

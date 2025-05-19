@@ -14,7 +14,6 @@ struct Fixture
     {
         projectile = memnew(Projectile);
         hitbox = memnew(Hitbox);
-        hitbox->set_damage_info(memnew(DamageInfo));
         movement_context.instantiate();
         timer = memnew(godot::Timer);
         projectile->set_hitbox(hitbox);
@@ -70,7 +69,7 @@ TEST_SUITE("TestProjectile")
         CHECK_VECTORS_EQ(projectile->get_position(), expected_position);
     }
 
-    TEST_CASE_FIXTURE(Fixture, "actor_source set before entering the tree still reaches the hitbox's damage_info")
+    TEST_CASE_FIXTURE(Fixture, "actor_source set before entering the tree still reaches the hitbox's actor_source")
     {
         godot::Node* source = memnew(godot::Node);
 
@@ -78,26 +77,25 @@ TEST_SUITE("TestProjectile")
            on a fresh projectile that hasn't had _ready() called yet. */
         Projectile* fresh_projectile = memnew(Projectile);
         Hitbox* fresh_hitbox = memnew(Hitbox);
-        fresh_hitbox->set_damage_info(memnew(DamageInfo));
         fresh_projectile->set_hitbox(fresh_hitbox);
         fresh_projectile->add_child(fresh_hitbox);
 
         fresh_projectile->set_actor_source(source);
-        CHECK_EQ(fresh_hitbox->get_damage_info()->get_source(), source);
+        CHECK_EQ(fresh_hitbox->get_actor_source(), source);
 
         ::get_scene_root()->add_child(fresh_projectile);
-        CHECK_EQ(fresh_hitbox->get_damage_info()->get_source(), source);
+        CHECK_EQ(fresh_hitbox->get_actor_source(), source);
 
         memdelete(fresh_projectile);
         memdelete(source);
     }
 
-    TEST_CASE_FIXTURE(Fixture, "actor_source set after entering the tree updates the hitbox's damage_info immediately")
+    TEST_CASE_FIXTURE(Fixture, "actor_source set after entering the tree updates the hitbox's actor_source immediately")
     {
         godot::Node* source = memnew(godot::Node);
 
         projectile->set_actor_source(source);
-        CHECK_EQ(hitbox->get_damage_info()->get_source(), source);
+        CHECK_EQ(hitbox->get_actor_source(), source);
         CHECK_EQ(projectile->get_actor_source(), source);
 
         memdelete(source);
