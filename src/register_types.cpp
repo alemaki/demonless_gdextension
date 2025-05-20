@@ -57,6 +57,7 @@
 #include "skills/skill_action.hpp"
 #include "skills/projectile_time_jump.hpp"
 
+#include "projectiles/laser.hpp"
 #include "projectiles/projectile.hpp"
 
 #include "ui/health_bar.hpp"
@@ -80,6 +81,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 
 		/* Projectiles */
 		ClassDB::register_class<Projectile>();
+		ClassDB::register_class<Laser>();
 
 		/* Components */
 		ClassDB::register_class<CharacterInputComponent>();
