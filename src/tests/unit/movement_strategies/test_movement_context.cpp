@@ -3,7 +3,7 @@
 #include "movement_strategies/movement_context.hpp"
 
 struct MovementContextFixture {
-    MovementContext* context = nullptr;
+    godot::Ref<MovementContext> context;
     godot::Node3D* dummy_target = nullptr;
 
     MovementContextFixture() {
@@ -12,7 +12,6 @@ struct MovementContextFixture {
     }
 
     ~MovementContextFixture() {
-        memdelete(context);
         memdelete(dummy_target);
     }
 };

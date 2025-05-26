@@ -18,7 +18,7 @@ void CircleWaveAttack::_step(double delta)
     double angle_step = 0;
     if (projectiles_per_wave != 0)
     {
-        angle_step = 2 * Math_PI / projectiles_per_wave;
+        angle_step = 2 * godot::Math::PI / projectiles_per_wave;
     }
 
     for (int wave = 0; wave < waves_to_fire; wave++)

@@ -59,7 +59,7 @@ TEST_SUITE("BTNode3DInRange")
     {
         BTTask::Status status = task->execute(0.1);
         CHECK_EQ(status, BTTask::Status::SUCCESS);
-        CHECK_EQ(animation_player->get_current_animation(), "first");
+        CHECK_EQ(animation_player->get_current_animation(), godot::StringName("first"));
     }
 
     TEST_CASE_FIXTURE(BTPlayAnimationFixture, "Fails when playing no animation.")
@@ -73,11 +73,11 @@ TEST_SUITE("BTNode3DInRange")
     {
         BTTask::Status status = task->execute(0.1);
         CHECK_EQ(status, BTTask::Status::SUCCESS);
-        CHECK_EQ(animation_player->get_current_animation(), "first");
+        CHECK_EQ(animation_player->get_current_animation(), godot::StringName("first"));
 
         task->set_play_animation("second");
         status = task->execute(0.1);
         CHECK_EQ(status, BTTask::Status::SUCCESS);
-        CHECK_EQ(animation_player->get_current_animation(), "second");
+        CHECK_EQ(animation_player->get_current_animation(), godot::StringName("second"));
     }
 }
