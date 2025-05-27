@@ -60,9 +60,15 @@ for compilation_path in compilation_paths:
 print("Compiler: " + env['CC'])
 
 if env['platform'] == 'linux' or env['platform'] == 'windows':
-	libpath = os.path.join(variant_dir, 'demonless{}{}'.format(env['suffix'], env['SHLIBSUFFIX']))
-	sharedlib = env.SharedLibrary(libpath, src)
-	Default(sharedlib)
+    libpath = os.path.join(variant_dir, 'demonless{}{}'.format(env['suffix'], env['SHLIBSUFFIX']))
+    if env['platform'] == 'linux':
+        # GNU ld resolves static archives (godot-cpp, behaviour_tree, test_utils) in
+        # a single left-to-right pass, so any cross-reference between them can
+        # silently leave symbols unresolved in the final .so depending on LIBS order
+        # Wrapping them in a group makes resolution order-independent.
+        env['_LIBFLAGS'] = '-Wl,--start-group ' + env['_LIBFLAGS'] + ' -Wl,--end-group'
+    sharedlib = env.SharedLibrary(libpath, src)
+    Default(sharedlib)
 
 if env['platform'] == 'android': # TODO
 	pass
