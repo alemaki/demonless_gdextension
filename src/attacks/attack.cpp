@@ -2,6 +2,7 @@
 
 void Attack::reset()
 {
+    this->elapsed = 0;
     this->_reset();
 }
 
