@@ -13,6 +13,7 @@ protected:
     static void _bind_methods();
 
 public:
+    virtual void on_timeout();
     void _ready() override;
     void set_lifespan_timer(godot::Timer* timer);
     _FORCE_INLINE_ godot::Timer* get_lifespan_timer() const
