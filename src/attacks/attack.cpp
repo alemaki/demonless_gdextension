@@ -2,11 +2,13 @@
 
 void Attack::reset()
 {
+    this->time_accumulated = 0;
     this->_reset();
 }
 
 void Attack::step(double delta)
 {
+    this->time_accumulated += delta;
     this->_step(delta);
 }
 
