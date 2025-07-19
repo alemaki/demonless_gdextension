@@ -12,7 +12,6 @@ class LinearProjectile : public Projectile
 protected:
 
     float speed = 0;
-    godot::Vector3 direction = godot::Vector3(0, 0, 0);
 
 public:
     virtual void _physics_process(double delta) override;

@@ -8,7 +8,7 @@ class Projectile : public godot::Node3D
     GDCLASS(Projectile, godot::Node3D);
 
 protected:
-    godot::Vector3 direction = godot::Vector3(0, 0, 0);
+    godot::Vector3 direction = godot::Vector3(1, 0, 0);
 
 public:
 

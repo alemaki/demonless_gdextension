@@ -10,11 +10,11 @@ class Attack : public godot::Node
     GDCLASS(Attack, godot::Node)
 
 protected:
-    double duration = 0;
+    double duration = 1;
     double time_accumulated = 0;
 
 protected:
-    godot::Node3D* actor_source;
+    godot::Node3D* actor_source = nullptr;
     virtual void _reset(){};
     virtual void _step(double delta){};
 

@@ -3,7 +3,6 @@
 
 void LinearProjectile::_physics_process(double delta)
 {
-    Projectile::_physics_process(delta);
     godot::Vector3 vector_travelled = this->direction * this->speed * delta;
     this->set_position(this->get_position() + vector_travelled);
 }

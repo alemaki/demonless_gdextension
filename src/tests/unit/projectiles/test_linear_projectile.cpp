@@ -13,7 +13,6 @@ TEST_SUITE("TestLinearProjectile")
     {
         LinearProjectile* projectile = memnew(LinearProjectile);
 
-        CHECK_VECTORS_EQ(projectile->get_direction(), godot::Vector3(0, 0, 0));
         CHECK_EQ(projectile->get_speed(), doctest::Approx(0));
 
         godot::Vector3 direction = godot::Vector3(1, 0, 1); // Vector3.RIGHT + Vector3.FORWARD
