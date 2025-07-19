@@ -17,12 +17,6 @@ protected:
 public:
     virtual void _physics_process(double delta) override;
 
-    void set_direction(godot::Vector3 direction);
-    _FORCE_INLINE_ godot::Vector3 get_direction() const
-    {
-        return this->direction;
-    }
-
     CREATE_GETTER_SETTER_DEFAULT(double, speed);
 
 protected:
