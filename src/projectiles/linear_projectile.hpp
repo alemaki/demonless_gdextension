@@ -10,8 +10,7 @@ class LinearProjectile : public Projectile
     GDCLASS(LinearProjectile, Projectile);
 
 protected:
-
-    float speed = 0;
+    double speed = 0;
 
 public:
     virtual void _physics_process(double delta) override;

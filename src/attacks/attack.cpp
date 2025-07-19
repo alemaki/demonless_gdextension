@@ -14,5 +14,5 @@ void Attack::step(double delta)
 
 void Attack::_bind_methods()
 {
-    BIND_GETTER_SETTER_PROPERTY_DEFAULT(Attack, INT, duration);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(Attack, FLOAT, duration);
 }

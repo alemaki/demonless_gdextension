@@ -23,7 +23,7 @@ TEST_SUITE("TestLinearProjectile")
         CHECK_VECTORS_EQ(projectile->get_direction(), direction.normalized());
         CHECK_EQ(projectile->get_speed(), doctest::Approx(speed));
 
-        memfree(projectile);
+        memdelete(projectile);
     }
 
     TEST_CASE("Test linear projectile movement")
@@ -39,6 +39,6 @@ TEST_SUITE("TestLinearProjectile")
         godot::Vector3 expected_position = godot::Vector3(100, 0, 0)*delta;
         CHECK_VECTORS_EQ(projectile->get_position(), expected_position);
 
-        memfree(projectile);
+        memdelete(projectile);
     }
 }
