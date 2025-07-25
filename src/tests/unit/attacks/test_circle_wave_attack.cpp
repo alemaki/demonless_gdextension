@@ -86,6 +86,11 @@ TEST_SUITE("[errors] TestCircleWaveAttack")
         attack->set_projectile(dummy_projectile);
         CHECK_GODOT_ERROR(attack->set_direction({0, 0, 0})); // Zero direction
 
+        attack->set_wave_cooldown(0);
+        CHECK_GODOT_ERROR(attack->step(0.1)); // divison by cooldown 0
+
+        attack->set_wave_cooldown(1);
+
         attack->step(1); // No error
 
         memdelete(dummy_source);
