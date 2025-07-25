@@ -23,6 +23,9 @@
 
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
+#include "attacks/attack.hpp"
+#include "attacks/circle_wave_attack.hpp"
+
 #include "components/area3d/hitbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "components/area3d/hurtbox.hpp"
@@ -58,6 +61,9 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<HealthBar>();
 		
 		/* Behaviour */
+		ClassDB::register_class<Attack>();
+		ClassDB::register_class<CircleWaveAttack>();
+
 		ClassDB::register_class<BTQueueFreeNode>();
 		ClassDB::register_class<BTSpawnNode3DAtPosition>();
 		ClassDB::register_class<BTPlayAnimation>();
