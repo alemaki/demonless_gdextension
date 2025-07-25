@@ -19,12 +19,11 @@ void CircleWaveAttack::_step(double delta)
     ERR_FAIL_COND(direction.is_zero_approx());
 
     int shots_to_fire = (this->time_accumulated / this->wave_cooldown) - this->waves_fired;
-
+    ERR_FAIL_COND(shots_to_fire > 3);
     if (shots_to_fire <= 0 || this->waves <= this->waves_fired)
     {
         return;
     }
-    godot::UtilityFunctions::print("here1");
 
     double angle_step = 0;
     if (projectiles_per_wave != 0)
@@ -38,19 +37,15 @@ void CircleWaveAttack::_step(double delta)
         {
             double angle = i * angle_step;
             godot::Vector3 dir = this->direction.rotated(VECTOR_UP, angle);
-
-            godot::UtilityFunctions::print("here2");
-            Projectile* projectile = Object::cast_to<Projectile>(projectile->duplicate());
-            ERR_FAIL_NULL(projectile);
-            projectile->set_position(this->actor_source->get_position());
-            projectile->set_direction(dir);
-            get_tree()->get_current_scene()->add_child(projectile);
-            godot::UtilityFunctions::print("here3");
+            Projectile* projectile_cpy = Object::cast_to<Projectile>(this->projectile->duplicate());
+            ERR_FAIL_NULL(projectile_cpy);
+            projectile_cpy->set_position(this->actor_source->get_position());
+            projectile_cpy->set_direction(dir);
+            get_tree()->get_current_scene()->add_child(projectile_cpy);
         }
     }
 
     this->waves_fired += shots_to_fire;
-    godot::UtilityFunctions::print("finished");
 }
 
 void CircleWaveAttack::_bind_methods()
