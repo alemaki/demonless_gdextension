@@ -17,6 +17,7 @@ protected:
     godot::Node3D* actor_source = nullptr;
     virtual void _reset(){};
     virtual void _step(double delta){};
+    virtual void _end(){};
 
 public:
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, duration);
