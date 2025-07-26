@@ -18,5 +18,7 @@ void HitboxBlocker::_on_area_entered(godot::Area3D* area3d)
 
 void HitboxBlocker::_bind_methods()
 {
+    using namespace godot;
+    
     ADD_SIGNAL(MethodInfo("hitbox_blocked"));
 }

@@ -35,7 +35,7 @@ void Projectile::_bind_methods()
     ClassDB::bind_method(D_METHOD("set_lifespan_timer", "timer"), &Projectile::set_lifespan_timer);
     ClassDB::bind_method(D_METHOD("get_lifespan_timer"), &Projectile::get_lifespan_timer);
     ClassDB::bind_method(D_METHOD("_on_timeout"), &Projectile::_on_timeout);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "lifespan_timer", PropertyHint::PROPERTY_HINT_NODE_TYPE, "Timer",PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, "Timer"), "set_lifespan_timer", "get_lifespan_timer");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "lifespan_timer", PROPERTY_HINT_NODE_TYPE, "Timer", PROPERTY_USAGE_DEFAULT, "Timer"), "set_lifespan_timer", "get_lifespan_timer");
 }
 
 void Projectile::set_lifespan_timer(godot::Timer* timer)
