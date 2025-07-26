@@ -51,7 +51,7 @@ void CircleWaveAttack::_step(double delta)
 
 void CircleWaveAttack::_bind_methods()
 {
-    BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(CircleWaveAttack, projectile, PropertyHint::PROPERTY_HINT_NODE_TYPE, "Projectile", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, Projectile);
+    BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(CircleWaveAttack, projectile, PROPERTY_HINT_NODE_TYPE, "Projectile", PROPERTY_USAGE_DEFAULT, Projectile);
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(CircleWaveAttack, INT, projectiles_per_wave);
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(CircleWaveAttack, INT, waves);
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(CircleWaveAttack, FLOAT, wave_cooldown);
