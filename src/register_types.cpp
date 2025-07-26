@@ -15,6 +15,7 @@
 
 #include "actors/player/player_character.hpp"
 
+#include "actor_behaviour/actions/bt_execute_attack.hpp"
 #include "actor_behaviour/actions/bt_queue_free_node.hpp"
 #include "actor_behaviour/actions/bt_look_at_position.hpp"
 #include "actor_behaviour/actions/bt_spawn_node3d_at_position.hpp"
@@ -64,6 +65,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<Attack>();
 		ClassDB::register_class<CircleWaveAttack>();
 
+		ClassDB::register_class<BTExecuteAttack>();
 		ClassDB::register_class<BTQueueFreeNode>();
 		ClassDB::register_class<BTSpawnNode3DAtPosition>();
 		ClassDB::register_class<BTPlayAnimation>();

@@ -14,6 +14,7 @@ public:
 
 protected:
     virtual BTTask::Status _tick(double delta) override;
+    virtual void _enter() override;
 
 public:
 
