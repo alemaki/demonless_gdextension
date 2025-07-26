@@ -1,7 +1,15 @@
 import os
 
 # Define build directories
-target = ARGUMENTS.get('target', "release")
+if 'target' not in ARGUMENTS:
+    ARGUMENTS['target'] = 'template_debug'
+
+if 'debug_symbols' not in ARGUMENTS:
+    ARGUMENTS['debug_symbols'] = 'yes'
+
+target = ARGUMENTS.get('target', "template_debug")
+debug_symbols = ARGUMENTS.get('debug_symbols', "yes")
+
 variant_dir = os.path.join('..', 'bin')
 
 # Ensure variant directory exists
@@ -46,9 +54,13 @@ for compilation_path in compilation_paths:
 # Godot doesn't like ".obj"
 env['OBJSUFFIX'] = '.o'
 
-if target == 'template_debug' or target == 'debug':
+print("Compiler: " + env['CC'])
+
+if target == 'template_debug':
     env.Append(CPPDEFINES=['DEBUG'])
-    env.Append(CXXFLAGS=['-g', '-O0'])  # Debug flags: No optimization, include debug symbols
+    if debug_symbols == "yes":
+        pass
+        #env.Append(CXXFLAGS=['-g', '-O0'])  # Debug flags: No optimization, include debug symbols
 else:
     env.Append(CPPDEFINES=['NDEBUG'])
 
@@ -59,4 +71,3 @@ if env['platform'] == 'linux' or env['platform'] == 'windows':
 
 if env['platform'] == 'android': # TODO
 	pass
-

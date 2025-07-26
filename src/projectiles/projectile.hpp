@@ -9,6 +9,17 @@ class Projectile : public godot::Node3D
     GDCLASS(Projectile, godot::Node3D);
 
 protected:
+    godot::Vector3 direction = godot::Vector3(1, 0, 0);
+
+public:
+
+    void set_direction(godot::Vector3 direction);
+    _FORCE_INLINE_ godot::Vector3 get_direction() const
+    {
+        return this->direction;
+    }
+
+protected:
     godot::Timer* lifespan_timer = nullptr;
     static void _bind_methods();
 
