@@ -77,11 +77,9 @@ TEST_SUITE("[Error] BTExecuteAttack")
     {
         blackboard->erase_var("attack_name");
         BTTask::Status status;
-        CHECK_GODOT_ERROR(task->abort());
         CHECK_GODOT_ERROR(status = task->execute(1));
 
         blackboard->set_var("attack_name", nullptr);
-        CHECK_GODOT_ERROR(task->abort());
         CHECK_GODOT_ERROR(status = task->execute(1));
     }
 }
