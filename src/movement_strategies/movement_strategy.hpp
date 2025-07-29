@@ -1,12 +1,12 @@
 #ifndef MOVEMENT_STRATEGY_HPP
 #define MOVEMENT_STRATEGY_HPP
 
-#include <godot_cpp/classes/resource.hpp>
+#include <godot_cpp/classes/node.hpp>
 #include "movement_strategies/movement_context.hpp"
 
-class MovementStrategy : public godot::Resource
+class MovementStrategy : public godot::Node
 {
-    GDCLASS(MovementStrategy, godot::Resource);
+    GDCLASS(MovementStrategy, godot::Node);
 
 public:
     virtual void apply(godot::Ref<MovementContext> context, double delta) const = 0;
