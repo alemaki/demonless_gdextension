@@ -78,7 +78,7 @@ void Projectile::_bind_methods()
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "lifespan_timer", PROPERTY_HINT_NODE_TYPE, "Timer", PROPERTY_USAGE_DEFAULT, "Timer"), "set_lifespan_timer", "get_lifespan_timer");
 
     BIND_GETTER_SETTER_DEFAULT(Projectile, movement_context);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_context", PROPERTY_HINT_RESOURCE_TYPE, "Movement strategies.", PROPERTY_USAGE_DEFAULT), "set_movement_strategies", "get_movement_strategies");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_context", PROPERTY_HINT_RESOURCE_TYPE, "Movement context.", PROPERTY_USAGE_DEFAULT), "set_movement_context", "get_movement_context");
     
     BIND_GETTER_SETTER_DEFAULT(Projectile, movement_strategies);
     ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "movement_strategies", PROPERTY_HINT_ARRAY_TYPE, "Movement strategies.", PROPERTY_USAGE_ARRAY), "set_movement_strategies", "get_movement_strategies");

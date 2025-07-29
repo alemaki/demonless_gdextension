@@ -33,7 +33,12 @@
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
 #include "components/movement/character_movement_component.hpp"
+
+#include "movement_strategies/movement_context.hpp"
+#include "movement_strategies/movement_strategy.hpp"
+
 #include "projectiles/projectile.hpp"
+
 #include "ui/health_bar.hpp"
 
 
@@ -46,7 +51,10 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 	
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
 	{
+		ClassDB::register_class<MovementContext>();
+		ClassDB::register_abstract_class<MovementStrategy>();
 		ClassDB::register_class<Projectile>();
+
 		ClassDB::register_class<HealthComponent>();
 		ClassDB::register_class<Hitbox>();
 		ClassDB::register_class<Hurtbox>();
