@@ -1,5 +1,9 @@
 #include "movement_context.hpp"
 
+void MovementContext::set_direction(const godot::Vector3 direction)
+{
+    this->direction = direction.normalized();
+}
 
 void MovementContext::_bind_methods()
 {

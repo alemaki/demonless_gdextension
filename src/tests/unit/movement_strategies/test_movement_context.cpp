@@ -29,12 +29,12 @@ TEST_SUITE("TestMovementContext")
     TEST_CASE_FIXTURE(MovementContextFixture, "Setters and getters function properly")
     {
         context->set_position(godot::Vector3(2, 4, 6));
-        context->set_direction(godot::Vector3(-1, 0, 1));
+        context->set_direction(godot::Vector3(-1, 0, 0));
         context->set_speed(2.718);
         context->set_target(dummy_target);
 
         CHECK_EQ(context->get_position(), godot::Vector3(2, 4, 6));
-        CHECK_EQ(context->get_direction(), godot::Vector3(-1, 0, 1));
+        CHECK_EQ(context->get_direction(), godot::Vector3(-1, 0, 0));
         CHECK_EQ(context->get_speed(), doctest::Approx(2.718));
         CHECK_EQ(context->get_target(), dummy_target);
     }
@@ -43,5 +43,13 @@ TEST_SUITE("TestMovementContext")
     {
         context->set_speed(-10.0);
         CHECK_GE(context->get_speed(), doctest::Approx(0.0));
+    }
+
+    TEST_CASE_FIXTURE(MovementContextFixture, "Direction is always normalised")
+    {
+        CHECK(context->get_direction().is_normalized());
+        context->set_direction(godot::Vector3(0, 1, 1));
+        
+        CHECK_VECTORS_EQ(context->get_direction(), godot::Vector3(0, 1, 1).normalized());
     }
 }
