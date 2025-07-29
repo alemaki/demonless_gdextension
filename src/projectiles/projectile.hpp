@@ -1,36 +1,31 @@
 #ifndef PROJECTILE_HPP
 #define PROJECTILE_HPP
 
-#include <godot_cpp/classes/node3d.hpp>
+#include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/timer.hpp>
+#include "movement_strategies/movement_context.hpp"
+#include "movement_strategies/movement_strategy.hpp"
 
-class Projectile : public godot::Node3D
+class Projectile : public godot::CharacterBody3D
 {
-    GDCLASS(Projectile, godot::Node3D);
+    GDCLASS(Projectile, godot::CharacterBody3D);
 
 protected:
-    godot::Vector3 direction = godot::Vector3(1, 0, 0);
-
-public:
-
-    void set_direction(godot::Vector3 direction);
-    _FORCE_INLINE_ godot::Vector3 get_direction() const
-    {
-        return this->direction;
-    }
-
-protected:
+    MovementContext* movement_context = nullptr;
+    godot::TypedArray<godot::Ref<MovementStrategy>> movement_strategies;
     godot::Timer* lifespan_timer = nullptr;
-    static void _bind_methods();
 
 public:
     virtual void _on_timeout();
     void _ready() override;
-    void set_lifespan_timer(godot::Timer* timer);
-    _FORCE_INLINE_ godot::Timer* get_lifespan_timer() const
-    {
-        return this->lifespan_timer;
-    }
+    void _physics_process(double delta) override;
+
+    CREATE_GETTER_SETTER_DEFAULT(MovementContext*, movement_context)
+    CREATE_GETTER_SETTER_DEFAULT(godot::Timer*, lifespan_timer)
+    CREATE_GETTER_SETTER_DEFAULT(godot::TypedArray<godot::Ref<MovementStrategy>>, movement_strategies)
+
+protected:
+    static void _bind_methods();
 };
 
 #endif // PROJECTILE_HPP
