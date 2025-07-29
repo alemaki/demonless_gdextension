@@ -40,8 +40,7 @@ void Projectile::_bind_methods()
 {
     using namespace godot;
 
-    ClassDB::bind_method(D_METHOD("set_lifespan_timer", "timer"), &Projectile::set_lifespan_timer);
-    ClassDB::bind_method(D_METHOD("get_lifespan_timer"), &Projectile::get_lifespan_timer);
+    BIND_GETTER_SETTER_DEFAULT(Projectile, lifespan_timer);
     ClassDB::bind_method(D_METHOD("_on_timeout"), &Projectile::_on_timeout);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "lifespan_timer", PROPERTY_HINT_NODE_TYPE, "Timer", PROPERTY_USAGE_DEFAULT, "Timer"), "set_lifespan_timer", "get_lifespan_timer");
 
