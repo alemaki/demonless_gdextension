@@ -1,29 +1,30 @@
 #include "projectile.hpp"
 
-void Projectile::set_movement_strategies(godot::TypedArray<MovementStrategy> movement_strategies)
+Projectile::Projectile()
 {
-    this->movement_strategies = movement_strategies;
-    for (int i = 0, size = this->movement_strategies.size(); i < size; i++)
+    this->movement_context = godot::Ref<MovementContext>(memnew(MovementContext));
+}
+
+void Projectile::set_movement_strategy(MovementStrategy* movement_strategy)
+{
+    this->movement_strategy = movement_strategy;
+    if (!(this->movement_strategy))
     {
-        MovementStrategy* movement_strategy = godot::Object::cast_to<MovementStrategy>(this->movement_strategies[i]);
-        if (!movement_strategy)
-        {
-            continue;
-        }
-        if (movement_strategy->get_parent() != this)
-        {
-            this->add_child(movement_strategy);
-        }
-        if (movement_strategy->get_owner() != this) /* make sure the strategy is saved in the editor when added. */
-        {
-            movement_strategy->set_owner(this);
-        }
+        return;
+    }
+    if (this->movement_strategy->get_parent() != this)
+    {
+        this->add_child(movement_strategy);
+    }
+    if (this->movement_strategy->get_owner() != this) /* make sure the strategy is saved in the editor when added. */
+    {
+        movement_strategy->set_owner(this);
     }
 }
 
-godot::TypedArray<MovementStrategy> Projectile::get_movement_strategies() const
+MovementStrategy* Projectile::get_movement_strategy() const
 {
-    return this->movement_strategies;
+    return this->movement_strategy;
 }
 
 void Projectile::_on_timeout()
@@ -47,7 +48,6 @@ void Projectile::_ready()
     {
         this->add_child(this->lifespan_timer);
     }
-
     if (this->movement_context.is_null())
     {
         this->movement_context = godot::Ref<MovementContext>(memnew(MovementContext));
@@ -58,11 +58,9 @@ void Projectile::_physics_process(double delta)
 {
     ERR_FAIL_NULL(this->movement_context);
     this->movement_context->set_position(this->get_position());
-    for (int i = 0, size = this->movement_strategies.size(); i < size; i++)
+    if (this->movement_strategy)
     {
-        MovementStrategy* movement_strategy = godot::Object::cast_to<MovementStrategy>(this->movement_strategies[i]);
-        ERR_CONTINUE(movement_strategy == nullptr);
-        movement_strategy->apply(this->movement_context, delta);
+        this->movement_strategy->apply(this->movement_context, delta);
     }
     this->set_velocity(this->movement_context->get_speed() * this->movement_context->get_direction());
     this->move_and_slide();
@@ -80,6 +78,6 @@ void Projectile::_bind_methods()
     BIND_GETTER_SETTER_DEFAULT(Projectile, movement_context);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_context", PROPERTY_HINT_RESOURCE_TYPE, "Movement context.", PROPERTY_USAGE_DEFAULT), "set_movement_context", "get_movement_context");
     
-    BIND_GETTER_SETTER_DEFAULT(Projectile, movement_strategies);
-    ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "movement_strategies", PROPERTY_HINT_ARRAY_TYPE, "Movement strategies.", PROPERTY_USAGE_ARRAY), "set_movement_strategies", "get_movement_strategies");
+    BIND_GETTER_SETTER_DEFAULT(Projectile, movement_strategy);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_strategy", PROPERTY_HINT_NODE_TYPE, "Movement strategy.", PROPERTY_USAGE_EDITOR, "MovementStrategy"), "set_movement_strategy", "get_movement_strategy");
 }
