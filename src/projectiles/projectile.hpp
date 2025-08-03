@@ -12,7 +12,7 @@ class Projectile : public godot::CharacterBody3D
 
 protected:
     godot::Ref<MovementContext> movement_context = nullptr;
-    MovementStrategy* movement_strategy;
+    MovementStrategy* movement_strategy = nullptr;
     godot::Timer* lifespan_timer = nullptr;
 
 public:

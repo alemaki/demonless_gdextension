@@ -12,7 +12,6 @@ private:
     godot::TypedArray<MovementStrategy> movement_strategies;
 
 public:
-    void set_movement_strategies(const godot::TypedArray<MovementStrategy>& movement_strategies);
     godot::TypedArray<MovementStrategy> get_movement_strategies() const;
 
     virtual void apply(godot::Ref<MovementContext> context, double delta) const;
