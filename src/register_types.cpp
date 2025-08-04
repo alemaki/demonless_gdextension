@@ -26,6 +26,7 @@
 #include "attacks/attack.hpp"
 #include "attacks/wave_attack.hpp"
 #include "attacks/circle_wave_attack.hpp"
+#include "attacks/directional_wave_attack.hpp"
 
 #include "components/area3d/hitbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
@@ -71,6 +72,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<Attack>();
 		ClassDB::register_class<WaveAttack>();
 		ClassDB::register_class<CircleWaveAttack>();
+		ClassDB::register_class<DirectionalWaveAttack>();
 
 		ClassDB::register_class<BTExecuteAttack>();
 		ClassDB::register_class<BTQueueFreeNode>();
