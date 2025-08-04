@@ -5,7 +5,13 @@ Projectile::Projectile()
     this->movement_context = godot::Ref<MovementContext>(memnew(MovementContext));
 }
 
-void Projectile::set_movement_strategy(MovementStrategy* movement_strategy)
+void Projectile::set_movement_context(godot::Ref<MovementContext> movement_context)
+{
+    ERR_FAIL_COND(movement_context.is_null());
+    this->movement_context = movement_context;
+}
+
+void Projectile::set_movement_strategy(MovementStrategy *movement_strategy)
 {
     this->movement_strategy = movement_strategy;
     if (!(this->movement_strategy))
@@ -22,9 +28,11 @@ void Projectile::set_movement_strategy(MovementStrategy* movement_strategy)
     }
 }
 
-MovementStrategy* Projectile::get_movement_strategy() const
+void Projectile::set_direction(const godot::Vector3& direction)
 {
-    return this->movement_strategy;
+    ERR_FAIL_COND(direction.is_zero_approx());
+    this->movement_context->set_direction(direction); 
+    this->look_at(this->get_position() + direction);
 }
 
 void Projectile::_on_timeout()
