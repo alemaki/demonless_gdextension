@@ -29,13 +29,13 @@ void DirectionalWaveAttack::_step(double delta)
 
             int index = projectile_index + projectiles_per_wave%2;
 
-            if(projectile_index%2 == 0)
+            if(index%2 == 0)
             {
-                angle = -1*(projectile_index/2 * angle_step);
+                angle = -1*(index/2 * angle_step);
             }
             else
             {
-                angle = (projectile_index/2 * angle_step);
+                angle = (index/2 * angle_step);
             }
             
             godot::Vector3 dir = this->direction.rotated(VECTOR_UP, angle);
