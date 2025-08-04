@@ -72,7 +72,7 @@ TEST_SUITE("BTSpawnNode3DAtPosition")
         REQUIRE_NE(::get_scene_root()->get_child_count(), 1);
         Node3D* node3d = godot::Object::cast_to<Node3D>(::get_scene_root()->get_child(1));
         REQUIRE(node3d != nullptr);
-        CHECK_EQ(node3d->get_global_position(), global_position);
+        CHECK(node3d->get_global_position().is_equal_approx(global_position));
 
         memdelete(mock_actor);
     }

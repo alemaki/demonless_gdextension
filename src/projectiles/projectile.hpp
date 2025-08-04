@@ -12,18 +12,34 @@ class Projectile : public godot::CharacterBody3D
 
 protected:
     godot::Ref<MovementContext> movement_context = nullptr;
-    godot::TypedArray<MovementStrategy> movement_strategies;
+    MovementStrategy* movement_strategy = nullptr;
     godot::Timer* lifespan_timer = nullptr;
 
 public:
+    Projectile();
+
     virtual void _on_timeout();
     void _ready() override;
     void _physics_process(double delta) override;
 
-    CREATE_GETTER_SETTER_DEFAULT(godot::Ref<MovementContext>, movement_context)
-    CREATE_GETTER_SETTER_DEFAULT(godot::Timer*, lifespan_timer)
-    void set_movement_strategies(godot::TypedArray<MovementStrategy> movement_strategies);
-    godot::TypedArray<MovementStrategy> get_movement_strategies() const;
+    CREATE_GETTER_SETTER_DEFAULT(godot::Timer*, lifespan_timer);
+    void set_movement_context(godot::Ref<MovementContext> movement_context);
+    godot::Ref<MovementContext> get_movement_context() const
+    {
+        return this->movement_context;
+    }
+
+    void set_movement_strategy(MovementStrategy* movement_strategy);
+    _FORCE_INLINE_ MovementStrategy* get_movement_strategy() const
+    {
+        return this->movement_strategy;
+    }
+
+    void set_direction(const godot::Vector3& direction);
+    _FORCE_INLINE_ godot::Vector3 get_direction() const
+    {
+        return this->movement_context->get_direction();
+    }
 
 protected:
     static void _bind_methods();
