@@ -42,7 +42,7 @@ void DirectionalWaveAttack::_step(double delta)
             Projectile* projectile_cpy = Object::cast_to<Projectile>(this->projectile->duplicate());
             ERR_FAIL_NULL(projectile_cpy);
             projectile_cpy->set_position(this->actor_source->get_position());
-            projectile_cpy->set_direction(dir);
+            projectile_cpy->get_movement_context()->set_direction(dir);
             get_tree()->get_current_scene()->add_child(projectile_cpy);
         }
     }
