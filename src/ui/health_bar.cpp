@@ -34,5 +34,5 @@ void HealthBar::_bind_methods()
 {
     using namespace godot;
 
-    BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(HealthBar, health_component, PropertyHint::PROPERTY_HINT_NODE_TYPE, "HealthComponent", PropertyUsageFlags::PROPERTY_USAGE_DEFAULT, HealthComponent);
+    BIND_GETTER_SETTER_PROPERTY_OBJECT_DEFAULT(HealthBar, health_component, PROPERTY_HINT_NODE_TYPE, "HealthComponent", PROPERTY_USAGE_DEFAULT, HealthComponent);
 }
