@@ -4,11 +4,11 @@
 
 #include "components/area3d/hitbox.hpp"
 #include "actor_behaviour/actions/bt_execute_attack.hpp"
-#include "attacks/attack.hpp"
+#include "skills/skill_action.hpp"
 
 struct BTExecuteAttackFixture
 {
-    Attack* attack = memnew(Attack);
+    SkillAction* attack = memnew(SkillAction);
     godot::Ref<BTExecuteAttack> task = memnew(BTExecuteAttack);
     godot::Ref<Blackboard> blackboard = memnew(Blackboard);
     godot::Node3D* mock_actor = memnew(godot::Node3D);

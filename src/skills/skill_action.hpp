@@ -1,17 +1,25 @@
-#ifndef ATTACK_HPP
-#define ATTACK_HPP
+#ifndef SKILL_ACTION_HPP
+#define SKILL_ACTION_HPP
 
 #include <godot_cpp/classes/node.hpp>
 #include "utils/utils.hpp"
 #include "godot_cpp/classes/node3d.hpp"
 
-class Attack : public godot::Node
+class SkillAction : public godot::Node
 {
-    GDCLASS(Attack, godot::Node)
-
+    GDCLASS(SkillAction, godot::Node)
+public:
+    enum class SkillPhase 
+    {
+        None,
+        Active,
+        Ended
+    };
 protected:
     double duration = 1;
     double time_accumulated = 0;
+    SkillPhase phase = SkillPhase::None;
+    bool cancellable = true;
 
 protected:
     godot::Node3D* actor_source = nullptr;
@@ -22,6 +30,7 @@ protected:
 public:
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, duration);
     CREATE_GETTER_SETTER_DEFAULT(godot::Node3D*, actor_source);
+    CREATE_GETTER_SETTER_BOOL_DEFAULT(cancellable);
 
     void reset();
     void step(double delta);
@@ -39,4 +48,4 @@ protected:
     static void _bind_methods();
 };
 
-#endif /* ATTACK_HPP */
+#endif /* SKILL_ACTION_HPP */

@@ -1,15 +1,15 @@
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include <doctest.h>
 
-#include "attacks/attack.hpp"
+#include "skills/skill_action.hpp"
 #include "utils/utils.hpp"
 
 
 TEST_SUITE("TestAttack")
 {
-    TEST_CASE("Attack basic")
+    TEST_CASE("SkillAction basic")
     {
-        Attack* attack = memnew(Attack);
+        SkillAction* attack = memnew(SkillAction);
 
         CHECK(attack->get_duration() == doctest::Approx(1.0));
         attack->set_duration(3.5);
@@ -26,7 +26,7 @@ TEST_SUITE("TestAttack")
 
     TEST_CASE("Reset behavior")
     {
-        Attack* attack = memnew(Attack);
+        SkillAction* attack = memnew(SkillAction);
 
         attack->step(1.0);
         CHECK(attack->get_time_accumulated() == doctest::Approx(1.0));
@@ -39,7 +39,7 @@ TEST_SUITE("TestAttack")
 
     TEST_CASE("Step and is_finished logic")
     {
-        Attack* attack = memnew(Attack);
+        SkillAction* attack = memnew(SkillAction);
         attack->set_duration(2.0);
 
         attack->step(1.0);
