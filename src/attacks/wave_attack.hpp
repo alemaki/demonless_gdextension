@@ -2,11 +2,11 @@
 #define WAVE_ATTACK_HPP
 
 #include "projectiles/projectile.hpp"
-#include "attacks/attack.hpp"
+#include "skills/skill_action.hpp"
 
-class WaveAttack : public Attack
+class WaveAttack : public SkillAction
 {
-    GDCLASS(WaveAttack, Attack)
+    GDCLASS(WaveAttack, SkillAction)
 
 protected:
     Projectile* projectile = nullptr; 

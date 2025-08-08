@@ -1,5 +1,5 @@
 #include "bt_execute_attack.hpp"
-#include "attacks/attack.hpp"
+#include "skills/skill_action.hpp"
 
 BTTask::Status BTExecuteAttack::_tick(double delta)
 {
@@ -7,9 +7,10 @@ BTTask::Status BTExecuteAttack::_tick(double delta)
         !(this->get_blackboard()->has_var(this->attack_to_execute)), 
         godot::String("Blackboard has no value named: ") + this->attack_to_execute
     );
-
-    Attack* attack = godot::Object::cast_to<Attack>(this->get_blackboard()->get_var(this->attack_to_execute));
-    TASK_FAIL_COND_COMP_MSG(attack == nullptr, this->attack_to_execute + godot::String(": is not Attack"));
+    
+    //TODO: make attack only or all skills?
+    SkillAction* attack = godot::Object::cast_to<SkillAction>(this->get_blackboard()->get_var(this->attack_to_execute));
+    TASK_FAIL_COND_COMP_MSG(attack == nullptr, this->attack_to_execute + godot::String(": is not SkillAction"));
     TASK_SUCCEED_COND(attack->is_finished());
 
     attack->step(delta);
@@ -25,8 +26,8 @@ void BTExecuteAttack::_enter()
         godot::String("Blackboard has no value named: ") + this->attack_to_execute
     );
 
-    Attack* attack = godot::Object::cast_to<Attack>(this->get_blackboard()->get_var(this->attack_to_execute));
-    ERR_FAIL_COND_MSG(attack == nullptr, this->attack_to_execute + godot::String(": is not Attack"));
+    SkillAction* attack = godot::Object::cast_to<SkillAction>(this->get_blackboard()->get_var(this->attack_to_execute));
+    ERR_FAIL_COND_MSG(attack == nullptr, this->attack_to_execute + godot::String(": is not SkillAction"));
     attack->reset();
 }
 
