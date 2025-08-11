@@ -49,12 +49,11 @@ using namespace godot;
 void initialize_gdextension_module(ModuleInitializationLevel p_level)
 {
 	::initialize_behaviour_tree_module(p_level);
-	::initialize_test_module(p_level);
 	
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
 	{
 		ClassDB::register_class<MovementContext>();
-		ClassDB::register_abstract_class<MovementStrategy>();
+		ClassDB::register_class<MovementStrategy>();
 		ClassDB::register_class<CompositeMovementStrategy>();
 
 		ClassDB::register_class<Projectile>();
