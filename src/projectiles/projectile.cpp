@@ -2,7 +2,7 @@
 
 Projectile::Projectile()
 {
-    this->movement_context = godot::Ref<MovementContext>(memnew(MovementContext));
+
 }
 
 void Projectile::set_movement_context(godot::Ref<MovementContext> movement_context)
@@ -58,7 +58,7 @@ void Projectile::_ready()
     }
     if (this->movement_context.is_null())
     {
-        this->movement_context = godot::Ref<MovementContext>(memnew(MovementContext));
+        this->movement_context.instantiate();
     }
 }
 
