@@ -2,14 +2,14 @@
 #define SKILL_ACTION_HPP
 
 #include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/node3d.hpp>
 #include "utils/utils.hpp"
-#include "godot_cpp/classes/node3d.hpp"
 
 class SkillAction : public godot::Node
 {
     GDCLASS(SkillAction, godot::Node)
 public:
-    enum class SkillPhase 
+    enum class SkillPhase
     {
         None,
         Active,
@@ -33,15 +33,23 @@ public:
     CREATE_GETTER_SETTER_BOOL_DEFAULT(cancellable);
 
     void reset();
+    void end();
     void step(double delta);
-
+    _FORCE_INLINE_ SkillPhase get_phase() const
+    {
+        return this->phase;
+    }
     _FORCE_INLINE_ double get_time_accumulated() const
     {
         return this->time_accumulated;
     }
+    _FORCE_INLINE_ bool is_active() const
+    {
+        return (phase == SkillPhase::Active);
+    }
     _FORCE_INLINE_ bool is_finished() const
     {
-        return (this->time_accumulated >= this->duration);
+        return (phase == SkillPhase::Ended);
     }
 
 protected:

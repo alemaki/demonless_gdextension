@@ -24,6 +24,8 @@
 #include "actor_behaviour/conditions/bt_node3d_in_range.hpp"
 
 #include "skills/skill_action.hpp"
+#include "skills/projectile_time_jump.hpp"
+
 #include "attacks/wave_attack.hpp"
 #include "attacks/circle_wave_attack.hpp"
 #include "attacks/directional_wave_attack.hpp"
@@ -49,7 +51,7 @@ using namespace godot;
 void initialize_gdextension_module(ModuleInitializationLevel p_level)
 {
 	::initialize_behaviour_tree_module(p_level);
-	
+
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
 	{
 		ClassDB::register_class<MovementContext>();
@@ -69,9 +71,12 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 
 		/* UI */
 		ClassDB::register_class<HealthBar>();
-		
+
 		/* Behaviour */
 		ClassDB::register_class<SkillAction>();
+
+		ClassDB::register_class<ProjectileTimeJump>();
+
 		ClassDB::register_class<WaveAttack>();
 		ClassDB::register_class<CircleWaveAttack>();
 		ClassDB::register_class<DirectionalWaveAttack>();
@@ -86,7 +91,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
 	{
-		
+
 	}
 }
 

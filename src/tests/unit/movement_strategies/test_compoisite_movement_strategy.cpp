@@ -7,12 +7,14 @@
 
 using namespace godot;
 
-struct CompositeStrategyFixture {
+struct CompositeStrategyFixture
+{
     CompositeMovementStrategy* composite = nullptr;
     MovementStrategy* strategy1 = nullptr;
     MovementStrategy* strategy2 = nullptr;
 
-    CompositeStrategyFixture() {
+    CompositeStrategyFixture()
+    {
         composite = memnew(CompositeMovementStrategy);
         strategy1 = memnew(MovementStrategy);
         strategy2 = memnew(MovementStrategy);
@@ -22,7 +24,8 @@ struct CompositeStrategyFixture {
         composite->add_child(strategy2);
     }
 
-    ~CompositeStrategyFixture() {
+    ~CompositeStrategyFixture()
+    {
         composite->remove_child(strategy1);
         composite->remove_child(strategy2);
 
@@ -34,18 +37,19 @@ struct CompositeStrategyFixture {
 
 TEST_SUITE("CompositeMovementStrategy Tests")
 {
-    /*(TEST_CASE_FIXTURE(CompositeStrategyFixture, "get_movement_strategies returns all MovementStrategy children")
+    TEST_CASE_FIXTURE(CompositeStrategyFixture, "get_movement_strategies returns all MovementStrategy children")
     {
         TypedArray<MovementStrategy> result = composite->get_movement_strategies();
 
         CHECK_EQ(result.size(), 2);
         CHECK_EQ(result[0], godot::Variant(strategy1));
         CHECK_EQ(result[1], godot::Variant(strategy2));
-    }*/
+    }
 
-    /*TEST_CASE_FIXTURE(CompositeStrategyFixture, "apply calls apply on all MovementStrategy children")
+    TEST_CASE_FIXTURE(CompositeStrategyFixture, "apply calls apply on all MovementStrategy children")
     {
-        struct TestStrategy : public MovementStrategy 
+        /* Note to self: CAN DO THIS if GDCLASS is not defined in child. */
+        struct TestStrategy : public MovementStrategy
         {
             int apply_call_count = 0;
 
@@ -71,5 +75,5 @@ TEST_SUITE("CompositeMovementStrategy Tests")
         composite->remove_child(test_strategy2);
         memdelete(test_strategy1);
         memdelete(test_strategy2);
-    }*/
+    }
 }
