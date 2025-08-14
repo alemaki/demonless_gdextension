@@ -35,7 +35,10 @@ public:
     void reset();
     void end();
     void step(double delta);
-
+    _FORCE_INLINE_ SkillPhase get_phase() const
+    {
+        return this->phase;
+    }
     _FORCE_INLINE_ double get_time_accumulated() const
     {
         return this->time_accumulated;

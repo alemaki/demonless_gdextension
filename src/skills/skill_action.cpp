@@ -20,10 +20,14 @@ void SkillAction::step(double delta)
 
     if (this->time_accumulated >= this->duration)
     {
-        this->phase = SkillPhase::Ended;
-        this->_end();
+        this->end();
     }
 
+}
+void SkillAction::end()
+{
+    this->phase = SkillPhase::Ended;
+    this->_end();
 }
 
 void SkillAction::_bind_methods()
