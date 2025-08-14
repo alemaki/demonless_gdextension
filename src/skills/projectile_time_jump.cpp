@@ -10,8 +10,18 @@ void ProjectileTimeJump::_step(double delta)
         Projectile* projectile = godot::Object::cast_to<Projectile>(projectiles[i]);
         MovementStrategy* move_strat = projectile->get_movement_strategy();
         godot::Ref<MovementContext> move_ctx = projectile->get_movement_context();
-        move_strat->apply(move_ctx, this->time_skip); // TODO: is movement strategy responsible for moving the projectile? - probably yes.
-        projectile->set_movement_context(move_ctx);
+        if (move_strat)
+        {
+            move_strat->apply(move_ctx, this->time_skip);
+        }
+        else
+        {
+            godot::Vector3 position = move_ctx->get_position();
+            godot::Vector3 direction = move_ctx->get_direction();
+            double speed = move_ctx->get_speed();
+            move_ctx->set_position(position + direction*speed*this->time_skip);
+        }
+        projectile->set_position(move_ctx->get_position());
     }
     /* End the skill instantly */
     this->duration = 0;
