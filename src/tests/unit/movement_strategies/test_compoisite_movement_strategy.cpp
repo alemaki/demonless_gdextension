@@ -7,12 +7,14 @@
 
 using namespace godot;
 
-struct CompositeStrategyFixture {
+struct CompositeStrategyFixture
+{
     CompositeMovementStrategy* composite = nullptr;
     MovementStrategy* strategy1 = nullptr;
     MovementStrategy* strategy2 = nullptr;
 
-    CompositeStrategyFixture() {
+    CompositeStrategyFixture()
+    {
         composite = memnew(CompositeMovementStrategy);
         strategy1 = memnew(MovementStrategy);
         strategy2 = memnew(MovementStrategy);
@@ -22,7 +24,8 @@ struct CompositeStrategyFixture {
         composite->add_child(strategy2);
     }
 
-    ~CompositeStrategyFixture() {
+    ~CompositeStrategyFixture()
+    {
         composite->remove_child(strategy1);
         composite->remove_child(strategy2);
 
