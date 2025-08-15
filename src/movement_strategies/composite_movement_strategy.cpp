@@ -16,8 +16,9 @@ TypedArray<MovementStrategy> CompositeMovementStrategy::get_movement_strategies(
     return strategies;
 }
 
-void CompositeMovementStrategy::apply(Ref<MovementContext> context, double delta) const 
+void CompositeMovementStrategy::apply(Ref<MovementContext> context, double delta) const
 {
+    ERR_FAIL_NULL(context);
     for (int i = 0; i < get_child_count(); ++i)
     {
         MovementStrategy* strategy = Object::cast_to<MovementStrategy>(get_child(i));

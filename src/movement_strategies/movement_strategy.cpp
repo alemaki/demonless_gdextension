@@ -2,6 +2,7 @@
 
 void MovementStrategy::apply(godot::Ref<MovementContext> context, double delta)
 {
+    ERR_FAIL_NULL(context);
     /* default behaviour is linear */
     context->set_position(context->get_position() + context->get_direction()*context->get_speed()*delta);
 }
