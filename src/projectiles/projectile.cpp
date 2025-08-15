@@ -11,13 +11,14 @@ void Projectile::set_movement_context(godot::Ref<MovementContext> movement_conte
     this->movement_context = movement_context;
 }
 
-void Projectile::set_movement_strategy(MovementStrategy *movement_strategy)
+void Projectile::set_movement_strategy(MovementStrategy* movement_strategy)
 {
-    this->movement_strategy = movement_strategy;
-    if (!(this->movement_strategy))
+    if (this->movement_strategy)
     {
-        return;
+        this->movement_strategy->queue_free();
     }
+    this->movement_strategy = movement_strategy;
+    ERR_FAIL_NULL(movement_strategy); /* set strategy to null so no segfaults can happen and fail after so it can alert */
     if (this->movement_strategy->get_parent() != this)
     {
         this->add_child(movement_strategy);
@@ -31,7 +32,7 @@ void Projectile::set_movement_strategy(MovementStrategy *movement_strategy)
 void Projectile::set_direction(const godot::Vector3& direction)
 {
     ERR_FAIL_COND(direction.is_zero_approx());
-    this->movement_context->set_direction(direction); 
+    this->movement_context->set_direction(direction);
     this->look_at(this->get_position() + direction);
 }
 
@@ -60,17 +61,20 @@ void Projectile::_ready()
     {
         this->movement_context.instantiate();
     }
+    if (!this->movement_strategy)
+    {
+        this->set_movement_strategy(memnew(MovementStrategy));
+    }
 }
 
 void Projectile::_physics_process(double delta)
 {
     ERR_FAIL_NULL(this->movement_context);
+    ERR_FAIL_NULL(this->movement_strategy);
     this->movement_context->set_position(this->get_position());
-    if (this->movement_strategy)
-    {
-        this->movement_strategy->apply(this->movement_context, delta);
-    }
-    this->set_velocity(this->movement_context->get_speed() * this->movement_context->get_direction());
+    this->movement_strategy->apply(this->movement_context, delta);
+    godot::Vector3 displacement = this->movement_context->get_position()- this->get_position();
+    this->set_velocity(displacement / delta); // velocity to reach in one frame
     this->move_and_slide();
 }
 
@@ -85,7 +89,7 @@ void Projectile::_bind_methods()
 
     BIND_GETTER_SETTER_DEFAULT(Projectile, movement_context);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_context", PROPERTY_HINT_RESOURCE_TYPE, "Movement context.", PROPERTY_USAGE_DEFAULT), "set_movement_context", "get_movement_context");
-    
+
     BIND_GETTER_SETTER_DEFAULT(Projectile, movement_strategy);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_strategy", PROPERTY_HINT_NODE_TYPE, "Movement strategy.", PROPERTY_USAGE_EDITOR, "MovementStrategy"), "set_movement_strategy", "get_movement_strategy");
 }

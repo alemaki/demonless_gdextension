@@ -65,7 +65,7 @@ TEST_SUITE("CompositeMovementStrategy Tests")
         composite->add_child(test_strategy1);
         composite->add_child(test_strategy2);
 
-        Ref<MovementContext> dummy_context;
+        Ref<MovementContext> dummy_context = memnew(MovementContext);
         composite->apply(dummy_context, 0.016);
 
         CHECK_EQ(test_strategy1->apply_call_count, 1);
