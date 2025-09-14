@@ -25,7 +25,7 @@ void PlayerCharacter::_ready()
     this->action_fsm->set_initial_state(this->action_idle);
     this->action_block->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_block));
     this->action_block->add_exit_callable(callable_mp(this, &PlayerCharacter::_exit_block));
-    
+
     this->movement_idle = this->movement_fsm->create_state();
     this->movement_run = this->movement_fsm->create_state();
     this->movement_fsm->set_initial_state(this->movement_idle);
@@ -67,8 +67,8 @@ void PlayerCharacter::process_movement_state()
         this->movement_fsm->transition_to_state(this->movement_idle);
     }
     godot::Vector3 dir = this->input_component->get_direction_input();
-    if ((this->movement_fsm->get_state() ==this->movement_idle) 
-        && (this->action_fsm->get_state() != this->action_attack) 
+    if ((this->movement_fsm->get_state() ==this->movement_idle)
+        && (this->action_fsm->get_state() != this->action_attack)
         && !(dir.is_equal_approx(godot::Vector3(0, 0, 0))))
     {
         this->movement_fsm->transition_to_state(this->movement_run);
@@ -108,6 +108,7 @@ void PlayerCharacter::process_action()
     else if (this->action_fsm->get_state() == this->action_block)
     {
         ERR_FAIL_NULL(this->input_component);
+        //TODO:
         if (!this->input_component->is_block_pressed())
         {
             this->action_fsm->transition_to_state(this->action_idle);
