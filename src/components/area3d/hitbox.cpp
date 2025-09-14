@@ -18,10 +18,8 @@ void Hitbox::_ready()
 
 void Hitbox::trigger_block()
 {
-    if (this->is_blockable())
-    {
-        this->_on_block();
-    }
+    ERR_FAIL_COND(!this->is_blockable());
+    this->_on_block();
 }
 
 void Hitbox::_on_block()

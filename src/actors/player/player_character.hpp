@@ -50,14 +50,14 @@ public:
     CREATE_GETTER_SETTER_DEFAULT(godot::Node3D*, mesh_instance)
     CREATE_GETTER_SETTER_DEFAULT(HitboxBlocker*, hitbox_blocker)
 
-    
+
     void set_movement_component(CharacterMovementComponent* movement_component);
     _FORCE_INLINE_ CharacterMovementComponent* get_movement_component()
     {
         return this->movement_component;
     }
 
-protected: 
+protected:
     static void _bind_methods();
 
 };
