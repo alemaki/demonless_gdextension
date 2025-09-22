@@ -13,22 +13,20 @@ void MovementStrategy::apply(godot::Ref<MovementContext> context, double delta)
     ERR_FAIL_NULL(context);
     if (this->is_done())
     {
-        /* TODO: leave it frozen? */
+        this->MovementStrategy::_apply(context, delta);
         return;
     }
     this->_apply(context, delta);
-    this->time_passed += delta;
 }
 
 bool MovementStrategy::is_done() const
 {
-    return this->time_passed > this->duration;
+    return false;
 }
 
 void MovementStrategy::_bind_methods()
 {
     using namespace godot;
 
-    BIND_GETTER_SETTER_DEFAULT(MovementStrategy, duration);
     //TODO: switch to godot_cpp 4.3 to be able to expose virtual methods.
 }
