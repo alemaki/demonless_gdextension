@@ -81,7 +81,10 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
 
         CHECK(SignalWatcher::signal_emitted(hitbox, "block_triggered"));
     }
+}
 
+TEST_SUITE("[errors] HitboxHurtboxInteractionTests")
+{
     TEST_CASE_FIXTURE(HitboxHurtboxFixture, "Test hitbox doesn't emit 'block_triggered', when prohibited.")
     {
         REQUIRE(hitbox->has_signal("block_triggered"));
@@ -89,9 +92,8 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         SignalWatcher::watch_signals(hitbox);
         hitbox->set_blockable(false);
         hitbox->set_monitoring(true);
-        hitbox->trigger_block();
+        CHECK_GODOT_ERROR(hitbox->trigger_block());
 
         CHECK_FALSE(SignalWatcher::signal_emitted(hitbox, "block_triggered"));
     }
-
 }
