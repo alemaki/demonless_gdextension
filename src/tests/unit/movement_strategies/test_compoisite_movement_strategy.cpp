@@ -37,6 +37,32 @@ struct CompositeStrategyFixture
 
 TEST_SUITE("CompositeMovementStrategy Tests")
 {
+    /* Note to self: CAN DO THIS if GDCLASS is not defined in child class. */
+    struct TestStrategy : public MovementStrategy
+    {
+        int apply_call_count = 0;
+
+        void _apply(Ref<MovementContext>, double) override
+        {
+            apply_call_count++;
+        }
+    };
+
+    struct AlwaysDoneStrategy : public MovementStrategy
+    {
+        int apply_call_count = 0;
+
+        void _apply(Ref<MovementContext>, double) override
+        {
+            apply_call_count++;
+        }
+
+        bool is_done() const override
+        {
+            return true;
+        }
+    };
+
     TEST_CASE_FIXTURE(CompositeStrategyFixture, "get_movement_strategies returns all MovementStrategy children")
     {
         TypedArray<MovementStrategy> result = composite->get_movement_strategies();
@@ -48,17 +74,6 @@ TEST_SUITE("CompositeMovementStrategy Tests")
 
     TEST_CASE_FIXTURE(CompositeStrategyFixture, "apply calls apply on all MovementStrategy children")
     {
-        /* Note to self: CAN DO THIS if GDCLASS is not defined in child. */
-        struct TestStrategy : public MovementStrategy
-        {
-            int apply_call_count = 0;
-
-            void _apply(Ref<MovementContext>, double) override
-            {
-                apply_call_count++;
-            }
-        };
-
         TestStrategy* test_strategy1 = memnew(TestStrategy);
         TestStrategy* test_strategy2 = memnew(TestStrategy);
 
@@ -75,5 +90,67 @@ TEST_SUITE("CompositeMovementStrategy Tests")
         composite->remove_child(test_strategy2);
         memdelete(test_strategy1);
         memdelete(test_strategy2);
+    }
+
+    TEST_CASE_FIXTURE(CompositeStrategyFixture, "is_done returns false if any of the children are not done")
+    {
+        /* strategy1-2 from the fixtures return true on is_done call. */
+        AlwaysDoneStrategy* always_done_strategy = memnew(AlwaysDoneStrategy);
+
+        composite->add_child(always_done_strategy);
+
+        REQUIRE_FALSE(composite->is_done());
+
+        Ref<MovementContext> dummy_context = memnew(MovementContext);
+        composite->apply(dummy_context, 0.016);
+
+        CHECK_EQ(always_done_strategy->apply_call_count, 0);
+        composite->remove_child(always_done_strategy);
+        memdelete(always_done_strategy);
+    }
+
+    TEST_CASE("is_done returns true if all of the children are done")
+    {
+        AlwaysDoneStrategy* always_done_strategy1 = memnew(AlwaysDoneStrategy);
+        AlwaysDoneStrategy* always_done_strategy2 = memnew(AlwaysDoneStrategy);
+        CompositeMovementStrategy* composite = memnew(CompositeMovementStrategy);
+
+        composite->add_child(always_done_strategy1);
+        composite->add_child(always_done_strategy2);
+
+        REQUIRE(composite->is_done());
+
+        Ref<MovementContext> dummy_context = memnew(MovementContext);
+        composite->apply(dummy_context, 0.016);
+
+        CHECK_EQ(always_done_strategy1->apply_call_count, 0);
+        CHECK_EQ(always_done_strategy2->apply_call_count, 0);
+        memdelete(composite);
+    }
+}
+
+TEST_SUITE("[errors] CompositeMovementStrategy Error Tests")
+{
+    TEST_CASE_FIXTURE(CompositeStrategyFixture, "Apply call fails if context is null")
+    {
+        CHECK_GODOT_ERROR(composite->apply(nullptr, 1));
+    }
+
+    TEST_CASE("Apply call fails if no children are in composite strategy.")
+    {
+        CompositeMovementStrategy* composite = memnew(CompositeMovementStrategy);
+        Ref<MovementContext> dummy_context = memnew(MovementContext);
+        CHECK_GODOT_ERROR(composite->apply(dummy_context, 1));
+        memdelete(composite);
+    }
+
+    TEST_CASE("One of children is not a MovementStrategy")
+    {
+        CompositeMovementStrategy* composite = memnew(CompositeMovementStrategy);
+        composite->add_child(memnew(MovementStrategy));
+        composite->add_child(memnew(Node3D));
+        Ref<MovementContext> dummy_context = memnew(MovementContext);
+        CHECK_GODOT_ERROR(composite->apply(dummy_context, 1));
+        memdelete(composite);
     }
 }
