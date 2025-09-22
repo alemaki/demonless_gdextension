@@ -1,10 +1,8 @@
 #include "composite_movement_strategy.hpp"
 
-using namespace godot;
-
-TypedArray<MovementStrategy> CompositeMovementStrategy::get_movement_strategies() const
+godot::TypedArray<MovementStrategy> CompositeMovementStrategy::get_movement_strategies() const
 {
-    TypedArray<MovementStrategy> strategies;
+    godot::TypedArray<MovementStrategy> strategies;
     for (int i = 0; i < get_child_count(); ++i)
     {
         MovementStrategy* strategy = Object::cast_to<MovementStrategy>(get_child(i));
@@ -16,14 +14,33 @@ TypedArray<MovementStrategy> CompositeMovementStrategy::get_movement_strategies(
     return strategies;
 }
 
-void CompositeMovementStrategy::apply(Ref<MovementContext> context, double delta) const
+bool CompositeMovementStrategy::is_done() const
 {
-    ERR_FAIL_NULL(context);
     for (int i = 0; i < get_child_count(); ++i)
     {
         MovementStrategy* strategy = Object::cast_to<MovementStrategy>(get_child(i));
-        ERR_CONTINUE(strategy == nullptr);
-        strategy->apply(context, delta);
+        ERR_CONTINUE_MSG(strategy == nullptr, "Child " + godot::itos(i) + " is not a movement strategy.");
+        if (!(strategy->is_done()))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+void CompositeMovementStrategy::_apply(godot::Ref<MovementContext> context, double delta)
+{
+    ERR_FAIL_NULL(context);
+    ERR_FAIL_COND_MSG(get_child_count() == 0, "No children of CompositeMovementStrategy: " + this->get_name());
+    for (int i = 0; i < get_child_count(); ++i)
+    {
+        MovementStrategy* strategy = Object::cast_to<MovementStrategy>(get_child(i));
+        ERR_CONTINUE_MSG(strategy == nullptr, "Child " + godot::itos(i) + " is not a movement strategy.");
+        if (!(strategy->is_done()))
+        {
+            strategy->apply(context, delta);
+        }
     }
 }
 

@@ -9,12 +9,11 @@ class CompositeMovementStrategy : public MovementStrategy
     GDCLASS(CompositeMovementStrategy, MovementStrategy);
 
 private:
-    godot::TypedArray<MovementStrategy> movement_strategies;
+    virtual void _apply(godot::Ref<MovementContext> context, double delta) override;
 
 public:
     godot::TypedArray<MovementStrategy> get_movement_strategies() const;
-
-    virtual void apply(godot::Ref<MovementContext> context, double delta) const;
+    bool is_done() const override;
 
 protected:
     static void _bind_methods();
