@@ -11,7 +11,7 @@ TEST_SUITE("ProjectileTimeJump")
         double last_delta = 0;
         godot::Ref<MovementContext> last_ctx;
 
-        void apply(godot::Ref<MovementContext> context, double delta) override
+        void _apply(godot::Ref<MovementContext> context, double delta) override
         {
             ERR_FAIL_NULL(context);
             apply_calls++;

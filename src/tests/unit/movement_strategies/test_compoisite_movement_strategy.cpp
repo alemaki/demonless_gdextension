@@ -53,7 +53,7 @@ TEST_SUITE("CompositeMovementStrategy Tests")
         {
             int apply_call_count = 0;
 
-            void apply(Ref<MovementContext>, double) override
+            void _apply(Ref<MovementContext>, double) override
             {
                 apply_call_count++;
             }
