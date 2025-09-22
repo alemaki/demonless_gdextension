@@ -16,13 +16,28 @@ godot::TypedArray<MovementStrategy> SequentialMovementStrategy::get_movement_str
 
 bool SequentialMovementStrategy::is_done() const
 {
-    return (get_child_count() <= this->current_strategy);
+    ERR_FAIL_COND_V_MSG(get_child_count() == 0, true, "No children of SequentialMovementStrategy: " + this->get_name());
+    int strat = 0;
+    MovementStrategy* strategy = Object::cast_to<MovementStrategy>(get_child(strat));
+    ERR_FAIL_COND_V_MSG(strategy == nullptr, true, "Child " + godot::itos(strat) + " is not a movement strategy.");
+
+    while (strategy->is_done())
+    {
+        strat++;
+        if (get_child_count() <= strat)
+        {
+            break;
+        }
+        strategy = Object::cast_to<MovementStrategy>(get_child(strat));
+        ERR_FAIL_COND_V_MSG(strategy == nullptr, true, "Child " + godot::itos(strat) + " is not a movement strategy.");
+    }
+
+    return (get_child_count() <= strat);
 }
 
 void SequentialMovementStrategy::_apply(godot::Ref<MovementContext> context, double delta)
 {
     ERR_FAIL_NULL(context);
-    ERR_FAIL_COND_MSG(get_child_count() == 0, "No children of SequentialMovementStrategy: " + this->get_name());
     ERR_FAIL_COND(get_child_count() <= this->current_strategy);
 
     MovementStrategy* strategy = Object::cast_to<MovementStrategy>(get_child(this->current_strategy));

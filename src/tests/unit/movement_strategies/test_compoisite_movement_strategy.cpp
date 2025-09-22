@@ -41,16 +41,7 @@ TEST_SUITE("CompositeMovementStrategy Tests")
     struct TestStrategy : public MovementStrategy
     {
         int apply_call_count = 0;
-
-        void _apply(Ref<MovementContext>, double) override
-        {
-            apply_call_count++;
-        }
-    };
-
-    struct AlwaysDoneStrategy : public MovementStrategy
-    {
-        int apply_call_count = 0;
+        bool done = false;
 
         void _apply(Ref<MovementContext>, double) override
         {
@@ -59,7 +50,7 @@ TEST_SUITE("CompositeMovementStrategy Tests")
 
         bool is_done() const override
         {
-            return true;
+            return this->done;
         }
     };
 
@@ -95,7 +86,8 @@ TEST_SUITE("CompositeMovementStrategy Tests")
     TEST_CASE_FIXTURE(CompositeStrategyFixture, "is_done returns false if any of the children are not done")
     {
         /* strategy1-2 from the fixtures return true on is_done call. */
-        AlwaysDoneStrategy* always_done_strategy = memnew(AlwaysDoneStrategy);
+        TestStrategy* always_done_strategy = memnew(TestStrategy);
+        always_done_strategy->done = true;
 
         composite->add_child(always_done_strategy);
 
@@ -111,8 +103,11 @@ TEST_SUITE("CompositeMovementStrategy Tests")
 
     TEST_CASE("is_done returns true if all of the children are done")
     {
-        AlwaysDoneStrategy* always_done_strategy1 = memnew(AlwaysDoneStrategy);
-        AlwaysDoneStrategy* always_done_strategy2 = memnew(AlwaysDoneStrategy);
+        TestStrategy* always_done_strategy1 = memnew(TestStrategy);
+        TestStrategy* always_done_strategy2 = memnew(TestStrategy);
+        always_done_strategy1->done = true;
+        always_done_strategy2->done = true;
+
         CompositeMovementStrategy* composite = memnew(CompositeMovementStrategy);
 
         composite->add_child(always_done_strategy1);
