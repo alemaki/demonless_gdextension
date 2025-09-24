@@ -17,6 +17,8 @@ public:
     godot::TypedArray<MovementStrategy> get_movement_strategies() const;
     bool is_done() const override;
 
+    void _ready() override;
+
 protected:
     static void _bind_methods();
 };

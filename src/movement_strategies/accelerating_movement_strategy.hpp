@@ -22,7 +22,7 @@ public:
     CREATE_GETTER_SETTER_DEFAULT(double, max_speed);
     bool is_done() const override;
 
-    virtual void _ready() override;
+    void _ready() override;
 
 protected:
     static void _bind_methods();
