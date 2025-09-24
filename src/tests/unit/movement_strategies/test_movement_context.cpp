@@ -49,7 +49,7 @@ TEST_SUITE("TestMovementContext")
     {
         CHECK(context->get_direction().is_normalized());
         context->set_direction(godot::Vector3(0, 1, 1));
-        
+
         CHECK_VECTORS_EQ(context->get_direction(), godot::Vector3(0, 1, 1).normalized());
     }
 }

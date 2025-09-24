@@ -35,7 +35,7 @@ struct SequentialStrategyFixture
     }
 };
 
-TEST_SUITE("SequentialMovementStrategy Tests")
+TEST_SUITE("SequentialMovementStrategy")
 {
     struct TestStrategy : public MovementStrategy
     {
@@ -134,7 +134,7 @@ TEST_SUITE("SequentialMovementStrategy Tests")
     }
 }
 
-TEST_SUITE("[errors] SequentialMovementStrategy Error Tests")
+TEST_SUITE("[errors] SequentialMovementStrategy")
 {
     TEST_CASE_FIXTURE(SequentialStrategyFixture, "Apply call fails if context is null")
     {

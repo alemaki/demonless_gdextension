@@ -35,7 +35,7 @@ struct CompositeStrategyFixture
     }
 };
 
-TEST_SUITE("CompositeMovementStrategy Tests")
+TEST_SUITE("CompositeMovementStrategy")
 {
     /* Note to self: CAN DO THIS if GDCLASS is not defined in child class. */
     struct TestStrategy : public MovementStrategy
@@ -124,7 +124,7 @@ TEST_SUITE("CompositeMovementStrategy Tests")
     }
 }
 
-TEST_SUITE("[errors] CompositeMovementStrategy Error Tests")
+TEST_SUITE("[errors] CompositeMovementStrategy")
 {
     TEST_CASE_FIXTURE(CompositeStrategyFixture, "Apply call fails if context is null")
     {

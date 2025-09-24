@@ -5,8 +5,9 @@ void AcceleratingMovementStrategy::_apply(godot::Ref<MovementContext> context, d
 {
     double speed = context->get_speed();
     speed += this->acceleration_per_second;
-    godot::Math::clamp<double>(speed, this->min_speed, this->max_speed);
+    speed = godot::Math::clamp<double>(speed, this->min_speed, this->max_speed);
     context->set_speed(speed);
+    context->set_position(context->get_position() + context->get_direction()*context->get_speed()*delta);
     last_speed_call = speed;
 }
 
@@ -21,7 +22,8 @@ bool AcceleratingMovementStrategy::is_done() const
 
 void AcceleratingMovementStrategy::_ready()
 {
-    ERR_FAIL_COND_MSG(godot::Math::is_equal_approx(this->last_speed_call, this->max_speed), "Acceleration is approx 0: " + this->get_name());
+    ERR_FAIL_COND(!godot::Math::is_zero_approx(this->min_speed - this->max_speed) && this->min_speed > this->max_speed);
+    ERR_FAIL_COND_MSG(godot::Math::is_equal_approx(this->acceleration_per_second, 0.), "Acceleration is approx 0: " + this->get_name());
 }
 
 void AcceleratingMovementStrategy::_bind_methods()

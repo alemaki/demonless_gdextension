@@ -8,7 +8,7 @@ class AcceleratingMovementStrategy : public MovementStrategy
 {
     GDCLASS(AcceleratingMovementStrategy, MovementStrategy);
 
-private:
+public:
     double last_speed_call = 0;
     double acceleration_per_second = 1;
     double min_speed = 0;
