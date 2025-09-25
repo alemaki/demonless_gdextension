@@ -1,14 +1,16 @@
-#ifndef COMPOSITE_MOVEMENT_STRATEGY_HPP
-#define COMPOSITE_MOVEMENT_STRATEGY_HPP
+#ifndef SEQUENTIAL_MOVEMENT_STRATEGY_HPP
+#define SEQUENTIAL_MOVEMENT_STRATEGY_HPP
 
 #include <godot_cpp/classes/node.hpp>
 #include "movement_strategies/movement_strategy.hpp"
 
-class CompositeMovementStrategy : public MovementStrategy
+class SequentialMovementStrategy : public MovementStrategy
 {
-    GDCLASS(CompositeMovementStrategy, MovementStrategy);
+    GDCLASS(SequentialMovementStrategy, MovementStrategy);
 
 private:
+    int current_strategy = 0;
+
     virtual void _apply(godot::Ref<MovementContext> context, double delta) override;
 
 public:
@@ -19,4 +21,4 @@ protected:
     static void _bind_methods();
 };
 
-#endif // COMPOSITE_MOVEMENT_STRATEGY_HPP
+#endif // SEQUENTIAL_MOVEMENT_STRATEGY_HPP

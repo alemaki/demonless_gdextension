@@ -8,8 +8,12 @@ class MovementStrategy : public godot::Node
 {
     GDCLASS(MovementStrategy, godot::Node);
 
+private:
+    virtual void _apply(godot::Ref<MovementContext> context, double delta);
+
 public:
-    virtual void apply(godot::Ref<MovementContext> context, double delta);
+    void apply(godot::Ref<MovementContext> context, double delta);
+    virtual bool is_done() const;
 
 protected:
     static void _bind_methods();

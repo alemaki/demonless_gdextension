@@ -40,6 +40,7 @@
 #include "movement_strategies/movement_context.hpp"
 #include "movement_strategies/movement_strategy.hpp"
 #include "movement_strategies/composite_movement_strategy.hpp"
+#include "movement_strategies/sequential_movement_strategy.hpp"
 
 #include "projectiles/projectile.hpp"
 
@@ -57,6 +58,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<MovementContext>();
 		ClassDB::register_class<MovementStrategy>();
 		ClassDB::register_class<CompositeMovementStrategy>();
+		ClassDB::register_class<SequentialMovementStrategy>();
 
 		ClassDB::register_class<Projectile>();
 
