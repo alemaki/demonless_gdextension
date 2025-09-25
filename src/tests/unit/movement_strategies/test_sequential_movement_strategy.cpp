@@ -19,9 +19,9 @@ struct SequentialStrategyFixture
         strategy1 = memnew(MovementStrategy);
         strategy2 = memnew(MovementStrategy);
 
-        ::get_scene_root()->add_child(sequential);
         sequential->add_child(strategy1);
         sequential->add_child(strategy2);
+        ::get_scene_root()->add_child(sequential);
     }
 
     ~SequentialStrategyFixture()
@@ -35,7 +35,7 @@ struct SequentialStrategyFixture
     }
 };
 
-TEST_SUITE("SequentialMovementStrategy Tests")
+TEST_SUITE("SequentialMovementStrategy")
 {
     struct TestStrategy : public MovementStrategy
     {
@@ -134,18 +134,17 @@ TEST_SUITE("SequentialMovementStrategy Tests")
     }
 }
 
-TEST_SUITE("[errors] SequentialMovementStrategy Error Tests")
+TEST_SUITE("[errors] SequentialMovementStrategy")
 {
     TEST_CASE_FIXTURE(SequentialStrategyFixture, "Apply call fails if context is null")
     {
         CHECK_GODOT_ERROR(sequential->apply(nullptr, 1));
     }
 
-    TEST_CASE("Apply call fails if no children are in sequential strategy")
+    TEST_CASE("Apply _ready fails if no children are in composite strategy.")
     {
         SequentialMovementStrategy* seq = memnew(SequentialMovementStrategy);
-        Ref<MovementContext> context = memnew(MovementContext);
-        CHECK_GODOT_ERROR(seq->apply(context, 1));
+        CHECK_GODOT_ERROR(::get_scene_root()->add_child(seq));
         memdelete(seq);
     }
 

@@ -19,9 +19,9 @@ struct CompositeStrategyFixture
         strategy1 = memnew(MovementStrategy);
         strategy2 = memnew(MovementStrategy);
 
-        ::get_scene_root()->add_child(composite);
         composite->add_child(strategy1);
         composite->add_child(strategy2);
+        ::get_scene_root()->add_child(composite);
     }
 
     ~CompositeStrategyFixture()
@@ -35,7 +35,7 @@ struct CompositeStrategyFixture
     }
 };
 
-TEST_SUITE("CompositeMovementStrategy Tests")
+TEST_SUITE("CompositeMovementStrategy")
 {
     /* Note to self: CAN DO THIS if GDCLASS is not defined in child class. */
     struct TestStrategy : public MovementStrategy
@@ -124,18 +124,17 @@ TEST_SUITE("CompositeMovementStrategy Tests")
     }
 }
 
-TEST_SUITE("[errors] CompositeMovementStrategy Error Tests")
+TEST_SUITE("[errors] CompositeMovementStrategy")
 {
     TEST_CASE_FIXTURE(CompositeStrategyFixture, "Apply call fails if context is null")
     {
         CHECK_GODOT_ERROR(composite->apply(nullptr, 1));
     }
 
-    TEST_CASE("Apply call fails if no children are in composite strategy.")
+    TEST_CASE("Apply _ready fails if no children are in composite strategy.")
     {
         CompositeMovementStrategy* composite = memnew(CompositeMovementStrategy);
-        Ref<MovementContext> dummy_context = memnew(MovementContext);
-        CHECK_GODOT_ERROR(composite->apply(dummy_context, 1));
+        CHECK_GODOT_ERROR(::get_scene_root()->add_child(composite));
         memdelete(composite);
     }
 
