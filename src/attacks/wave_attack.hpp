@@ -9,7 +9,7 @@ class WaveAttack : public SkillAction
     GDCLASS(WaveAttack, SkillAction)
 
 protected:
-    Projectile* projectile = nullptr; 
+    Projectile* projectile = nullptr;
     double wave_cooldown = 1;
     int waves = 1;
     int waves_fired = 0;
