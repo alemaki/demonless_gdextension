@@ -1,11 +1,11 @@
 #ifndef URIEL_HPP
 #define URIEL_HPP
 
-#include <godot_cpp/classes/character_body3d.hpp>
+#include "actors/npc/agent.hpp"
 
-class Uriel : public godot::CharacterBody3D
+class Uriel : public Agent
 {
-    GDCLASS(Uriel, godot::CharacterBody3D)
+    GDCLASS(Uriel, Agent)
 
 private:
 
