@@ -123,12 +123,12 @@ void PlayerCharacter::process_movement()
     ERR_FAIL_NULL(this->input_component);
     if (this->movement_fsm->get_state() == this->movement_idle)
     {
-        this->animation_player->set_current_animation("idle");
+        this->animation_player->set_current_animation("Idle");
         this->movement_component->set_target_direction(godot::Vector3(0, 0, 0));
     }
     else if (this->movement_fsm->get_state() == this->movement_run)
     {
-        this->animation_player->set_current_animation("run");
+        this->animation_player->set_current_animation("Running");
         godot::Vector3 direction = this->input_component->get_direction_input();
         this->movement_component->set_target_direction(direction);
         this->look_at(direction);
