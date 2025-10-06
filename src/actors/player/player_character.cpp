@@ -67,11 +67,15 @@ void PlayerCharacter::process_movement_state()
         this->movement_fsm->transition_to_state(this->movement_idle);
     }
     godot::Vector3 dir = this->input_component->get_direction_input();
-    if ((this->movement_fsm->get_state() ==this->movement_idle)
+    if ((this->movement_fsm->get_state() == this->movement_idle)
         && (this->action_fsm->get_state() != this->action_attack)
-        && !(dir.is_equal_approx(godot::Vector3(0, 0, 0))))
+        && !(dir.is_zero_approx()))
     {
         this->movement_fsm->transition_to_state(this->movement_run);
+    }
+    if (dir.is_zero_approx())
+    {
+        this->movement_fsm->transition_to_state(this->movement_idle);
     }
 }
 
@@ -100,6 +104,7 @@ void PlayerCharacter::_exit_block()
 
 void PlayerCharacter::process_action()
 {
+    ERR_FAIL_NULL(this->input_component);
     if (this->action_fsm->get_state() == this->action_attack)
     {
         //TODO:
@@ -107,7 +112,6 @@ void PlayerCharacter::process_action()
     }
     else if (this->action_fsm->get_state() == this->action_block)
     {
-        ERR_FAIL_NULL(this->input_component);
         //TODO:
         if (!this->input_component->is_block_pressed())
         {
@@ -131,7 +135,7 @@ void PlayerCharacter::process_movement()
         this->animation_player->set_current_animation("Running");
         godot::Vector3 direction = this->input_component->get_direction_input();
         this->movement_component->set_target_direction(direction);
-        this->look_at(direction);
+        this->look_at(this->get_position() + direction);
     }
 }
 
