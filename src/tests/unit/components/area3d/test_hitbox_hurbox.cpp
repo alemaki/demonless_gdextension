@@ -3,32 +3,36 @@
 
 #include "components/area3d/hitbox.hpp"
 #include "components/area3d/hurtbox.hpp"
+#include "components/area3d/hitbox_blocker.hpp"
 #include "tests/test_utils/test_runner.hpp"
 #include "tests/test_utils/signal_watcher.hpp"
 
-struct HitboxHurtboxFixture
+struct HitboxFixture
 {
     Hitbox* hitbox = memnew(Hitbox);
     Hurtbox* hurtbox = memnew(Hurtbox);
+    HitboxBlocker* hitbox_blocker = memnew(HitboxBlocker);
 
-    HitboxHurtboxFixture()
+    HitboxFixture()
     {
         godot::Node* scene_root = ::get_scene_root();
         scene_root->add_child(hitbox);
         scene_root->add_child(hurtbox);
+        scene_root->add_child(hitbox_blocker);
         hitbox->set_monitoring(true);
     }
 
-    ~HitboxHurtboxFixture()
+    ~HitboxFixture()
     {
         memdelete(hitbox);
         memdelete(hurtbox);
+        memdelete(hitbox_blocker);
     }
 };
 
 TEST_SUITE("HitboxHurtboxInteractionTests")
 {
-    TEST_CASE_FIXTURE(HitboxHurtboxFixture, "Test hitbox and hurtbox interaction.")
+    TEST_CASE_FIXTURE(HitboxFixture, "Test hitbox and hurtbox interaction.")
     {
         REQUIRE(hitbox->has_signal("hit_hurtbox"));
         REQUIRE(hurtbox->has_signal("hurtbox_hit"));
@@ -50,7 +54,7 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         CHECK_EQ(hurtbox_signal, SignalWatcher::get_signal_emitted_arguments(hurtbox, "hurtbox_hit"));
     }
 
-    TEST_CASE_FIXTURE(HitboxHurtboxFixture, "Test hitbox and hurtbox won't emmit signal when touched by other area3D objects.")
+    TEST_CASE_FIXTURE(HitboxFixture, "Test hitbox and hurtbox won't emmit signal when touched by other area3D objects.")
     {
         godot::Area3D* area3d = memnew(godot::Area3D);
         ::get_scene_root()->add_child(area3d);
@@ -70,30 +74,25 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         memdelete(area3d);
     }
 
-    TEST_CASE_FIXTURE(HitboxHurtboxFixture, "Test hitbox emits 'block_triggered'.")
+    TEST_CASE_FIXTURE(HitboxFixture, "Test hitbox and hitbox_blocker interaction.")
     {
-        REQUIRE(hitbox->has_signal("block_triggered"));
+        REQUIRE(hitbox->has_signal("hit_blocker"));
+        REQUIRE(hitbox_blocker->has_signal("hitbox_blocked"));
 
         SignalWatcher::watch_signals(hitbox);
-        hitbox->set_blockable(true);
-        hitbox->set_monitoring(true);
-        hitbox->trigger_block();
+        SignalWatcher::watch_signals(hitbox_blocker);
 
-        CHECK(SignalWatcher::signal_emitted(hitbox, "block_triggered"));
-    }
-}
+        hitbox->emit_signal("area_entered", hitbox_blocker);
 
-TEST_SUITE("[errors] HitboxHurtboxInteractionTests")
-{
-    TEST_CASE_FIXTURE(HitboxHurtboxFixture, "Test hitbox doesn't emit 'block_triggered', when prohibited.")
-    {
-        REQUIRE(hitbox->has_signal("block_triggered"));
+        CHECK(SignalWatcher::signal_emitted(hitbox, "hit_blocker"));
+        CHECK(SignalWatcher::signal_emitted(hitbox_blocker, "hitbox_blocked"));
 
-        SignalWatcher::watch_signals(hitbox);
-        hitbox->set_blockable(false);
-        hitbox->set_monitoring(true);
-        CHECK_GODOT_ERROR(hitbox->trigger_block());
+        godot::Array hitbox_signal;
+        hitbox_signal.push_back(hitbox_blocker);
+        CHECK_EQ(hitbox_signal, SignalWatcher::get_signal_emitted_arguments(hitbox, "hit_blocker"));
 
-        CHECK_FALSE(SignalWatcher::signal_emitted(hitbox, "block_triggered"));
+        godot::Array hitbox_blocker_signal;
+        hitbox_blocker_signal.push_back(hitbox);
+        CHECK_EQ(hitbox_blocker_signal, SignalWatcher::get_signal_emitted_arguments(hitbox_blocker, "hitbox_blocked"));
     }
 }

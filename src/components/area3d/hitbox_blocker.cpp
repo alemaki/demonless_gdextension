@@ -10,5 +10,5 @@ void HitboxBlocker::_bind_methods()
 {
     using namespace godot;
 
-    ADD_SIGNAL(MethodInfo("hitbox_blocked"), PropertyInfo(Variant::OBJECT, "hitbox", PROPERTY_HINT_NONE, "Area3D"));
+    ADD_SIGNAL(MethodInfo("hitbox_blocked", PropertyInfo(Variant::OBJECT, "hitbox", PROPERTY_HINT_NONE, "Area3D")));
 }
