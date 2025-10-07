@@ -3,6 +3,9 @@
 
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/timer.hpp>
+#include "components/area3d/hurtbox.hpp"
+#include "components/area3d/hitbox_blocker.hpp"
+#include "components/area3d/hitbox.hpp"
 #include "movement_strategies/movement_context.hpp"
 #include "movement_strategies/movement_strategy.hpp"
 
@@ -14,11 +17,17 @@ protected:
     godot::Ref<MovementContext> movement_context = nullptr;
     MovementStrategy* movement_strategy = nullptr;
     godot::Timer* lifespan_timer = nullptr;
+    Hitbox* hitbox = nullptr;
+
+    void _hit(godot::Area3D* area3d);
+    virtual void _hit_hurtbox(Hurtbox* hurtbox);
+    virtual void _hit_blockbox(HitboxBlocker* hitbox_blocker);
+
+    virtual void _on_timeout();
 
 public:
     Projectile();
 
-    virtual void _on_timeout();
     void _ready() override;
     void _physics_process(double delta) override;
 
