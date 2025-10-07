@@ -1,32 +1,13 @@
 #include "agent.hpp"
+#include "utils/utils.hpp"
 
 void Agent::_ready()
 {
-    if (!animation_player)
-    {
-        animation_player = godot::Object::cast_to<godot::AnimationPlayer>(
-            get_node_or_null("AnimationPlayer"));
-    }
-    if (!navigation_agent)
-    {
-        navigation_agent = godot::Object::cast_to<godot::NavigationAgent3D>(
-            get_node_or_null("NavigationAgent3D"));
-    }
-    if (!health_component)
-    {
-        health_component = godot::Object::cast_to<HealthComponent>(
-            get_node_or_null("HealthComponent"));
-    }
-    if (!hurtbox)
-    {
-        hurtbox = godot::Object::cast_to<Hurtbox>(
-            get_node_or_null("Hurtbox"));
-    }
-    if (!behaviour_tree)
-    {
-        behaviour_tree = godot::Object::cast_to<BehaviourTree>(
-            get_node_or_null("BehaviourTree"));
-    }
+    utils::ensure_node(animation_player, this, "AnimationPlayer");
+    utils::ensure_node(navigation_agent, this, "NavigationAgent3D");
+    utils::ensure_node(health_component, this, "HealthComponent");
+    utils::ensure_node(hurtbox, this, "Hurtbox");
+    utils::ensure_node(behaviour_tree, this, "BehaviourTree");
 }
 
 void Agent::_bind_methods()
