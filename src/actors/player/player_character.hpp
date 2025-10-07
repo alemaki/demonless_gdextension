@@ -7,6 +7,7 @@
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
 #include "components/movement/character_movement_component.hpp"
+#include "components/area3d/hurtbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "finite_state_machine/fsm.hpp"
 
@@ -14,6 +15,7 @@ class PlayerCharacter : public godot::CharacterBody3D
 {
     GDCLASS(PlayerCharacter, CharacterBody3D);
 
+    Hurtbox* hurtbox = nullptr;
     HealthComponent* health_component = nullptr;
     CharacterInputComponent* input_component = nullptr;
     CharacterMovementComponent* movement_component = nullptr;
@@ -45,6 +47,7 @@ public:
     void _process(double delta) override;
     void _physics_process(double delta) override;
 
+    CREATE_GETTER_SETTER_DEFAULT(Hurtbox*, hurtbox);
     CREATE_GETTER_SETTER_DEFAULT(HealthComponent*, health_component);
     CREATE_GETTER_SETTER_DEFAULT(CharacterInputComponent*, input_component);
     CREATE_GETTER_SETTER_DEFAULT(godot::Node3D*, mesh_instance)

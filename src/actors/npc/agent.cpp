@@ -1,5 +1,4 @@
 #include "agent.hpp"
-#include "utils/utils.hpp"
 
 void Agent::_ready()
 {

@@ -8,6 +8,7 @@
 #include "behaviour_tree/behaviour_tree.hpp"
 #include "components/area3d/hurtbox.hpp"
 #include "components/health/health_component.hpp"
+#include "utils/utils.hpp"
 
 /**
  * @brief Agent class to serve as base for all AI driven npc characters. Fields are either set by adding a

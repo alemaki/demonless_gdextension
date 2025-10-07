@@ -40,6 +40,10 @@ void PlayerCharacter::_ready()
 
     this->movement_fsm->initialize();
     this->action_fsm->initialize();
+
+    utils::ensure_node(health_component, this, "HealthComponent");
+    utils::ensure_node(hitbox_blocker, this, "HitboxBlocker");
+    utils::ensure_node(hurtbox, this, "Hurtbox");
 }
 
 void PlayerCharacter::process_action_state()
