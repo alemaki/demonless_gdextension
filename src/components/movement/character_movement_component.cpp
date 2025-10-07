@@ -27,7 +27,6 @@ void CharacterMovementComponent::_bind_methods()
 
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(CharacterMovementComponent, FLOAT, speed);
     BIND_GETTER_SETTER_PROPERTY_DEFAULT(CharacterMovementComponent, FLOAT, friction);
-    
     BIND_GETTER_SETTER_DEFAULT(CharacterMovementComponent, character);
 
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "character", PROPERTY_HINT_NODE_TYPE, "CharacterBody3D"), "set_character", "get_character");

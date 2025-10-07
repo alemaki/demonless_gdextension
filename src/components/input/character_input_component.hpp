@@ -7,7 +7,7 @@
 class CharacterInputComponent : public godot::Node3D
 {
     GDCLASS(CharacterInputComponent, godot::Node3D);
-    
+
 public:
     CharacterInputComponent(){};
 

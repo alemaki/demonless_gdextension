@@ -47,7 +47,7 @@ TEST_SUITE("BTQueueFreeNode")
         godot::Ref<BTQueueFreeNode> task = memnew(BTQueueFreeNode);
         task->set_var_node("hitbox_var");
         task->set_complain_enabled(false);
-    
+
         godot::Node3D* mock_actor = memnew(godot::Node3D);
         godot::Ref<Blackboard> blackboard = memnew(Blackboard);
 

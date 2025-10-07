@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/src/**",
                 "${workspaceFolder}/behaviour_tree_GDE/**",
                 "${workspaceFolder}/behaviour_tree_GDE/godot-cpp/include/**",
                 "${workspaceFolder}/behaviour_tree_GDE/godot-cpp/gen/include/**"

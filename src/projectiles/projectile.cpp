@@ -36,6 +36,28 @@ void Projectile::set_direction(const godot::Vector3& direction)
     this->look_at(this->get_position() + direction);
 }
 
+void Projectile::_hit(godot::Area3D* area3d)
+{
+    if (auto* hurtbox = Object::cast_to<Hurtbox>(area3d))
+    {
+        this->_hit_hurtbox(hurtbox);
+    }
+    if (auto* hitbox_blocker = Object::cast_to<HitboxBlocker>(area3d))
+    {
+        this->_hit_blockbox(hitbox_blocker);
+    }
+}
+
+void Projectile::_hit_hurtbox(Hurtbox *hurtbox)
+{
+    /* Does nothing for now. */
+}
+
+void Projectile::_hit_blockbox(HitboxBlocker *hitbox_blocker)
+{
+    this->queue_free();
+}
+
 void Projectile::_on_timeout()
 {
     this->queue_free();

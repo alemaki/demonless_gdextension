@@ -1,26 +1,14 @@
 #include "hitbox_blocker.hpp"
 #include "components/area3d/hitbox.hpp"
 
-void HitboxBlocker::_ready()
+void HitboxBlocker::hitbox_entered(godot::Area3D* hitbox)
 {
-    this->connect("area_entered", callable_mp(this, &HitboxBlocker::_on_area_entered));
-}
-
-void HitboxBlocker::_on_area_entered(godot::Area3D* area3d)
-{
-    Hitbox* hitbox = godot::Object::cast_to<Hitbox>(area3d);
-    if (hitbox != nullptr
-        && hitbox->is_blockable()
-        && this->is_active())
-    {
-        hitbox->trigger_block();
-        this->emit_signal("hitbox_blocked");
-    }
+    this->emit_signal("hitbox_blocked", hitbox);
 }
 
 void HitboxBlocker::_bind_methods()
 {
     using namespace godot;
 
-    ADD_SIGNAL(MethodInfo("hitbox_blocked"));
+    ADD_SIGNAL(MethodInfo("hitbox_blocked", PropertyInfo(Variant::OBJECT, "hitbox", PROPERTY_HINT_NONE, "Area3D")));
 }
