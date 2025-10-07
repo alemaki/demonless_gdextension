@@ -8,15 +8,16 @@ class HitboxBlocker : public godot::Area3D
 {
     GDCLASS(HitboxBlocker, godot::Area3D);
 
+    friend class Hitbox;
+
 private:
     bool active = true;
 
 protected:
-    void _on_area_entered(godot::Area3D* area3d);
+    void hitbox_entered(godot::Area3D* hitbox);
 
 public:
     CREATE_GETTER_SETTER_BOOL_DEFAULT(active);
-    virtual void _ready() override;
 
 protected:
     static void _bind_methods();

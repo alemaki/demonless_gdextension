@@ -3,6 +3,8 @@
 
 #include <godot_cpp/classes/area3d.hpp>
 #include "utils/utils.hpp"
+#include "components/area3d/hitbox_blocker.hpp"
+#include "components/area3d/hurtbox.hpp"
 
 class Hitbox : public godot::Area3D
 {
