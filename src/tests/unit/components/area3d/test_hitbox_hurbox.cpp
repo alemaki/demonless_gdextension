@@ -5,7 +5,7 @@
 #include "components/area3d/hurtbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "tests/test_utils/test_runner.hpp"
-#include "tests/test_utils/signal_watcher.hpp"
+#include "tests/test_utils/signal_observer.hpp"
 
 struct HitboxFixture
 {

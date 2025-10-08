@@ -28,12 +28,12 @@ inline void ensure_node(T*& member_ptr, const godot::Node* owner, const godot::S
         return;
     }
 
-    Node *node = owner->get_node_or_null(path);
+    godot::Node *node = owner->get_node_or_null(path);
 
     ERR_FAIL_COND_MSG(!node, vformat("Missing required child '%s' (expected type '%s') in '%s'.",
                                      path, T::get_class_static(), owner->get_name()));
 
-    member_ptr = Object::cast_to<T>(node);
+    member_ptr = godot::Object::cast_to<T>(node);
 
     ERR_FAIL_COND_MSG(!member_ptr, vformat("Node '%s' exists but is not of type '%s' in '%s'.",
                                            path, T::get_class_static(), owner->get_name()));

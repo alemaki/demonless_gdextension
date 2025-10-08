@@ -2,7 +2,7 @@
 #include <doctest.h>
 
 #include "components/health/health_component.hpp"
-#include "tests/test_utils/signal_watcher.hpp"
+#include "tests/test_utils/signal_observer.hpp"
 
 struct HealthComponentFixture
 {
