@@ -41,9 +41,21 @@ void PlayerCharacter::_ready()
     this->movement_fsm->initialize();
     this->action_fsm->initialize();
 
-    utils::ensure_node(health_component, this, "HealthComponent");
-    utils::ensure_node(hitbox_blocker, this, "HitboxBlocker");
-    utils::ensure_node(hurtbox, this, "Hurtbox");
+    utils::ensure_node(this->health_component, this, "HealthComponent");
+    utils::ensure_node(this->hitbox_blocker, this, "HitboxBlocker");
+    utils::ensure_node(this->hurtbox, this, "Hurtbox");
+
+    if (this->hitbox_blocker)
+    {
+        // nothing to handle currently
+        // hitbox_blocker->connect("hitbox_blocked");
+    }
+
+    if (this->hurtbox)
+    {
+        // nothing to handle currently
+        // hurtbox->connect("hitbox_blocked");
+    }
 }
 
 void PlayerCharacter::process_action_state()
@@ -96,14 +108,20 @@ void PlayerCharacter::_process(double delta)
 
 void PlayerCharacter::_enter_block()
 {
+    ERR_FAIL_NULL(this->input_component);
     ERR_FAIL_NULL(this->hitbox_blocker);
     this->add_child(this->hitbox_blocker);
+    this->hitbox_blocker->set_monitoring(true);
+    godot::Vector3 mouse_position = this->input_component->get_mouse_casted_position();
+    this->hitbox_blocker->look_at(mouse_position);
+    this->look_at(mouse_position);
 }
 
 void PlayerCharacter::_exit_block()
 {
     ERR_FAIL_NULL(this->hitbox_blocker);
     this->remove_child(this->hitbox_blocker);
+    this->hitbox_blocker->set_monitoring(false);
 }
 
 void PlayerCharacter::process_action()
