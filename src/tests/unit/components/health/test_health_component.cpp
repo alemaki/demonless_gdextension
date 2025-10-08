@@ -82,40 +82,40 @@ TEST_SUITE("HealthComponentTests")
 
         REQUIRE(health_component->has_signal("health_depleted"));
 
-        SignalWatcher::watch_signals(health_component);
+        SignalObserver::watch_signals(health_component);
 
         health_component->take_damage(1);
-        CHECK_FALSE(SignalWatcher::signal_emitted(health_component, godot::String("health_depleted")));
+        CHECK_FALSE(SignalObserver::signal_emitted(health_component, godot::String("health_depleted")));
 
         health_component->take_damage(1);
-        CHECK(SignalWatcher::signal_emitted(health_component, godot::String("health_depleted")));
-        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("health_depleted")), 1);
+        CHECK(SignalObserver::signal_emitted(health_component, godot::String("health_depleted")));
+        CHECK_EQ(SignalObserver::get_signal_emitted_count(health_component, godot::String("health_depleted")), 1);
     }
 
     TEST_CASE_FIXTURE(HealthComponentFixture, "Test health component perc_health_changed signal")
     {
         REQUIRE(health_component->has_signal("perc_health_changed"));
 
-        SignalWatcher::watch_signals(health_component);
+        SignalObserver::watch_signals(health_component);
 
         health_component->set_max_hp(10);
-        CHECK(SignalWatcher::signal_emitted(health_component, godot::String("perc_health_changed")));
+        CHECK(SignalObserver::signal_emitted(health_component, godot::String("perc_health_changed")));
         health_component->set_current_hp(0);
-        CHECK(SignalWatcher::signal_emitted(health_component, godot::String("perc_health_changed")));
-        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 1);
+        CHECK(SignalObserver::signal_emitted(health_component, godot::String("perc_health_changed")));
+        CHECK_EQ(SignalObserver::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 1);
 
         REQUIRE(health_component->has_signal("perc_health_changed"));
 
         health_component->take_damage(1);
-        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 1);
+        CHECK_EQ(SignalObserver::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 1);
 
         health_component->set_current_hp(5);
-        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 2);
+        CHECK_EQ(SignalObserver::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 2);
         health_component->take_damage(1);
-        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 3);
+        CHECK_EQ(SignalObserver::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 3);
         health_component->take_damage(1);
-        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 4);
+        CHECK_EQ(SignalObserver::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 4);
         health_component->heal(1);
-        CHECK_EQ(SignalWatcher::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 5);
+        CHECK_EQ(SignalObserver::get_signal_emitted_count(health_component, godot::String("perc_health_changed")), 5);
     }
 }

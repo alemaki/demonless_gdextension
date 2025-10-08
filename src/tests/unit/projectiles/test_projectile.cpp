@@ -23,7 +23,7 @@ TEST_SUITE("TestProjectile")
     {
         Projectile* projectile = memnew(Projectile);
         godot::Timer* timer = memnew(godot::Timer);
-        SignalWatcher::watch_signals(timer);
+        SignalObserver::watch_signals(timer);
         timer->set_wait_time(5);
         projectile->set_lifespan_timer(timer);
         ::get_scene_root()->add_child(projectile);
@@ -31,7 +31,7 @@ TEST_SUITE("TestProjectile")
         CHECK_FALSE(projectile->is_queued_for_deletion());
         projectile->get_lifespan_timer()->_process(5);
         projectile->get_lifespan_timer()->emit_signal("timeout");
-        CHECK(SignalWatcher::signal_emitted(projectile->get_lifespan_timer(), godot::String("timeout")));
+        CHECK(SignalObserver::signal_emitted(projectile->get_lifespan_timer(), godot::String("timeout")));
         CHECK(projectile->is_queued_for_deletion());
     }
 

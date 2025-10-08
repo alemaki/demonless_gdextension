@@ -37,21 +37,21 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         REQUIRE(hitbox->has_signal("hit_hurtbox"));
         REQUIRE(hurtbox->has_signal("hurtbox_hit"));
 
-        SignalWatcher::watch_signals(hitbox);
-        SignalWatcher::watch_signals(hurtbox);
+        SignalObserver::watch_signals(hitbox);
+        SignalObserver::watch_signals(hurtbox);
 
         hitbox->emit_signal("area_entered", hurtbox);
 
-        CHECK(SignalWatcher::signal_emitted(hitbox, "hit_hurtbox"));
-        CHECK(SignalWatcher::signal_emitted(hurtbox, "hurtbox_hit"));
+        CHECK(SignalObserver::signal_emitted(hitbox, "hit_hurtbox"));
+        CHECK(SignalObserver::signal_emitted(hurtbox, "hurtbox_hit"));
 
         godot::Array hitbox_signal;
         hitbox_signal.push_back(hurtbox);
-        CHECK_EQ(hitbox_signal, SignalWatcher::get_signal_emitted_arguments(hitbox, "hit_hurtbox"));
+        CHECK_EQ(hitbox_signal, SignalObserver::get_signal_emitted_arguments(hitbox, "hit_hurtbox"));
 
         godot::Array hurtbox_signal;
         hurtbox_signal.push_back(hitbox);
-        CHECK_EQ(hurtbox_signal, SignalWatcher::get_signal_emitted_arguments(hurtbox, "hurtbox_hit"));
+        CHECK_EQ(hurtbox_signal, SignalObserver::get_signal_emitted_arguments(hurtbox, "hurtbox_hit"));
     }
 
     TEST_CASE_FIXTURE(HitboxFixture, "Test hitbox and hurtbox won't emmit signal when touched by other area3D objects.")
@@ -62,14 +62,14 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         REQUIRE(hitbox->has_signal("hit_hurtbox"));
         REQUIRE(hurtbox->has_signal("hurtbox_hit"));
 
-        SignalWatcher::watch_signals(hitbox);
-        SignalWatcher::watch_signals(hurtbox);
+        SignalObserver::watch_signals(hitbox);
+        SignalObserver::watch_signals(hurtbox);
 
         hitbox->emit_signal("area_entered", area3d);
         hurtbox->emit_signal("area_entered", area3d);
 
-        CHECK_FALSE(SignalWatcher::signal_emitted(hitbox, "hit_hurtbox"));
-        CHECK_FALSE(SignalWatcher::signal_emitted(hurtbox, "hurtbox_hit"));
+        CHECK_FALSE(SignalObserver::signal_emitted(hitbox, "hit_hurtbox"));
+        CHECK_FALSE(SignalObserver::signal_emitted(hurtbox, "hurtbox_hit"));
 
         memdelete(area3d);
     }
@@ -79,20 +79,20 @@ TEST_SUITE("HitboxHurtboxInteractionTests")
         REQUIRE(hitbox->has_signal("hit_blocker"));
         REQUIRE(hitbox_blocker->has_signal("hitbox_blocked"));
 
-        SignalWatcher::watch_signals(hitbox);
-        SignalWatcher::watch_signals(hitbox_blocker);
+        SignalObserver::watch_signals(hitbox);
+        SignalObserver::watch_signals(hitbox_blocker);
 
         hitbox->emit_signal("area_entered", hitbox_blocker);
 
-        CHECK(SignalWatcher::signal_emitted(hitbox, "hit_blocker"));
-        CHECK(SignalWatcher::signal_emitted(hitbox_blocker, "hitbox_blocked"));
+        CHECK(SignalObserver::signal_emitted(hitbox, "hit_blocker"));
+        CHECK(SignalObserver::signal_emitted(hitbox_blocker, "hitbox_blocked"));
 
         godot::Array hitbox_signal;
         hitbox_signal.push_back(hitbox_blocker);
-        CHECK_EQ(hitbox_signal, SignalWatcher::get_signal_emitted_arguments(hitbox, "hit_blocker"));
+        CHECK_EQ(hitbox_signal, SignalObserver::get_signal_emitted_arguments(hitbox, "hit_blocker"));
 
         godot::Array hitbox_blocker_signal;
         hitbox_blocker_signal.push_back(hitbox);
-        CHECK_EQ(hitbox_blocker_signal, SignalWatcher::get_signal_emitted_arguments(hitbox_blocker, "hitbox_blocked"));
+        CHECK_EQ(hitbox_blocker_signal, SignalObserver::get_signal_emitted_arguments(hitbox_blocker, "hitbox_blocked"));
     }
 }
