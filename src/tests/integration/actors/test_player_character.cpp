@@ -15,13 +15,19 @@ struct PlayerCharacterFixture
     CharacterMovementComponent* movement_component;
     godot::MeshInstance3D* mesh;
     godot::AnimationPlayer* animation_player;
+    HealthComponent* health_component;
+    HitboxBlocker* hitbox_blocker;
+    Hurtbox* hurtbox;
 
     PlayerCharacterFixture() :
         player(memnew(PlayerCharacter)),
         input_component(memnew(CharacterInputComponent)),
         movement_component(memnew(CharacterMovementComponent)),
         mesh(memnew(MeshInstance3D)),
-        animation_player(memnew(AnimationPlayer))
+        animation_player(memnew(AnimationPlayer)),
+        health_component(memnew(HealthComponent)),
+        hitbox_blocker(memnew(HitboxBlocker)),
+        hurtbox(memnew(Hurtbox))
     {
         player->add_child(input_component);
         player->set_input_component(input_component);
@@ -34,7 +40,10 @@ struct PlayerCharacterFixture
         player->add_child(mesh);
         player->set_mesh_instance(mesh);
         movement_component->set_speed(100.0);
-        
+        player->add_child(health_component);
+        player->add_child(hitbox_blocker);
+        player->add_child(hurtbox);
+
         ::get_scene_root()->add_child(player);
     }
 
@@ -54,7 +63,7 @@ TEST_SUITE("PlayerCharacter")
         ::simulate(::get_scene_root());
 
         godot::Vector3 expected_direction = godot::Vector3(1, 0, 0);
-        // TODO 
+        // TODO
 
         godot::Input::get_singleton()->action_release("move_right");
     }
