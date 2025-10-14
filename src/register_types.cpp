@@ -13,6 +13,9 @@
 
 #include "bt_register_types.h"
 
+#include "actors/npc/agent.hpp"
+#include "actors/npc/enemy.hpp"
+#include "actors/npc/uriel.hpp"
 #include "actors/player/player_character.hpp"
 
 #include "actor_behaviour/actions/bt_execute_attack.hpp"
@@ -71,6 +74,10 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<CharacterInputComponent>();
 		ClassDB::register_class<CharacterMovementComponent>();
 
+		/* Actors */
+		ClassDB::register_class<Agent>();
+		ClassDB::register_class<Enemy>();
+		ClassDB::register_class<Uriel>();
 		ClassDB::register_class<PlayerCharacter>();
 
 		/* UI */

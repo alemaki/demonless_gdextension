@@ -8,6 +8,19 @@
 
 #define VECTOR_UP godot::Vector3(0, 1, 0)
 
+#define DISABLE_PROCESSING() /**************************************************************************************************************************************************/\
+set_process(false);                                                                                                                                                              \
+set_physics_process(false)
+
+#define DISABLE_EDITOR_PROCESSING() /******************************************************************************************************************************************/\
+if (godot::Engine::get_singleton()->is_editor_hint())                                                                                                                           \
+{                                                                                                                                                                               \
+    DISABLE_PROCESSING();                                                                                                                                                       \
+    return;                                                                                                                                                                     \
+}                                                                                                                                                                               \
+else ((void)0)                                                                                                                                                                  \
+
+
 namespace utils
 {
 

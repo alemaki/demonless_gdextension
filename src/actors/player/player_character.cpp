@@ -9,12 +9,7 @@ PlayerCharacter::~PlayerCharacter()
 
 void PlayerCharacter::_ready()
 {
-    if (godot::Engine::get_singleton()->is_editor_hint())
-    {
-        this->set_process(false);
-        this->set_physics_process(false);
-        return;
-    }
+    DISABLE_EDITOR_PROCESSING();
 
     this->action_fsm = memnew(FSM);
     this->movement_fsm = memnew(FSM);
@@ -23,16 +18,21 @@ void PlayerCharacter::_ready()
     this->action_attacking = this->action_fsm->create_state();
     this->action_blocking = this->action_fsm->create_state();
     this->action_fsm->set_initial_state(this->action_idle);
+
+    this->movement_idle = this->movement_fsm->create_state();
+    this->movement_running = this->movement_fsm->create_state();
+    this->movement_fsm->set_initial_state(this->movement_idle);
+
+    ERR_FAIL_NULL(this->movement_idle);
+    ERR_FAIL_NULL(this->movement_running);
+    ERR_FAIL_NULL(this->action_blocking);
+
     this->movement_idle->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_idle));
     this->movement_running->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_movement));
     this->movement_running->add_process_callable(callable_mp(this, &PlayerCharacter::_process_movement));
     this->action_blocking->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_block));
     this->action_blocking->add_process_callable(callable_mp(this, &PlayerCharacter::_process_block));
     this->action_blocking->add_exit_callable(callable_mp(this, &PlayerCharacter::_exit_block));
-
-    this->movement_idle = this->movement_fsm->create_state();
-    this->movement_running = this->movement_fsm->create_state();
-    this->movement_fsm->set_initial_state(this->movement_idle);
 
     if (this->mesh_instance != nullptr)
     {
@@ -123,11 +123,12 @@ void PlayerCharacter::_enter_movement()
     this->animation_player->set_current_animation("Running");
 }
 
-void PlayerCharacter::_process_movement()
+void PlayerCharacter::_process_movement(double delta)
 {
     ERR_FAIL_NULL(this->movement_component);
     ERR_FAIL_NULL(this->input_component);
     godot::Vector3 direction = this->input_component->get_direction_input();
+    ERR_FAIL_COND(direction.is_zero_approx());
     this->movement_component->set_target_direction(direction);
     this->look_at(this->get_position() + direction);
 }
@@ -143,7 +144,7 @@ void PlayerCharacter::_enter_block()
     this->look_at(mouse_position);
 }
 
-void PlayerCharacter::_process_block()
+void PlayerCharacter::_process_block(double delta)
 {
     ERR_FAIL_NULL(this->input_component);
     ERR_FAIL_NULL(this->hitbox_blocker);

@@ -1,11 +1,11 @@
 #ifndef URIEL_HPP
 #define URIEL_HPP
 
-#include "actors/npc/agent.hpp"
+#include "actors/npc/enemy.hpp"
 
-class Uriel : public Agent
+class Uriel : public Enemy
 {
-    GDCLASS(Uriel, Agent)
+    GDCLASS(Uriel, Enemy)
 
 private:
 

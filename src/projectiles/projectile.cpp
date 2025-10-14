@@ -65,6 +65,7 @@ void Projectile::_on_timeout()
 
 void Projectile::_ready()
 {
+    DISABLE_EDITOR_PROCESSING();
     if (!this->lifespan_timer)
     {
         this->lifespan_timer = memnew(godot::Timer);

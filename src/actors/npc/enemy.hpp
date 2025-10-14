@@ -19,7 +19,7 @@ public:
     void _ready() override;
 
 protected:
-    static void _bind_methods();
+    static void _bind_methods(){};
 };
 
 #endif /* ENEMY_HPP */

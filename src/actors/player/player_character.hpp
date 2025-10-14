@@ -41,10 +41,10 @@ private:
     void _enter_idle();
 
     void _enter_movement();
-    void _process_movement();
+    void _process_movement(double delta);
 
     void _enter_block();
-    void _process_block();
+    void _process_block(double delta);
     void _exit_block();
 public:
     ~PlayerCharacter();
