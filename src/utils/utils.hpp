@@ -34,7 +34,7 @@ namespace utils
  * @param path Path to search if member_ptr is not defined
  */
 template <typename T>
-inline void ensure_node(T*& member_ptr, const godot::Node* owner, const godot::String& path)
+inline void ensure_node(T*& member_ptr, const godot::Node* owner, const godot::NodePath& path)
 {
     if (member_ptr)
     {
