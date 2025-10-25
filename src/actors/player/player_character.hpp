@@ -43,6 +43,7 @@ private:
     void _enter_block();
     void _process_block(double delta);
     void _exit_block();
+
 public:
     ~PlayerCharacter();
 

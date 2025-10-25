@@ -72,6 +72,13 @@ void PlayerCharacter::process_action_state()
         //TODO:
         this->action_fsm->transition_to_state(this->action_idle);
     }
+    else if (this->action_fsm->get_state() == this->action_idle)
+    {
+        if (this->input_component->is_block_pressed())
+        {
+            this->action_fsm->transition_to_state(this->action_blocking);
+        }
+    }
     else if (this->action_fsm->get_state() == this->action_blocking)
     {
         if (!this->input_component->is_block_pressed())
