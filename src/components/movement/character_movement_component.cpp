@@ -1,7 +1,7 @@
 #include "character_movement_component.hpp"
 #include <godot_cpp/variant/utility_functions.hpp>
 
-void CharacterMovementComponent::_physics_process(double delta)
+void CharacterMovementComponent::handle_movement(double delta)
 {
     ERR_FAIL_NULL(this->character);
 

@@ -66,6 +66,7 @@ TEST_SUITE("CharacterMovementComponentTests")
 
         ::simulate(movement_component, 1);
         double delta = ::get_current_engine_delta();
+        movement_component->handle_movement(delta);
         CHECK_VECTORS_EQ(character->get_velocity(), godot::Vector3(100, 0, 0)*movement_component->get_friction());
         CHECK_VECTORS_EQ(character->get_position(), godot::Vector3(100, 0, 0)*movement_component->get_friction()*delta);
     }

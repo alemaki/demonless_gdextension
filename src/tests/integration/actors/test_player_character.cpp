@@ -11,38 +11,12 @@
 struct PlayerCharacterFixture
 {
     PlayerCharacter* player;
-    CharacterInputComponent* input_component;
-    CharacterMovementComponent* movement_component;
-    godot::MeshInstance3D* mesh;
-    godot::AnimationPlayer* animation_player;
-    HealthComponent* health_component;
-    HitboxBlocker* hitbox_blocker;
-    Hurtbox* hurtbox;
 
-    PlayerCharacterFixture() :
-        player(memnew(PlayerCharacter)),
-        input_component(memnew(CharacterInputComponent)),
-        movement_component(memnew(CharacterMovementComponent)),
-        mesh(memnew(MeshInstance3D)),
-        animation_player(memnew(AnimationPlayer)),
-        health_component(memnew(HealthComponent)),
-        hitbox_blocker(memnew(HitboxBlocker)),
-        hurtbox(memnew(Hurtbox))
+    PlayerCharacterFixture()
     {
-        player->add_child(input_component);
-        player->set_input_component(input_component);
-        player->set_name("Player");
-        player->add_child(movement_component);
-        player->set_movement_component(movement_component);
-        mesh->add_child(animation_player);
-        animation_player->set_name("AnimationPlayer");
-        animation_player->set_owner(mesh);
-        player->add_child(mesh);
-        player->set_mesh_instance(mesh);
-        movement_component->set_speed(100.0);
-        player->add_child(health_component);
-        player->add_child(hitbox_blocker);
-        player->add_child(hurtbox);
+        player = utils::load_scene_node<PlayerCharacter>("res://player/player_character.tscn");
+        REQUIRE(player);
+        player->get_movement_component()->set_speed(100.0);
 
         ::get_scene_root()->add_child(player);
     }

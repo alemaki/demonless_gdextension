@@ -20,7 +20,9 @@ void PlayerCharacter::_ready()
     this->action_fsm->set_initial_state(this->action_idle);
 
     this->movement_idle = this->movement_fsm->create_state();
+    this->movement_idle->set_name("idle");
     this->movement_running = this->movement_fsm->create_state();
+    this->movement_running->set_name("running");
     this->movement_fsm->set_initial_state(this->movement_idle);
 
     ERR_FAIL_NULL(this->movement_idle);
@@ -65,17 +67,17 @@ void PlayerCharacter::_ready()
 void PlayerCharacter::process_action_state()
 {
     ERR_FAIL_NULL(this->input_component);
-    if (this->action_fsm->get_state() != this->action_idle)
+    if (this->action_fsm->get_state() == this->action_attacking)
     {
-        return;
+        //TODO:
+        this->action_fsm->transition_to_state(this->action_idle);
     }
-    if (this->input_component->is_attack_pressed())
+    else if (this->action_fsm->get_state() == this->action_blocking)
     {
-        this->action_fsm->transition_to_state(this->action_attacking);
-    }
-    if (this->input_component->is_block_pressed())
-    {
-        this->action_fsm->transition_to_state(this->action_blocking);
+        if (!this->input_component->is_block_pressed())
+        {
+            this->action_fsm->transition_to_state(this->action_idle);
+        }
     }
 }
 
@@ -99,16 +101,6 @@ void PlayerCharacter::process_movement_state()
     }
 }
 
-void PlayerCharacter::_process(double delta)
-{
-    if (this->input_component == nullptr)
-    {
-        return;
-    }
-    this->process_action_state();
-    this->process_movement_state();
-}
-
 void PlayerCharacter::_enter_idle()
 {
     ERR_FAIL_NULL(this->animation_player);
@@ -128,7 +120,12 @@ void PlayerCharacter::_process_movement(double delta)
     ERR_FAIL_NULL(this->movement_component);
     ERR_FAIL_NULL(this->input_component);
     godot::Vector3 direction = this->input_component->get_direction_input();
-    ERR_FAIL_COND(direction.is_zero_approx());
+    if (direction.is_zero_approx())
+    {
+        this->movement_fsm->transition_to_state(this->movement_idle);
+        // TODO: what about lost delta time?
+        return;
+    }
     this->movement_component->set_target_direction(direction);
     this->look_at(this->get_position() + direction);
 }
@@ -137,50 +134,43 @@ void PlayerCharacter::_enter_block()
 {
     ERR_FAIL_NULL(this->input_component);
     ERR_FAIL_NULL(this->hitbox_blocker);
-    this->add_child(this->hitbox_blocker);
+    this->hitbox_blocker->set_visible(true);
     this->hitbox_blocker->set_monitoring(true);
-    godot::Vector3 mouse_position = this->input_component->get_mouse_casted_position();
-    this->hitbox_blocker->look_at(mouse_position);
-    this->look_at(mouse_position);
 }
 
 void PlayerCharacter::_process_block(double delta)
 {
     ERR_FAIL_NULL(this->input_component);
     ERR_FAIL_NULL(this->hitbox_blocker);
+    if (!this->input_component->is_block_pressed())
+    {
+        this->action_fsm->transition_to_state(this->action_idle);
+        return;
+    }
     godot::Vector3 mouse_position = this->input_component->get_mouse_casted_position();
-    this->hitbox_blocker->look_at(mouse_position);
+    ERR_FAIL_COND(mouse_position.is_equal_approx(this->get_position()));
     this->look_at(mouse_position);
+    //TODO: unneded blocker attached to player face? this->hitbox_blocker->look_at(mouse_position);
 }
 
 void PlayerCharacter::_exit_block()
 {
     ERR_FAIL_NULL(this->hitbox_blocker);
-    this->remove_child(this->hitbox_blocker);
+    this->hitbox_blocker->set_visible(false);
     this->hitbox_blocker->set_monitoring(false);
 }
 
-void PlayerCharacter::process_action()
+void PlayerCharacter::_process(double delta)
 {
-    ERR_FAIL_NULL(this->input_component);
-    if (this->action_fsm->get_state() == this->action_attacking)
-    {
-        //TODO:
-        this->action_fsm->transition_to_state(this->action_idle);
-    }
-    else if (this->action_fsm->get_state() == this->action_blocking)
-    {
-        if (!this->input_component->is_block_pressed())
-        {
-            this->action_fsm->transition_to_state(this->action_idle);
-        }
-    }
+    this->process_movement_state();
+    this->process_action_state();
 }
 
 void PlayerCharacter::_physics_process(double delta)
 {
     this->movement_fsm->process_state(delta);
-    this->process_action();
+    this->movement_component->handle_movement(delta);
+    this->action_fsm->process_state(delta);
 }
 
 void PlayerCharacter::set_movement_component(CharacterMovementComponent* movement_component)

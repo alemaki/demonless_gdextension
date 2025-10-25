@@ -22,7 +22,7 @@ private:
     godot::CharacterBody3D* character = nullptr;
 
 public:
-    void _physics_process(double delta) override;
+    void handle_movement(double delta);
 
     CREATE_GETTER_SETTER_DEFAULT(godot::Vector3, target_velocity);
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, speed);

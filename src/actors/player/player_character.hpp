@@ -35,9 +35,6 @@ private:
     void process_action_state();
     void process_movement_state();
 
-    void process_action();
-    void process_movement();
-
     void _enter_idle();
 
     void _enter_movement();

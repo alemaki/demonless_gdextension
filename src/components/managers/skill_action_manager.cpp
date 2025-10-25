@@ -6,7 +6,8 @@ void SkillActionManager::_ready()
 
     const int child_count = get_child_count();
 
-    for (int i = 0; i < child_count; i++) {
+    for (int i = 0; i < child_count; i++)
+    {
         Node *child = get_child(i);
 
         SkillAction *skill = Object::cast_to<SkillAction>(child);

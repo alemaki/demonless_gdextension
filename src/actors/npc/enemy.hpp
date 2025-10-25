@@ -3,6 +3,7 @@
 
 #include "actors/npc/agent.hpp"
 #include "skills/skill_action.hpp"
+#include "components/managers/skill_action_manager.hpp"
 
 /**
  * @brief Enemy class to serve as base for all enemies in the game. Registers all SkillActions that
@@ -13,7 +14,7 @@ class Enemy : public Agent
     GDCLASS(Enemy, Agent)
 
 protected:
-    godot::TypedArray<SkillAction> attacks; /* currently SkillAction describes all npc attacks. */
+    SkillActionManager* skill_action_manager = nullptr; /* currently SkillAction describes all npc attacks. */
 
 public:
     void _ready() override;
