@@ -43,6 +43,7 @@ protected:
 
 public:
     virtual void _ready() override;
+    virtual ~WaveAttack();
 
 protected:
     static void _bind_methods();

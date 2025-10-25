@@ -15,13 +15,21 @@ void WaveAttack::_ready()
     }
 
     ERR_FAIL_COND_MSG(this->projectile_scene.is_null(), vformat("\"%s\": no projectile scene or projectile.", this->get_name()));
-    ERR_FAIL_COND_MSG(this->projectile_scene->can_instantiate(), vformat("\"%s\": cannot instantiate prijectile scene and has no projectile.", this->get_name()));
+    ERR_FAIL_COND_MSG((!this->projectile_scene->can_instantiate()), vformat("\"%s\": cannot instantiate prijectile scene and has no projectile.", this->get_name()));
 
     Projectile* projectile = godot::Object::cast_to<Projectile>(projectile_scene->instantiate());
 
     ERR_FAIL_COND_MSG(this->projectile_scene.is_null(), vformat("\"%s\": packed scene is not projectile.", this->get_name()));
 
     this->projectile = projectile;
+}
+
+WaveAttack::~WaveAttack()
+{
+    if (this->projectile)
+    {
+        memdelete(this->projectile);
+    }
 }
 
 void WaveAttack::_reset()
