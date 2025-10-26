@@ -5,12 +5,12 @@ BTTask::Status BTExecuteAttack::_tick(double delta)
 {
     TASK_FAIL_COND_COMP_MSG(
         !(this->get_blackboard()->has_var(this->attack_to_execute)),
-        godot::String("Blackboard has no value named: ") + this->attack_to_execute
+        vformat("%s: Blackboard has no value named: %s", this->get_name(), this->attack_to_execute)
     );
 
     //TODO: make attack only or all skills?
     SkillAction* attack = godot::Object::cast_to<SkillAction>(this->get_blackboard()->get_var(this->attack_to_execute));
-    TASK_FAIL_COND_COMP_MSG(attack == nullptr, this->attack_to_execute + godot::String(": is not SkillAction"));
+    TASK_FAIL_COND_COMP_MSG(attack == nullptr, vformat("%s: %s is not SkillAction as expected", this->get_name(), this->attack_to_execute));
     TASK_SUCCEED_COND(attack->is_finished());
 
     attack->step(delta);
@@ -23,11 +23,11 @@ void BTExecuteAttack::_enter()
 {
     ERR_FAIL_COND_MSG(
         !(this->get_blackboard()->has_var(this->attack_to_execute)),
-        godot::String("Blackboard has no value named: ") + this->attack_to_execute
+        vformat("%s: Blackboard has no value named: %s", this->get_name(), this->attack_to_execute)
     );
 
     SkillAction* attack = godot::Object::cast_to<SkillAction>(this->get_blackboard()->get_var(this->attack_to_execute));
-    ERR_FAIL_COND_MSG(attack == nullptr, this->attack_to_execute + godot::String(": is not SkillAction"));
+    ERR_FAIL_COND_MSG(attack == nullptr, vformat("%s: %s is not SkillAction as expected", this->get_name(), this->attack_to_execute));
     attack->reset();
 }
 
