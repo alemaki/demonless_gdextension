@@ -26,7 +26,7 @@ void WaveAttack::_ready()
 
 WaveAttack::~WaveAttack()
 {
-    if (this->projectile)
+    if (this->projectile) //TODO: can set projectile ptr - Is wave attack the owner?
     {
         memdelete(this->projectile);
     }

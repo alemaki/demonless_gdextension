@@ -20,6 +20,7 @@ protected:
 
 public:
     CREATE_GETTER_SETTER_DEFAULT(godot::Ref<godot::PackedScene>, projectile_scene);
+    /* Attack will take ownership of the projectile in question. TODO: is this ok? */
     CREATE_GETTER_SETTER_DEFAULT(Projectile*, projectile);
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, wave_cooldown);
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(int, waves);

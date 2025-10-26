@@ -4,7 +4,7 @@
 #include "attacks/circle_wave_attack.hpp"
 #include "utils/utils.hpp"
 
-struct CircleWaveAttackFixture 
+struct CircleWaveAttackFixture
 {
     CircleWaveAttack* attack = memnew(CircleWaveAttack);
     godot::Node3D* dummy_source = memnew(godot::Node3D);
@@ -19,7 +19,6 @@ struct CircleWaveAttackFixture
     ~CircleWaveAttackFixture()
     {
         memdelete(attack);
-        memdelete(dummy_projectile);
         memdelete(dummy_source);
     }
 };
@@ -94,7 +93,6 @@ TEST_SUITE("[errors] TestCircleWaveAttack")
         attack->step(1); // No error
 
         memdelete(dummy_source);
-        memdelete(dummy_projectile);
         memdelete(attack);
     }
 }
