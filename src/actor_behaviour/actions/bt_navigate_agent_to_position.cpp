@@ -29,7 +29,7 @@ void BTNavigateAgentToPosition::_enter()
 {
     ERR_FAIL_COND_MSG(
         !(this->get_blackboard()->has_var(this->position_name)),
-        vformat("Blackboard has no value named: %s", this->position_name)
+        vformat("%s: Blackboard has no value named: %s", this->get_name(), this->position_name)
     );
 
     Vector3 position = this->get_blackboard()->get_var(this->position_name);
