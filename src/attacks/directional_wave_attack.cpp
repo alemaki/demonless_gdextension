@@ -37,7 +37,7 @@ void DirectionalWaveAttack::_step(double delta)
             {
                 angle = (index/2 * angle_step);
             }
-            
+
             godot::Vector3 dir = this->direction.rotated(VECTOR_UP, angle);
             Projectile* projectile_cpy = Object::cast_to<Projectile>(this->projectile->duplicate());
             ERR_FAIL_NULL(projectile_cpy);
