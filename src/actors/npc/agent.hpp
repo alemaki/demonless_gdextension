@@ -26,6 +26,7 @@ protected:
     godot::NavigationAgent3D* navigation_agent = nullptr;
     BehaviourTree* behaviour_tree = nullptr;
     godot::Ref<Blackboard> blackboard = memnew(Blackboard);
+    godot::Ref<BTTask> beh_task = nullptr;
 
 public:
     CREATE_GETTER_SETTER_DEFAULT(Hurtbox*, hurtbox);
@@ -35,6 +36,7 @@ public:
     CREATE_GETTER_SETTER_DEFAULT(BehaviourTree*, behaviour_tree);
 
     void _ready() override;
+    void _physics_process(double delta) override;
 
 protected:
     static void _bind_methods();

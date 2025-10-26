@@ -2,11 +2,24 @@
 
 void Agent::_ready()
 {
-    utils::ensure_node(animation_player, this, "AnimationPlayer");
-    utils::ensure_node(navigation_agent, this, "NavigationAgent3D");
-    utils::ensure_node(health_component, this, "HealthComponent");
-    utils::ensure_node(hurtbox, this, "Hurtbox");
-    utils::ensure_node(behaviour_tree, this, "BehaviourTree");
+    DISABLE_EDITOR_PROCESSING();
+
+    utils::ensure_node(this->animation_player, this, "AnimationPlayer");
+    utils::ensure_node(this->navigation_agent, this, "NavigationAgent3D");
+    utils::ensure_node(this->health_component, this, "HealthComponent");
+    utils::ensure_node(this->hurtbox, this, "Hurtbox");
+    utils::ensure_node(this->behaviour_tree, this, "BehaviourTree");
+
+    if (this->behaviour_tree)
+    {
+        this->beh_task = this->behaviour_tree->instantiate(this, this->blackboard);
+    }
+}
+
+void Agent::_physics_process(double delta)
+{
+    ERR_FAIL_NULL(this->beh_task);
+    this->beh_task->execute(delta);
 }
 
 void Agent::_bind_methods()

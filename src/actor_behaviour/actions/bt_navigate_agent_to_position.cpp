@@ -1,5 +1,6 @@
 #include "bt_navigate_agent_to_position.hpp"
 #include "actors/npc/agent.hpp"
+
 BTTask::Status BTNavigateAgentToPosition::_tick(double delta)
 {
     Agent* agent = godot::Object::cast_to<Agent>(this->get_actor());
@@ -19,7 +20,7 @@ BTTask::Status BTNavigateAgentToPosition::_tick(double delta)
     Vector3 direction = agent->get_navigation_agent()->get_next_path_position() - agent->get_global_position();
     /* will not be 0vec */
     direction.normalize();
-    agent->set_velocity(direction * speed * delta);
+    agent->set_velocity(direction * speed);
     agent->move_and_slide();
 
     TASK_RUNNING();

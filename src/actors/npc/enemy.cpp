@@ -2,6 +2,7 @@
 
 void Enemy::_ready()
 {
+    this->Agent::_ready();
     utils::ensure_node(this->skill_action_manager, this, "SkillActionManager");
 
     ERR_FAIL_NULL(this->skill_action_manager);

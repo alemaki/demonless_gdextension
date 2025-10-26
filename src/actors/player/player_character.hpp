@@ -3,6 +3,7 @@
 
 #include <godot_cpp/classes/animation_player.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
+#include <godot_cpp/classes/camera3d.hpp>
 #include "behaviour_tree/behaviour_tree.hpp"
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
@@ -24,6 +25,7 @@ class PlayerCharacter : public godot::CharacterBody3D
     godot::Node3D* mesh_instance = nullptr;
     godot::AnimationPlayer* animation_player = nullptr;
     HitboxBlocker* hitbox_blocker = nullptr;
+    godot::Camera3D* player_camera = nullptr; // Todo maybe make another thing for the camera?
 
     State* action_idle = nullptr;
     State* action_attacking = nullptr;
@@ -43,6 +45,8 @@ private:
     void _enter_block();
     void _process_block(double delta);
     void _exit_block();
+
+    void handle_camera_movement();
 
 public:
     ~PlayerCharacter();

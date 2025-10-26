@@ -29,6 +29,7 @@ void BTExecuteAttack::_enter()
     SkillAction* attack = godot::Object::cast_to<SkillAction>(this->get_blackboard()->get_var(this->attack_to_execute));
     ERR_FAIL_COND_MSG(attack == nullptr, vformat("%s: %s is not SkillAction as expected", this->get_name(), this->attack_to_execute));
     attack->reset();
+    attack->set_actor_source(godot::Object::cast_to<godot::Node3D>(this->get_actor()));
 }
 
 void BTExecuteAttack::_bind_methods()

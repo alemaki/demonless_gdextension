@@ -2,7 +2,7 @@
 
 Projectile::Projectile()
 {
-
+    this->movement_context.instantiate();
 }
 
 void Projectile::set_movement_context(godot::Ref<MovementContext> movement_context)
@@ -110,8 +110,8 @@ void Projectile::_bind_methods()
     ClassDB::bind_method(D_METHOD("_on_timeout"), &Projectile::_on_timeout);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "lifespan_timer", PROPERTY_HINT_NODE_TYPE, "Timer", PROPERTY_USAGE_DEFAULT, "Timer"), "set_lifespan_timer", "get_lifespan_timer");
 
-    BIND_GETTER_SETTER_DEFAULT(Projectile, movement_context);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_context", PROPERTY_HINT_RESOURCE_TYPE, "Movement context.", PROPERTY_USAGE_DEFAULT), "set_movement_context", "get_movement_context");
+    //BIND_GETTER_SETTER_DEFAULT(Projectile, movement_context);
+    //ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_context", PROPERTY_HINT_RESOURCE_TYPE, "Movement context.", PROPERTY_USAGE_DEFAULT), "set_movement_context", "get_movement_context");
 
     BIND_GETTER_SETTER_DEFAULT(Projectile, movement_strategy);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_strategy", PROPERTY_HINT_NODE_TYPE, "Movement strategy.", PROPERTY_USAGE_EDITOR, "MovementStrategy"), "set_movement_strategy", "get_movement_strategy");
