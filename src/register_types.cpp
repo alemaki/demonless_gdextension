@@ -35,6 +35,7 @@
 #include "components/area3d/hitbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "components/area3d/hurtbox.hpp"
+#include "components/camera/sticky_camera.hpp"
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
 #include "components/managers/skill_action_manager.hpp"
@@ -62,20 +63,24 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 
 	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
 	{
+		/* Movement strategies */
 		ClassDB::register_class<MovementContext>();
 		ClassDB::register_class<MovementStrategy>();
 		ClassDB::register_class<AcceleratingMovementStrategy>();
 		ClassDB::register_class<CompositeMovementStrategy>();
 		ClassDB::register_class<SequentialMovementStrategy>();
 
+		/* Projectiles */
 		ClassDB::register_class<Projectile>();
 
-		ClassDB::register_class<HealthComponent>();
-		ClassDB::register_class<Hitbox>();
-		ClassDB::register_class<Hurtbox>();
-		ClassDB::register_class<HitboxBlocker>();
+		/* Components */
 		ClassDB::register_class<CharacterInputComponent>();
 		ClassDB::register_class<CharacterMovementComponent>();
+		ClassDB::register_class<HealthComponent>();
+		ClassDB::register_class<Hitbox>();
+		ClassDB::register_class<HitboxBlocker>();
+		ClassDB::register_class<Hurtbox>();
+		ClassDB::register_class<StickyCamera>();
 
 		/* Actors */
 		ClassDB::register_class<Agent>();
@@ -86,16 +91,7 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		/* UI */
 		ClassDB::register_class<HealthBar>();
 
-		/* Behaviour */
-		ClassDB::register_class<SkillAction>();
-		ClassDB::register_class<SkillActionManager>();
-
-		ClassDB::register_class<ProjectileTimeJump>();
-
-		ClassDB::register_class<WaveAttack>();
-		ClassDB::register_class<CircleWaveAttack>();
-		ClassDB::register_class<DirectionalWaveAttack>();
-
+		/* Behaviour - Actions*/
 		ClassDB::register_class<BTExecuteAttack>();
 		ClassDB::register_class<BTLookAtPosition>();
 		ClassDB::register_class<BTNavigateAgentToPosition>();
@@ -104,7 +100,20 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<BTSetRandomPosition>();
 		ClassDB::register_class<BTSpawnNode3DAtPosition>();
 
+		/* Behaviour - Conditions*/
 		ClassDB::register_class<BTNode3DInRange>();
+
+		/* Skills */
+		ClassDB::register_class<SkillAction>();
+		ClassDB::register_class<ProjectileTimeJump>();
+
+		/* Managers */
+		ClassDB::register_class<SkillActionManager>();
+
+		/* Attacks */
+		ClassDB::register_class<WaveAttack>();
+		ClassDB::register_class<CircleWaveAttack>();
+		ClassDB::register_class<DirectionalWaveAttack>();
 	}
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR)
 	{

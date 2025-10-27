@@ -7,7 +7,7 @@
 class HealthComponent : public godot::Node
 {
     GDCLASS(HealthComponent, godot::Node);
-    
+
 public:
     double max_hp = 0;
     double current_hp = 0;
@@ -35,10 +35,10 @@ public:
 
     void take_damage(double amount);
     void heal(double amount);
-    
+
 
 protected:
     static void _bind_methods();
 };
 
-#endif
+#endif // HEALTH_COMPONENT_HPP
