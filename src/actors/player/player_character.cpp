@@ -50,7 +50,6 @@ void PlayerCharacter::_ready()
     utils::ensure_node(this->health_component, this, "HealthComponent");
     utils::ensure_node(this->hitbox_blocker, this, "HitboxBlocker");
     utils::ensure_node(this->hurtbox, this, "Hurtbox");
-    utils::ensure_node(this->player_camera, this, "Camera3D");
 
     if (this->hitbox_blocker)
     {
@@ -62,10 +61,6 @@ void PlayerCharacter::_ready()
     {
         // nothing to handle currently
         // hurtbox->connect("hitbox_blocked");
-    }
-    if (this->player_camera)
-    {
-        this->player_camera->set_as_top_level(true);
     }
 }
 
@@ -172,15 +167,6 @@ void PlayerCharacter::_exit_block()
     this->hitbox_blocker->set_monitoring(false);
 }
 
-void PlayerCharacter::handle_camera_movement()
-{
-    ERR_FAIL_NULL(this->player_camera);
-    Vector3 position = this->player_camera->get_position();
-    position.x = this->get_position().x;
-    position.z = 6.5 + this->get_position().z;
-    this->player_camera->set_position(position);
-}
-
 void PlayerCharacter::_process(double delta)
 {
     this->process_movement_state();
@@ -192,7 +178,6 @@ void PlayerCharacter::_physics_process(double delta)
     this->movement_fsm->process_state(delta);
     this->movement_component->handle_movement(delta);
     this->action_fsm->process_state(delta);
-    this->handle_camera_movement();
 }
 
 void PlayerCharacter::set_movement_component(CharacterMovementComponent* movement_component)

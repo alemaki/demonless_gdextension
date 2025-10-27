@@ -69,9 +69,10 @@ void Projectile::_ready()
     if (!this->lifespan_timer)
     {
         this->lifespan_timer = memnew(godot::Timer);
-        this->add_child(this->lifespan_timer);
+        this->lifespan_timer->set_wait_time(10); // 10 seconds default?
         this->lifespan_timer->set_autostart(true);
         this->lifespan_timer->set_one_shot(true);
+        this->add_child(this->lifespan_timer);
     }
 
     this->lifespan_timer->connect("timeout", godot::Callable(this, "_on_timeout"));

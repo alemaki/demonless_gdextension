@@ -1,5 +1,4 @@
 #include "sticky_camera.hpp"
-#include "utils/utils.hpp"
 
 void StickyCamera::_ready()
 {

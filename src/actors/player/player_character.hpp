@@ -25,7 +25,6 @@ class PlayerCharacter : public godot::CharacterBody3D
     godot::Node3D* mesh_instance = nullptr;
     godot::AnimationPlayer* animation_player = nullptr;
     HitboxBlocker* hitbox_blocker = nullptr;
-    godot::Camera3D* player_camera = nullptr; // Todo maybe make another thing for the camera?
 
     State* action_idle = nullptr;
     State* action_attacking = nullptr;
@@ -45,8 +44,6 @@ private:
     void _enter_block();
     void _process_block(double delta);
     void _exit_block();
-
-    void handle_camera_movement();
 
 public:
     ~PlayerCharacter();
