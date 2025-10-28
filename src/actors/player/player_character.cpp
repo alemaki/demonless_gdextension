@@ -17,6 +17,7 @@ void PlayerCharacter::_ready()
     this->action_idle = this->action_fsm->create_state();
     this->action_attacking = this->action_fsm->create_state();
     this->action_blocking = this->action_fsm->create_state();
+    this->action_blocking_react = this->action_fsm->create_state();
     this->action_fsm->set_initial_state(this->action_idle);
 
     this->movement_idle = this->movement_fsm->create_state();
@@ -35,6 +36,9 @@ void PlayerCharacter::_ready()
     this->action_blocking->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_block));
     this->action_blocking->add_process_callable(callable_mp(this, &PlayerCharacter::_process_block));
     this->action_blocking->add_exit_callable(callable_mp(this, &PlayerCharacter::_exit_block));
+    this->action_blocking_react->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_block_react));
+    this->action_blocking_react->add_process_callable(callable_mp(this, &PlayerCharacter::_enter_block_react));
+    this->action_blocking_react->add_exit_callable(callable_mp(this, &PlayerCharacter::_exit_block_react));
 
     if (this->mesh_instance != nullptr)
     {
@@ -53,8 +57,7 @@ void PlayerCharacter::_ready()
 
     if (this->hitbox_blocker)
     {
-        // nothing to handle currently
-        // hitbox_blocker->connect("hitbox_blocked");
+        this->hitbox_blocker->connect("hitbox_blocked", callable_mp(this, &PlayerCharacter::hitbox_blocked));
     }
 
     if (this->hurtbox)
@@ -143,6 +146,7 @@ void PlayerCharacter::_enter_block()
     ERR_FAIL_NULL(this->hitbox_blocker);
     this->hitbox_blocker->set_visible(true);
     this->hitbox_blocker->set_monitoring(true);
+    this->movement_component->set_speed(this->movement_component->get_speed()/3.0);
 }
 
 void PlayerCharacter::_process_block(double delta)
@@ -165,6 +169,41 @@ void PlayerCharacter::_exit_block()
     ERR_FAIL_NULL(this->hitbox_blocker);
     this->hitbox_blocker->set_visible(false);
     this->hitbox_blocker->set_monitoring(false);
+    this->movement_component->set_speed(this->movement_component->get_speed()*3.0);
+}
+
+void PlayerCharacter::_enter_block_react()
+{
+    ERR_FAIL_NULL(this->animation_player);
+    this->animation_player->connect(
+        "animation_finished",
+        callable_mp(this, &PlayerCharacter::_on_block_animation_finished),
+        godot::Object::ConnectFlags::CONNECT_ONE_SHOT
+        );
+    this->animation_player->play("Idle");
+}
+
+void PlayerCharacter::_on_block_animation_finished(godot::StringName animation_name)
+{
+    ERR_FAIL_NULL(this->input_component);
+    if (this->input_component->is_block_pressed())
+    {
+        this->action_fsm->transition_to_state(this->action_blocking);
+    }
+    else
+    {
+        this->action_fsm->transition_to_state(this->action_idle);
+    }
+}
+
+void PlayerCharacter::_exit_block_react()
+{
+    //TODO: nothing for now
+}
+
+void PlayerCharacter::hitbox_blocked(const godot::Area3D* hitbox)
+{
+    this->action_fsm->transition_to_state(this->action_blocking_react);
 }
 
 void PlayerCharacter::_process(double delta)

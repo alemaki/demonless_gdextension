@@ -29,6 +29,7 @@ class PlayerCharacter : public godot::CharacterBody3D
     State* action_idle = nullptr;
     State* action_attacking = nullptr;
     State* action_blocking = nullptr;
+    State* action_blocking_react = nullptr;
     State* movement_running = nullptr;
     State* movement_idle = nullptr;
 
@@ -45,6 +46,11 @@ private:
     void _process_block(double delta);
     void _exit_block();
 
+    void _enter_block_react();
+    void _on_block_animation_finished(godot::StringName animation_name);
+    void _exit_block_react();
+
+    void hitbox_blocked(const godot::Area3D* hitbox);
 public:
     ~PlayerCharacter();
 
