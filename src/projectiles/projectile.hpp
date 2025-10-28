@@ -19,9 +19,8 @@ protected:
     godot::Timer* lifespan_timer = nullptr;
     Hitbox* hitbox = nullptr;
 
-    void _hit(godot::Area3D* area3d);
     virtual void _hit_hurtbox(Hurtbox* hurtbox);
-    virtual void _hit_blockbox(HitboxBlocker* hitbox_blocker);
+    virtual void _hit_blocker(HitboxBlocker* hitbox_blocker);
 
     virtual void _on_timeout();
 
@@ -32,6 +31,7 @@ public:
     void _physics_process(double delta) override;
 
     CREATE_GETTER_SETTER_DEFAULT(godot::Timer*, lifespan_timer);
+    CREATE_GETTER_SETTER_DEFAULT(Hitbox*, hitbox);
     void set_movement_context(godot::Ref<MovementContext> movement_context);
     godot::Ref<MovementContext> get_movement_context() const
     {

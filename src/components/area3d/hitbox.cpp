@@ -31,6 +31,6 @@ void Hitbox::_bind_methods()
     using namespace godot;
     ClassDB::bind_method(D_METHOD("_on_area_entered", "area3d"), &Hitbox::_on_area_entered);
 
-    ADD_SIGNAL(MethodInfo("hit_hurtbox", PropertyInfo(Variant::OBJECT, "hitbox", PROPERTY_HINT_NONE, "Area3D")));
+    ADD_SIGNAL(MethodInfo("hit_hurtbox", PropertyInfo(Variant::OBJECT, "hurtbox", PROPERTY_HINT_NONE, "Area3D")));
     ADD_SIGNAL(MethodInfo("hit_blocker", PropertyInfo(Variant::OBJECT, "hitbox_blocker", PROPERTY_HINT_NONE, "Area3D")));
 }

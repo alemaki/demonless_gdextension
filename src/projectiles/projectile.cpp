@@ -36,24 +36,12 @@ void Projectile::set_direction(const godot::Vector3& direction)
     this->look_at(this->get_position() + direction);
 }
 
-void Projectile::_hit(godot::Area3D* area3d)
-{
-    if (auto* hurtbox = Object::cast_to<Hurtbox>(area3d))
-    {
-        this->_hit_hurtbox(hurtbox);
-    }
-    if (auto* hitbox_blocker = Object::cast_to<HitboxBlocker>(area3d))
-    {
-        this->_hit_blockbox(hitbox_blocker);
-    }
-}
-
 void Projectile::_hit_hurtbox(Hurtbox *hurtbox)
 {
-    /* Does nothing for now. */
+    this->queue_free();
 }
 
-void Projectile::_hit_blockbox(HitboxBlocker *hitbox_blocker)
+void Projectile::_hit_blocker(HitboxBlocker *hitbox_blocker)
 {
     this->queue_free();
 }
@@ -66,6 +54,13 @@ void Projectile::_on_timeout()
 void Projectile::_ready()
 {
     DISABLE_EDITOR_PROCESSING();
+
+    utils::ensure_node(this->hitbox, this, "Hitbox");
+    ERR_FAIL_NULL(this->hitbox);
+
+    this->hitbox->connect("hit_hurtbox", callable_mp(this, &Projectile::_hit_hurtbox));
+    this->hitbox->connect("hit_blocker", callable_mp(this, &Projectile::_hit_blocker));
+
     if (!this->lifespan_timer)
     {
         this->lifespan_timer = memnew(godot::Timer);
