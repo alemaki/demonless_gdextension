@@ -4,6 +4,7 @@
 #include <godot_cpp/classes/animation_player.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/camera3d.hpp>
+#include <godot_cpp/classes/timer.hpp>
 #include "behaviour_tree/behaviour_tree.hpp"
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
@@ -25,6 +26,7 @@ class PlayerCharacter : public godot::CharacterBody3D
     godot::Node3D* mesh_instance = nullptr;
     godot::AnimationPlayer* animation_player = nullptr;
     HitboxBlocker* hitbox_blocker = nullptr;
+    godot::Timer* blocking_timer = nullptr;
 
     State* action_idle = nullptr;
     State* action_attacking = nullptr;
@@ -47,7 +49,7 @@ private:
     void _exit_block();
 
     void _enter_block_react();
-    void _on_block_animation_finished(godot::StringName animation_name);
+    void _on_blocking_finished();
     void _exit_block_react();
 
     void hitbox_blocked(const godot::Area3D* hitbox);

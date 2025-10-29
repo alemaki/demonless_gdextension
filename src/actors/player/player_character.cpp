@@ -14,6 +14,15 @@ void PlayerCharacter::_ready()
     this->action_fsm = memnew(FSM);
     this->movement_fsm = memnew(FSM);
 
+    this->blocking_timer = memnew(Timer);
+    this->blocking_timer->set_autostart(false);
+    this->blocking_timer->set_one_shot(true);
+    this->blocking_timer->connect(
+        "timeout",
+        callable_mp(this, &PlayerCharacter::_on_blocking_finished)
+        );
+    this->add_child(this->blocking_timer);
+
     this->action_idle = this->action_fsm->create_state();
     this->action_attacking = this->action_fsm->create_state();
     this->action_blocking = this->action_fsm->create_state();
@@ -99,8 +108,10 @@ void PlayerCharacter::process_movement_state()
         this->movement_fsm->transition_to_state(this->movement_idle);
     }
     godot::Vector3 dir = this->input_component->get_direction_input();
+
     if ((this->movement_fsm->get_state() == this->movement_idle)
         && (this->action_fsm->get_state() != this->action_attacking)
+        && (this->action_fsm->get_state() != this->action_blocking_react)
         && !(dir.is_zero_approx()))
     {
         this->movement_fsm->transition_to_state(this->movement_running);
@@ -175,15 +186,19 @@ void PlayerCharacter::_exit_block()
 void PlayerCharacter::_enter_block_react()
 {
     ERR_FAIL_NULL(this->animation_player);
-    this->animation_player->connect(
-        "animation_finished",
-        callable_mp(this, &PlayerCharacter::_on_block_animation_finished),
-        godot::Object::ConnectFlags::CONNECT_ONE_SHOT
-        );
+    this->movement_fsm->transition_to_state(this->movement_idle);
     this->animation_player->play("Idle");
+    if (!(this->blocking_timer->is_stopped()))
+    {
+        // we are in blocking already
+    }
+    else
+    {
+        this->blocking_timer->start(1);
+    }
 }
 
-void PlayerCharacter::_on_block_animation_finished(godot::StringName animation_name)
+void PlayerCharacter::_on_blocking_finished()
 {
     ERR_FAIL_NULL(this->input_component);
     if (this->input_component->is_block_pressed())
