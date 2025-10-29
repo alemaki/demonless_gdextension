@@ -49,7 +49,8 @@ private:
     void _exit_block();
 
     void _enter_block_react();
-    void _on_blocking_finished();
+    void _process_block_react(double delta);
+    void _on_blocking_react_finished();
     void _exit_block_react();
 
     void hitbox_blocked(const godot::Area3D* hitbox);

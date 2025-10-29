@@ -19,7 +19,7 @@ void PlayerCharacter::_ready()
     this->blocking_timer->set_one_shot(true);
     this->blocking_timer->connect(
         "timeout",
-        callable_mp(this, &PlayerCharacter::_on_blocking_finished)
+        callable_mp(this, &PlayerCharacter::_on_blocking_react_finished)
         );
     this->add_child(this->blocking_timer);
 
@@ -38,6 +38,7 @@ void PlayerCharacter::_ready()
     ERR_FAIL_NULL(this->movement_idle);
     ERR_FAIL_NULL(this->movement_running);
     ERR_FAIL_NULL(this->action_blocking);
+    ERR_FAIL_NULL(this->action_blocking_react);
 
     this->movement_idle->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_idle));
     this->movement_running->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_movement));
@@ -46,7 +47,7 @@ void PlayerCharacter::_ready()
     this->action_blocking->add_process_callable(callable_mp(this, &PlayerCharacter::_process_block));
     this->action_blocking->add_exit_callable(callable_mp(this, &PlayerCharacter::_exit_block));
     this->action_blocking_react->add_enter_callable(callable_mp(this, &PlayerCharacter::_enter_block_react));
-    this->action_blocking_react->add_process_callable(callable_mp(this, &PlayerCharacter::_enter_block_react));
+    this->action_blocking_react->add_process_callable(callable_mp(this, &PlayerCharacter::_process_block_react));
     this->action_blocking_react->add_exit_callable(callable_mp(this, &PlayerCharacter::_exit_block_react));
 
     if (this->mesh_instance != nullptr)
@@ -155,8 +156,7 @@ void PlayerCharacter::_enter_block()
 {
     ERR_FAIL_NULL(this->input_component);
     ERR_FAIL_NULL(this->hitbox_blocker);
-    this->hitbox_blocker->set_visible(true);
-    this->hitbox_blocker->set_monitoring(true);
+    this->hitbox_blocker->set_blocker_enabled(true);
     this->movement_component->set_speed(this->movement_component->get_speed()/3.0);
 }
 
@@ -178,8 +178,7 @@ void PlayerCharacter::_process_block(double delta)
 void PlayerCharacter::_exit_block()
 {
     ERR_FAIL_NULL(this->hitbox_blocker);
-    this->hitbox_blocker->set_visible(false);
-    this->hitbox_blocker->set_monitoring(false);
+    this->hitbox_blocker->set_blocker_enabled(false);
     this->movement_component->set_speed(this->movement_component->get_speed()*3.0);
 }
 
@@ -188,17 +187,27 @@ void PlayerCharacter::_enter_block_react()
     ERR_FAIL_NULL(this->animation_player);
     this->movement_fsm->transition_to_state(this->movement_idle);
     this->animation_player->play("Idle");
+    this->hitbox_blocker->set_blocker_enabled(true);
     if (!(this->blocking_timer->is_stopped()))
     {
         // we are in blocking already
     }
     else
     {
-        this->blocking_timer->start(1);
+        this->blocking_timer->start(0.5);
     }
 }
 
-void PlayerCharacter::_on_blocking_finished()
+void PlayerCharacter::_process_block_react(double delta)
+{
+    ERR_FAIL_NULL(this->input_component);
+    ERR_FAIL_NULL(this->hitbox_blocker);
+    godot::Vector3 mouse_position = this->input_component->get_mouse_casted_position();
+    ERR_FAIL_COND(mouse_position.is_equal_approx(this->get_position()));
+    this->look_at(mouse_position);
+}
+
+void PlayerCharacter::_on_blocking_react_finished()
 {
     ERR_FAIL_NULL(this->input_component);
     if (this->input_component->is_block_pressed())
@@ -213,7 +222,7 @@ void PlayerCharacter::_on_blocking_finished()
 
 void PlayerCharacter::_exit_block_react()
 {
-    //TODO: nothing for now
+    this->hitbox_blocker->set_blocker_enabled(false);
 }
 
 void PlayerCharacter::hitbox_blocked(const godot::Area3D* hitbox)

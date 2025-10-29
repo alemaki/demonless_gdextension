@@ -2,6 +2,9 @@
 #define HITBOX_BLOCKER_HPP
 
 #include <godot_cpp/classes/area3d.hpp>
+#include <godot_cpp/classes/collision_object3d.hpp>
+#include <godot_cpp/classes/collision_shape3d.hpp>
+#include <godot_cpp/classes/collision_polygon3d.hpp>
 #include "utils/utils.hpp"
 
 class HitboxBlocker : public godot::Area3D
@@ -18,6 +21,8 @@ protected:
 
 public:
     CREATE_GETTER_SETTER_BOOL_DEFAULT(active);
+
+    void set_blocker_enabled(bool enabled);
 
 protected:
     static void _bind_methods();
