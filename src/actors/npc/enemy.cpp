@@ -20,4 +20,8 @@ void Enemy::_ready()
         }
         blackboard->set_var(skill_action->get_name(), skill_action);
     }
+
+    ERR_FAIL_NULL(this->blackboard);
+    Node* player = get_tree()->get_first_node_in_group("player");
+    this->blackboard->set_var("target", player);
 }

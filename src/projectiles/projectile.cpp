@@ -33,7 +33,6 @@ void Projectile::set_direction(const godot::Vector3& direction)
 {
     ERR_FAIL_COND(direction.is_zero_approx());
     this->movement_context->set_direction(direction);
-    this->look_at(this->get_position() + direction);
 }
 
 void Projectile::_hit_hurtbox(Hurtbox *hurtbox)
@@ -95,6 +94,7 @@ void Projectile::_physics_process(double delta)
     this->movement_strategy->apply(this->movement_context, delta);
     godot::Vector3 displacement = this->movement_context->get_position()- this->get_position();
     this->set_velocity(displacement / delta); // velocity to reach in one frame
+    this->look_at(this->get_position().direction_to(this->movement_context->get_position()));
     this->move_and_slide();
 }
 

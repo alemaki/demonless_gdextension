@@ -41,9 +41,9 @@ void DirectionalWaveAttack::_step(double delta)
             godot::Vector3 dir = this->direction.rotated(VECTOR_UP, angle);
             Projectile* projectile_cpy = Object::cast_to<Projectile>(this->projectile->duplicate());
             ERR_FAIL_NULL(projectile_cpy);
+            get_tree()->get_current_scene()->add_child(projectile_cpy);
             projectile_cpy->set_position(this->actor_source->get_position());
             projectile_cpy->set_direction(dir);
-            get_tree()->get_current_scene()->add_child(projectile_cpy);
         }
     }
 

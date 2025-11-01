@@ -59,6 +59,7 @@ private:
     void _on_hurtbox_hit(const godot::Area3D* hitbox);
 
 public:
+    PlayerCharacter();
     ~PlayerCharacter();
 
     void _ready() override;

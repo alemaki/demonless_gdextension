@@ -2,6 +2,11 @@
 
 #include <godot_cpp/classes/engine.hpp>
 
+PlayerCharacter::PlayerCharacter()
+{
+    this->add_to_group("player");
+}
+
 PlayerCharacter::~PlayerCharacter()
 {
 

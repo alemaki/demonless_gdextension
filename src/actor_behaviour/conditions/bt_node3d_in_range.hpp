@@ -7,7 +7,7 @@ class BTNode3DInRange : public BTCondition
 {
     GDCLASS(BTNode3DInRange, BTCondition);
 
-private: 
+private:
     double range;
     godot::StringName node_name;
 

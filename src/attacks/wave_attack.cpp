@@ -4,7 +4,7 @@
 void WaveAttack::set_direction(const godot::Vector3 direction)
 {
     ERR_FAIL_COND_MSG(direction.is_zero_approx(), "Attack direction cannot be godot::Vector3{0, 0, 0}");
-    this->direction = direction;
+    this->direction = direction.normalized();
 }
 
 void WaveAttack::_ready()
