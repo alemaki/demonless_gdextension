@@ -10,10 +10,14 @@ class Hitbox : public godot::Area3D
 {
     GDCLASS(Hitbox, godot::Area3D);
 
+    double damage;
+
 protected:
     void _on_area_entered(godot::Area3D* area3d);
 
 public:
+    CREATE_GETTER_SETTER_DEFAULT(double, damage);
+
     virtual void _ready() override;
 
 protected:
@@ -21,4 +25,4 @@ protected:
 };
 
 
-#endif
+#endif /* HITBOX_HPP */

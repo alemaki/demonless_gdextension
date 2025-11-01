@@ -9,6 +9,7 @@
 #include "components/health/health_component.hpp"
 #include "components/input/character_input_component.hpp"
 #include "components/movement/character_movement_component.hpp"
+#include "components/area3d/hitbox.hpp"
 #include "components/area3d/hurtbox.hpp"
 #include "components/area3d/hitbox_blocker.hpp"
 #include "finite_state_machine/fsm.hpp"
@@ -54,6 +55,9 @@ private:
     void _exit_block_react();
 
     void hitbox_blocked(const godot::Area3D* hitbox);
+
+    void _on_hurtbox_hit(const godot::Area3D* hitbox);
+
 public:
     ~PlayerCharacter();
 

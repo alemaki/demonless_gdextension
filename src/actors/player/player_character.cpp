@@ -68,12 +68,12 @@ void PlayerCharacter::_ready()
     if (this->hitbox_blocker)
     {
         this->hitbox_blocker->connect("hitbox_blocked", callable_mp(this, &PlayerCharacter::hitbox_blocked));
+        this->hitbox_blocker->set_blocker_enabled(false);
     }
 
     if (this->hurtbox)
     {
-        // nothing to handle currently
-        // hurtbox->connect("hitbox_blocked");
+        hurtbox->connect("hurtbox_hit", callable_mp(this, &PlayerCharacter::_on_hurtbox_hit));
     }
 }
 
@@ -201,7 +201,8 @@ void PlayerCharacter::_enter_block_react()
 void PlayerCharacter::_process_block_react(double delta)
 {
     ERR_FAIL_NULL(this->input_component);
-    ERR_FAIL_NULL(this->hitbox_blocker);
+    /* will not enter her if no hitbox blocker, no need to check */
+    // ERR_FAIL_NULL(this->hitbox_blocker);
     godot::Vector3 mouse_position = this->input_component->get_mouse_casted_position();
     ERR_FAIL_COND(mouse_position.is_equal_approx(this->get_position()));
     this->look_at(mouse_position);
@@ -228,6 +229,15 @@ void PlayerCharacter::_exit_block_react()
 void PlayerCharacter::hitbox_blocked(const godot::Area3D* hitbox)
 {
     this->action_fsm->transition_to_state(this->action_blocking_react);
+}
+
+void PlayerCharacter::_on_hurtbox_hit(const godot::Area3D* _hitbox)
+{
+    ERR_FAIL_NULL(this->health_component);
+    const Hitbox* hitbox = godot::Object::cast_to<Hitbox>(_hitbox);
+    ERR_FAIL_NULL(hitbox);
+    godot::UtilityFunctions::print(vformat("Character took damage: %d", hitbox->get_damage()));
+    this->health_component->take_damage(hitbox->get_damage());
 }
 
 void PlayerCharacter::_process(double delta)

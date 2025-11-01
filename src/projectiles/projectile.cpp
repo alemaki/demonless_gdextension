@@ -58,6 +58,7 @@ void Projectile::_ready()
     utils::ensure_node(this->hitbox, this, "Hitbox");
     ERR_FAIL_NULL(this->hitbox);
 
+    this->hitbox->set_damage(this->damage);
     this->hitbox->connect("hit_hurtbox", callable_mp(this, &Projectile::_hit_hurtbox));
     this->hitbox->connect("hit_blocker", callable_mp(this, &Projectile::_hit_blocker));
 
@@ -101,6 +102,8 @@ void Projectile::_physics_process(double delta)
 void Projectile::_bind_methods()
 {
     using namespace godot;
+
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(Projectile, Variant::FLOAT ,damage);
 
     BIND_GETTER_SETTER_DEFAULT(Projectile, lifespan_timer);
     ClassDB::bind_method(D_METHOD("_on_timeout"), &Projectile::_on_timeout);

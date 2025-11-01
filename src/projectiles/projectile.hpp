@@ -19,6 +19,8 @@ protected:
     godot::Timer* lifespan_timer = nullptr;
     Hitbox* hitbox = nullptr;
 
+    double damage = 1;
+
     virtual void _hit_hurtbox(Hurtbox* hurtbox);
     virtual void _hit_blocker(HitboxBlocker* hitbox_blocker);
 
@@ -32,6 +34,8 @@ public:
 
     CREATE_GETTER_SETTER_DEFAULT(godot::Timer*, lifespan_timer);
     CREATE_GETTER_SETTER_DEFAULT(Hitbox*, hitbox);
+    CREATE_GETTER_SETTER_DEFAULT(double, damage);
+
     void set_movement_context(godot::Ref<MovementContext> movement_context);
     godot::Ref<MovementContext> get_movement_context() const
     {
