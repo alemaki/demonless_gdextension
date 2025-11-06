@@ -17,6 +17,7 @@ protected:
     int waves_fired = 0;
     int projectiles_per_wave = 0;
     godot::Vector3 direction = {1, 0, 0};
+    godot::Node3D* target = nullptr;
 
 public:
     CREATE_GETTER_SETTER_DEFAULT(godot::Ref<godot::PackedScene>, projectile_scene);
@@ -25,6 +26,7 @@ public:
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, wave_cooldown);
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(int, waves);
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(int, projectiles_per_wave);
+    CREATE_GETTER_SETTER_DEFAULT(godot::Node3D*, target);
 
     void set_direction(const godot::Vector3 direction);
     _FORCE_INLINE_ godot::Vector3 get_direction() const
