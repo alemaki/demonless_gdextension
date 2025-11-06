@@ -2,7 +2,7 @@
 
 Projectile::Projectile()
 {
-    this->movement_context.instantiate();
+
 }
 
 void Projectile::set_movement_context(godot::Ref<MovementContext> movement_context)
@@ -18,13 +18,14 @@ void Projectile::set_movement_strategy(MovementStrategy* movement_strategy)
         this->movement_strategy->queue_free();
     }
     this->movement_strategy = movement_strategy;
-    ERR_FAIL_NULL(movement_strategy); /* set strategy to null so no segfaults can happen and fail after so it can alert */
+    ERR_FAIL_NULL(this->movement_strategy);
     if (this->movement_strategy->get_parent() != this)
     {
-        this->add_child(movement_strategy);
+        this->add_child(this->movement_strategy);
     }
-    if (this->movement_strategy->get_owner() != this) /* make sure the strategy is saved in the editor when added. */
+    if (this->movement_strategy->get_owner() != this)
     {
+        /* make sure the strategy is saved in the editor when added. */
         movement_strategy->set_owner(this);
     }
 }
@@ -109,9 +110,9 @@ void Projectile::_bind_methods()
     ClassDB::bind_method(D_METHOD("_on_timeout"), &Projectile::_on_timeout);
     ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "lifespan_timer", PROPERTY_HINT_NODE_TYPE, "Timer", PROPERTY_USAGE_DEFAULT, "Timer"), "set_lifespan_timer", "get_lifespan_timer");
 
-    //BIND_GETTER_SETTER_DEFAULT(Projectile, movement_context);
-    //ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_context", PROPERTY_HINT_RESOURCE_TYPE, "Movement context.", PROPERTY_USAGE_DEFAULT), "set_movement_context", "get_movement_context");
+    BIND_GETTER_SETTER_DEFAULT(Projectile, movement_context);
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_context", PROPERTY_HINT_RESOURCE_TYPE, "MovementContext", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE, "MovementContext"), "set_movement_context", "get_movement_context");
 
     BIND_GETTER_SETTER_DEFAULT(Projectile, movement_strategy);
-    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_strategy", PROPERTY_HINT_NODE_TYPE, "Movement strategy.", PROPERTY_USAGE_EDITOR, "MovementStrategy"), "set_movement_strategy", "get_movement_strategy");
+    ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "movement_strategy", PROPERTY_HINT_NODE_TYPE, "MovementStrategy", PROPERTY_USAGE_DEFAULT | PROPERTY_USAGE_ALWAYS_DUPLICATE, "MovementStrategy"), "set_movement_strategy", "get_movement_strategy");
 }
