@@ -8,6 +8,19 @@ class MovementStrategy : public godot::Node
 {
     GDCLASS(MovementStrategy, godot::Node);
 
+protected:
+    /**
+     * @brief The total duration (in seconds) that this movement strategy will run before being considered done.
+     * If duration is 0, then
+     */
+    double duration = 0;
+    /**
+     * @brief Determines whether this movement strategy will ever complete.
+     */
+    bool never_ending = true;
+
+    double time_remaining = 0;
+
 private:
     /**
      * @brief Applies the movement strategy to the context based on delta time variable.
@@ -17,7 +30,33 @@ private:
      */
     virtual void _apply(godot::Ref<MovementContext> context, double delta);
 
+    /**
+     * @brief Internal virtual check to determine if the movement strategy has finished.
+     *
+     * This method provides a customizable completion condition for derived movement strategies.
+     * By default, it always returns `false`, meaning the base `MovementStrategy` never finishes
+     * on its own unless controlled by `duration` or `never_ending` flags.
+     *
+     * @return `true` if the movement strategy should be considered done, `false` otherwise.
+     *
+     * @note This method is called internally by `is_done()`, which also considers `duration`
+     *       and `never_ending` settings when determining overall completion.
+     *
+     * @see is_done()
+     * @see duration
+     * @see never_ending
+     */
+    virtual bool _is_done() const;
+
+    /**
+     * @brief Called after _ready(). For child definitinos.
+     */
+    virtual void _init(){};
 public:
+
+    CREATE_GETTER_SETTER_BOOL_DEFAULT(never_ending);
+    CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, duration);
+
     /**
      * @brief Checks if the strategy is done if yes - applies the default linear behaviour implemented by
      * MovementStrategy to context based on delta time variable, if not - applies _apply() of the strategy.
@@ -27,12 +66,19 @@ public:
      */
     void apply(godot::Ref<MovementContext> context, double delta);
     /**
-     * @brief Checks if the movement strategy is finished with executing itself.
-     * Child classes define different meanings of is_done.
-     * @return true if done
-     * @return false if not done
+     * @brief Checks whether the current movement strategy has finished executing.
+     *
+     * This method determines if the strategy should continue applying its motion or stop.
+     * If `never_ending` is set to true, the strategy will *never* be considered done, and
+     * this method will always return false.
+     * Otherwise, it will check the internal timer and the custom `_is_done()` logic implemented
+     * by derived classes to determine completion.
+     *
+     * @return `true` if the strategy has finished and should stop applying movement, `false` otherwise.
      */
-    virtual bool is_done() const;
+    bool is_done() const;
+
+    virtual void _ready();
 
 protected:
     static void _bind_methods();

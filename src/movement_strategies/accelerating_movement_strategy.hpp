@@ -20,9 +20,9 @@ public:
     CREATE_GETTER_SETTER_DEFAULT(double, acceleration_per_second);
     CREATE_GETTER_SETTER_DEFAULT(double, min_speed);
     CREATE_GETTER_SETTER_DEFAULT(double, max_speed);
-    bool is_done() const override;
+    bool _is_done() const override;
 
-    void _ready() override;
+    void _init() override;
 
 protected:
     static void _bind_methods();

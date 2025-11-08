@@ -14,7 +14,7 @@ godot::TypedArray<MovementStrategy> SequentialMovementStrategy::get_movement_str
     return strategies;
 }
 
-bool SequentialMovementStrategy::is_done() const
+bool SequentialMovementStrategy::_is_done() const
 {
     for (int i = this->current_strategy; i < get_child_count(); ++i)
     {
@@ -32,7 +32,7 @@ bool SequentialMovementStrategy::is_done() const
     return true;
 }
 
-void SequentialMovementStrategy::_ready()
+void SequentialMovementStrategy::_init()
 {
     ERR_FAIL_COND_MSG(get_child_count() == 0, "No children of SequentialMovementStrategy: " + this->get_name());
 }

@@ -11,7 +11,7 @@ void AcceleratingMovementStrategy::_apply(godot::Ref<MovementContext> context, d
     last_speed_call = speed;
 }
 
-bool AcceleratingMovementStrategy::is_done() const
+bool AcceleratingMovementStrategy::_is_done() const
 {
     if (this->acceleration_per_second < 0)
     {
@@ -20,7 +20,7 @@ bool AcceleratingMovementStrategy::is_done() const
     return godot::Math::is_equal_approx(this->last_speed_call, this->max_speed);
 }
 
-void AcceleratingMovementStrategy::_ready()
+void AcceleratingMovementStrategy::_init()
 {
     ERR_FAIL_COND(!godot::Math::is_zero_approx(this->min_speed - this->max_speed) && this->min_speed > this->max_speed);
     ERR_FAIL_COND_MSG(godot::Math::is_equal_approx(this->acceleration_per_second, 0.), "Acceleration is approx 0: " + this->get_name());

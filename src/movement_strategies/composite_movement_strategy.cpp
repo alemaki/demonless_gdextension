@@ -14,7 +14,7 @@ godot::TypedArray<MovementStrategy> CompositeMovementStrategy::get_movement_stra
     return strategies;
 }
 
-bool CompositeMovementStrategy::is_done() const
+bool CompositeMovementStrategy::_is_done() const
 {
     for (int i = 0; i < get_child_count(); ++i)
     {
@@ -32,7 +32,7 @@ bool CompositeMovementStrategy::is_done() const
     return true;
 }
 
-void CompositeMovementStrategy::_ready()
+void CompositeMovementStrategy::_init()
 {
     ERR_FAIL_COND_MSG(get_child_count() == 0, "No children of CompositeMovementStrategy: " + this->get_name());
 }

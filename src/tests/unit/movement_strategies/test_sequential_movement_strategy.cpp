@@ -47,7 +47,7 @@ TEST_SUITE("SequentialMovementStrategy")
             apply_call_count++;
         }
 
-        bool is_done() const override
+        bool _is_done() const override
         {
             return this->done;
         }

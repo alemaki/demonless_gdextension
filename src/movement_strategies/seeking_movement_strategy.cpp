@@ -16,26 +16,7 @@ void SeekingMovementStrategy::_apply(godot::Ref<MovementContext> context, double
     }
 }
 
-bool SeekingMovementStrategy::is_done() const
-{
-    if (this->never_ending)
-    {
-        return false;
-    }
-    else if (this->time_remaining <= 0)
-    {
-        return true;
-    }
-    return false;
-}
-
-void SeekingMovementStrategy::_ready()
-{
-    this->time_remaining = this->duration;
-}
-
 void SeekingMovementStrategy::_bind_methods()
 {
-    BIND_GETTER_SETTER_PROPERTY_BOOL_DEFAULT(SeekingMovementStrategy, never_ending);
-    BIND_GETTER_SETTER_PROPERTY_DEFAULT(SeekingMovementStrategy, FLOAT, duration);
+
 }
