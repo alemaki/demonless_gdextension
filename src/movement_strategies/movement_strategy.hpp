@@ -18,6 +18,10 @@ protected:
      * @brief Determines whether this movement strategy will ever complete.
      */
     bool never_ending = true;
+    /**
+     * @brief If true only checks duration, and not the virtual `_is_done`.
+     */
+    bool only_duration = false; //TODO: enum maybe?
 
     double time_remaining = 0;
 
@@ -54,8 +58,9 @@ private:
     virtual void _init(){};
 public:
 
-    CREATE_GETTER_SETTER_BOOL_DEFAULT(never_ending);
     CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, duration);
+    CREATE_GETTER_SETTER_BOOL_DEFAULT(never_ending);
+    CREATE_GETTER_SETTER_BOOL_DEFAULT(only_duration);
 
     /**
      * @brief Checks if the strategy is done if yes - applies the default linear behaviour implemented by

@@ -34,10 +34,17 @@ bool MovementStrategy::is_done() const
     {
         return false;
     }
-    else if (this->duration != 0
-             || this->time_remaining > 0)
+    else if (!(only_duration)
+             && (this->duration != 0
+                 || this->time_remaining > 0)
+            )
     {
         return this->_is_done();
+    }
+    else if (only_duration
+             && this->time_remaining > 0)
+    {
+        return false;
     }
     return true;
 }
@@ -53,4 +60,8 @@ void MovementStrategy::_bind_methods()
     using namespace godot;
 
     //TODO: switch to godot_cpp 4.3 to be able to expose virtual methods.
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(MovementStrategy, FLOAT, duration);
+    BIND_GETTER_SETTER_PROPERTY_BOOL_DEFAULT(MovementStrategy, never_ending);
+    BIND_GETTER_SETTER_PROPERTY_BOOL_DEFAULT(MovementStrategy, only_duration);
+
 }

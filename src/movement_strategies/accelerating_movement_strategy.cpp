@@ -28,7 +28,7 @@ void AcceleratingMovementStrategy::_init()
 
 void AcceleratingMovementStrategy::_bind_methods()
 {
-    BIND_GETTER_SETTER_DEFAULT(AcceleratingMovementStrategy, acceleration_per_second);
-    BIND_GETTER_SETTER_DEFAULT(AcceleratingMovementStrategy, min_speed);
-    BIND_GETTER_SETTER_DEFAULT(AcceleratingMovementStrategy, max_speed);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(AcceleratingMovementStrategy, FLOAT, acceleration_per_second);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(AcceleratingMovementStrategy, FLOAT, min_speed);
+    BIND_GETTER_SETTER_PROPERTY_DEFAULT(AcceleratingMovementStrategy, FLOAT, max_speed);
 }

@@ -35,6 +35,7 @@ struct SequentialStrategyFixture
     }
 };
 
+// TODO: make duration tests. Add tests for bools.
 TEST_SUITE("SequentialMovementStrategy")
 {
     struct TestStrategy : public MovementStrategy

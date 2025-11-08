@@ -13,12 +13,11 @@ void Projectile::set_movement_context(godot::Ref<MovementContext> movement_conte
 
 void Projectile::set_movement_strategy(MovementStrategy* movement_strategy)
 {
-    if (this->movement_strategy)
-    {
-        this->movement_strategy->queue_free();
-    }
     this->movement_strategy = movement_strategy;
-    ERR_FAIL_NULL(this->movement_strategy);
+    if (!this->movement_strategy)
+    {
+        return;
+    }
     if (this->movement_strategy->get_parent() != this)
     {
         this->add_child(this->movement_strategy);
