@@ -4,7 +4,7 @@
 void AcceleratingMovementStrategy::_apply(godot::Ref<MovementContext> context, double delta)
 {
     double speed = context->get_speed();
-    speed += this->acceleration_per_second;
+    speed += this->acceleration_per_second*delta;
     speed = godot::Math::clamp<double>(speed, this->min_speed, this->max_speed);
     context->set_speed(speed);
     context->set_position(context->get_position() + context->get_direction()*context->get_speed()*delta);

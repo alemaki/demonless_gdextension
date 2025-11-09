@@ -52,6 +52,25 @@ inline void ensure_node(T*& member_ptr, const godot::Node* owner, const godot::N
                                            path, T::get_class_static(), owner->get_name()));
 }
 
+/**
+ * @brief Same as `ensure_node`, but no error prints.
+ *
+ * @tparam T Any Node type
+ * @param member_ptr The pointer reference
+ * @param owner Owner of the pointer
+ * @param path Path to search if member_ptr is not defined
+ */
+template <typename T>
+void ensure_node_silent(T*& member_ptr, const godot::Node* owner, const godot::NodePath& path)
+{
+     if (member_ptr)
+    {
+        return;
+    }
+    godot::Node *node = owner->get_node_or_null(path);
+    member_ptr = godot::Object::cast_to<T>(node);
+}
+
 } // namespace utils
 
 #endif /* SRC_UTILS_HPP */

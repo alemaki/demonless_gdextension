@@ -54,6 +54,8 @@ void Projectile::_ready()
 {
     DISABLE_EDITOR_PROCESSING();
 
+    utils::ensure_node_silent(this->hitbox, this, "Hitbox");
+
     if (this->hitbox)
     {
         this->hitbox->set_damage(this->damage);
