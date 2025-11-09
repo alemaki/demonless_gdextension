@@ -21,7 +21,7 @@ void MovementStrategy::apply(godot::Ref<MovementContext> context, double delta)
         this->MovementStrategy::_apply(context, delta);
         return;
     }
-    if (this->never_ending)
+    if (!(this->never_ending))
     {
         this->time_remaining -= delta;
     }
@@ -34,19 +34,19 @@ bool MovementStrategy::is_done() const
     {
         return false;
     }
-    else if (!(only_duration)
-             && (this->duration != 0
+    else if (!(this->only_duration)
+             && (this->duration == 0
                  || this->time_remaining > 0)
             )
     {
         return this->_is_done();
     }
-    else if (only_duration
-             && this->time_remaining > 0)
+    else if ((this->duration > 0)
+             && (this->time_remaining <= 0))
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 
 void MovementStrategy::_ready()

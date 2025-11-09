@@ -26,6 +26,7 @@ BTTask::Status BTExecuteAttack::_tick(double delta)
 
     godot::Vector3 direction = actor->get_global_position().direction_to(target->get_global_position());
     direction.y = 0; //TODO, fix this so it wont move upon the UP_VECTOR
+    TASK_FAIL_COND_COMP(direction.is_zero_approx());
     attack->set_target(target);
     attack->set_direction(direction);
     attack->step(delta);

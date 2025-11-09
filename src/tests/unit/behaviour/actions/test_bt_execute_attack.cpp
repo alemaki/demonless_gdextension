@@ -4,17 +4,22 @@
 
 #include "components/area3d/hitbox.hpp"
 #include "actor_behaviour/actions/bt_execute_attack.hpp"
-#include "skills/skill_action.hpp"
+#include "attacks/wave_attack.hpp"
 
 struct BTExecuteAttackFixture
 {
-    SkillAction* attack = memnew(SkillAction);
+    WaveAttack* attack = memnew(WaveAttack);
     godot::Ref<BTExecuteAttack> task = memnew(BTExecuteAttack);
     godot::Ref<Blackboard> blackboard = memnew(Blackboard);
     godot::Node3D* mock_actor = memnew(godot::Node3D);
+    godot::Node3D* mock_target = memnew(godot::Node3D);
     BTExecuteAttackFixture()
     {
+        ::get_scene_root()->add_child(mock_actor);
+        ::get_scene_root()->add_child(mock_target);
+        mock_target->set_position({1, 0, 0});
         blackboard->set_var("attack_name", attack);
+        blackboard->set_var("target", mock_target);
         task->set_attack_to_execute("attack_name");
         task->set_blackboard(blackboard);
         task->initialize(mock_actor, blackboard);
@@ -40,7 +45,6 @@ TEST_SUITE("BTExecuteAttack")
     TEST_CASE_FIXTURE(BTExecuteAttackFixture, "Steps in attack and returns running")
     {
         auto status = task->execute(0.1);
-
         CHECK_EQ(status, BTTask::Status::RUNNING);
         CHECK_EQ(attack->get_time_accumulated(), doctest::Approx(0.1));
     }
@@ -70,7 +74,7 @@ TEST_SUITE("BTExecuteAttack")
     }
 }
 
-
+//TODO: test target missing
 TEST_SUITE("[Error] BTExecuteAttack")
 {
     TEST_CASE_FIXTURE(BTExecuteAttackFixture, "Test basic errors")

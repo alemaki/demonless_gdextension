@@ -63,6 +63,7 @@ TEST_SUITE("ProjectileTimeJump")
         ::get_scene_root()->add_child(projectile);
 
         ProjectileTimeJump* jump = memnew(ProjectileTimeJump);
+
         jump->set_time_skip(3.0);
 
         jump->step(0.0);

@@ -13,6 +13,7 @@ struct AcceleratingFixture
 
     AcceleratingFixture()
     {
+        strat->set_duration(0); // TODO: make enums for behvaiour of movement strats
         ctx->set_speed(0.0);
         ctx->set_position(Vector3(0, 0, 0));
         ctx->set_direction(Vector3(1, 0, 0));

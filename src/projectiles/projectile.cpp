@@ -13,11 +13,11 @@ void Projectile::set_movement_context(godot::Ref<MovementContext> movement_conte
 
 void Projectile::set_movement_strategy(MovementStrategy* movement_strategy)
 {
-    this->movement_strategy = movement_strategy;
-    if (!this->movement_strategy)
+    if (!movement_strategy)
     {
         return;
     }
+    this->movement_strategy = movement_strategy;
     if (this->movement_strategy->get_parent() != this)
     {
         this->add_child(this->movement_strategy);
@@ -54,12 +54,12 @@ void Projectile::_ready()
 {
     DISABLE_EDITOR_PROCESSING();
 
-    utils::ensure_node(this->hitbox, this, "Hitbox");
-    ERR_FAIL_NULL(this->hitbox);
-
-    this->hitbox->set_damage(this->damage);
-    this->hitbox->connect("hit_hurtbox", callable_mp(this, &Projectile::_hit_hurtbox));
-    this->hitbox->connect("hit_blocker", callable_mp(this, &Projectile::_hit_blocker));
+    if (this->hitbox)
+    {
+        this->hitbox->set_damage(this->damage);
+        this->hitbox->connect("hit_hurtbox", callable_mp(this, &Projectile::_hit_hurtbox));
+        this->hitbox->connect("hit_blocker", callable_mp(this, &Projectile::_hit_blocker));
+    }
 
     if (!this->lifespan_timer)
     {
@@ -80,7 +80,7 @@ void Projectile::_ready()
     {
         this->movement_context.instantiate();
     }
-    if (!this->movement_strategy)
+    if (!(this->movement_strategy))
     {
         this->set_movement_strategy(memnew(MovementStrategy));
     }

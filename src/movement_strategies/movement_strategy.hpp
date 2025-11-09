@@ -11,13 +11,13 @@ class MovementStrategy : public godot::Node
 protected:
     /**
      * @brief The total duration (in seconds) that this movement strategy will run before being considered done.
-     * If duration is 0, then
+     * If duration is 0, then timeout won't be checked.
      */
     double duration = 0;
     /**
      * @brief Determines whether this movement strategy will ever complete.
      */
-    bool never_ending = true;
+    bool never_ending = false;
     /**
      * @brief If true only checks duration, and not the virtual `_is_done`.
      */

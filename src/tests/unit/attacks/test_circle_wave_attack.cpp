@@ -12,8 +12,10 @@ struct CircleWaveAttackFixture
 
     CircleWaveAttackFixture()
     {
+        ::get_scene_root()->add_child(dummy_source);
         attack->set_actor_source(dummy_source);
         attack->set_projectile(dummy_projectile);
+        ::get_scene_root()->add_child(attack);
     }
 
     ~CircleWaveAttackFixture()
@@ -42,7 +44,9 @@ TEST_SUITE("TestCircleWaveAttack")
 
         godot::Vector3 dir = {1, 0, 1};
         attack->set_direction(dir);
-        CHECK_VECTORS_EQ(attack->get_direction(), dir);
+        godot::Vector3 got = attack->get_direction();
+        dir.normalize();
+        CHECK_VECTORS_EQ(got, dir);
     }
 
     TEST_CASE_FIXTURE(CircleWaveAttackFixture, "Fires waves on time accumulation")
