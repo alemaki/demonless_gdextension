@@ -9,7 +9,7 @@ BTTask::Status BTNode3DInRange::_tick(double delta)
 
     TASK_FAIL_COND(node == nullptr);
 
-    TASK_SUCCEED_COND(actor->get_position().distance_to(node->get_position()) <= range);
+    TASK_SUCCEED_COND(actor->get_global_position().distance_to(node->get_global_position()) <= range);
 
     return BTTask::Status::FAILURE;
 }

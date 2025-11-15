@@ -23,6 +23,8 @@
 #include "actor_behaviour/actions/bt_navigate_agent_to_position.hpp"
 #include "actor_behaviour/actions/bt_play_animation.hpp"
 #include "actor_behaviour/actions/bt_queue_free_node.hpp"
+#include "actor_behaviour/actions/bt_set_node_from_group.hpp"
+#include "actor_behaviour/actions/bt_set_position_away_from_target.hpp"
 #include "actor_behaviour/actions/bt_set_random_position.hpp"
 #include "actor_behaviour/actions/bt_spawn_node3d_at_position.hpp"
 
@@ -99,6 +101,8 @@ void initialize_gdextension_module(ModuleInitializationLevel p_level)
 		ClassDB::register_class<BTNavigateAgentToPosition>();
 		ClassDB::register_class<BTPlayAnimation>();
 		ClassDB::register_class<BTQueueFreeNode>();
+		ClassDB::register_class<BTSetNodeFromGroup>();
+		ClassDB::register_class<BTSetPositionAwayFromTarget>();
 		ClassDB::register_class<BTSetRandomPosition>();
 		ClassDB::register_class<BTSpawnNode3DAtPosition>();
 
