@@ -14,7 +14,7 @@ class BTSetPositionAwayFromTarget : public BTAction
 public:
     CREATE_GETTER_SETTER_DEFAULT(godot::StringName, position_name);
     CREATE_GETTER_SETTER_DEFAULT(godot::StringName, target_name);
-    CREATE_GETTER_SETTER_DEFAULT(double, distance);
+    CREATE_GETTER_SETTER_POSITIVE_DEFAULT(double, distance);
 
 protected:
     virtual BTTask::Status _tick(double delta) override;
