@@ -2,10 +2,7 @@
 
 BTTask::Status BTSetRandomPosition::_tick(double delta)
 {
-    TASK_FAIL_COND_COMP_MSG(
-        this->position_name.is_empty(),
-        vformat("%s: position_name is empty", this->get_name())
-    );
+    TASK_FAIL_COND_COMP_MSG( this->position_name.is_empty(), "%s: position_name is empty");
 
     Vector3 random_position;
     /* TODO: make this random position to be in the navMesh */

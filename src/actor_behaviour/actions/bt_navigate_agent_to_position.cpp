@@ -7,12 +7,12 @@ BTTask::Status BTNavigateAgentToPosition::_tick(double delta)
 
     TASK_FAIL_COND_COMP_MSG(
         agent == nullptr,
-        vformat("%s: %s is not an Agent as expected.", this->get_name(), this->get_actor())
+        vformat("%s is not an Agent as expected.", this->get_actor())
     );
 
     TASK_FAIL_COND_COMP_MSG(
         agent->get_navigation_agent() == nullptr,
-        vformat("%s: Agent has no NavigationAgent3D.", this->get_actor())
+        vformat("Agent has no NavigationAgent3D.", this->get_actor())
     );
 
     TASK_SUCCEED_COND(agent->get_navigation_agent()->is_navigation_finished());
@@ -30,7 +30,7 @@ void BTNavigateAgentToPosition::_enter()
 {
     ERR_FAIL_COND_MSG(
         !(this->get_blackboard()->has_var(this->position_name)),
-        vformat("%s: Blackboard has no value named: %s", this->get_name(), this->position_name)
+        vformat("Blackboard has no value named: %s", this->position_name)
     );
 
     Vector3 position = this->get_blackboard()->get_var(this->position_name);
@@ -39,7 +39,7 @@ void BTNavigateAgentToPosition::_enter()
 
     ERR_FAIL_COND_MSG(
         agent == nullptr,
-        vformat("%s: %s is not an Agent as expected.", this->get_name(), this->get_actor())
+        vformat("%s is not an Agent as expected.", this->get_actor())
     );
 
     agent->get_navigation_agent()->set_target_position(position);
