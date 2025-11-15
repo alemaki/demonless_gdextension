@@ -8,11 +8,9 @@ class BTSetRandomPosition : public BTAction
     GDCLASS(BTSetRandomPosition, BTAction);
 
     godot::StringName position_name;
-    godot::Vector3 up_vector = godot::Vector3(0, 1, 0);
 
 public:
     CREATE_GETTER_SETTER_DEFAULT(godot::StringName, position_name);
-    CREATE_GETTER_SETTER_DEFAULT(godot::Vector3, up_vector);
 
 protected:
     virtual BTTask::Status _tick(double delta) override;

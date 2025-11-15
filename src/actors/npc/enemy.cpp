@@ -23,5 +23,5 @@ void Enemy::_ready()
 
     ERR_FAIL_NULL(this->blackboard);
     Node* player = get_tree()->get_first_node_in_group("player");
-    this->blackboard->set_var("target", player);
+    this->blackboard->set_var("target", player); // TODO: remove this maybe?
 }
