@@ -1,3 +1,4 @@
+
 #define DOCTEST_CONFIG_NO_EXCEPTIONS_BUT_WITH_ALL_ASSERTS
 #include "utils/utils.hpp"
 
@@ -13,7 +14,7 @@ struct AcceleratingFixture
 
     AcceleratingFixture()
     {
-        strat->set_duration(0); // TODO: make enums for behvaiour of movement strats
+        strat->set_duration(0);
         ctx->set_speed(0.0);
         ctx->set_position(Vector3(0, 0, 0));
         ctx->set_direction(Vector3(1, 0, 0));
@@ -25,99 +26,124 @@ struct AcceleratingFixture
     }
 };
 
-TEST_SUITE("AcceleratingMovementStrategy Tests")
+TEST_SUITE("AcceleratingMovementStrategy Full Acceleration Tests")
 {
-    TEST_CASE_FIXTURE(AcceleratingFixture, "Positive acceleration increases speed until max_speed")
+    TEST_CASE_FIXTURE(AcceleratingFixture, "Positive acceleration until max_speed")
     {
-        strat->set_acceleration_per_second(1.0);
+        strat->set_acceleration_per_second(2.0);
         strat->set_min_speed(0.0);
-        strat->set_max_speed(3.0);
-
-        strat->apply(ctx, 1.0);
-        CHECK_EQ(ctx->get_speed(), doctest::Approx(1.0));
+        strat->set_max_speed(5.0);
 
         strat->apply(ctx, 1.0);
         CHECK_EQ(ctx->get_speed(), doctest::Approx(2.0));
 
         strat->apply(ctx, 1.0);
-        CHECK_EQ(ctx->get_speed(), doctest::Approx(3.0));
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(4.0));
 
         strat->apply(ctx, 1.0);
-        CHECK_EQ(ctx->get_speed(), doctest::Approx(3.0));
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(5.0)); // hits max speed
+
+        strat->apply(ctx, 1.0);
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(5.0)); // stays at max
 
         CHECK(strat->is_done());
     }
 
-    TEST_CASE_FIXTURE(AcceleratingFixture, "Negative acceleration decreases speed until min_speed")
+    TEST_CASE_FIXTURE(AcceleratingFixture, "Negative acceleration until min_speed")
     {
-        ctx->set_speed(5.0);
+        ctx->set_speed(6.0);
 
-        strat->set_acceleration_per_second(-2.0);
-        strat->set_min_speed(1.0);
+        strat->set_acceleration_per_second(-3.0);
+        strat->set_min_speed(2.0);
         strat->set_max_speed(10.0);
 
         strat->apply(ctx, 1.0);
         CHECK_EQ(ctx->get_speed(), doctest::Approx(3.0));
 
         strat->apply(ctx, 1.0);
-        CHECK_EQ(ctx->get_speed(), doctest::Approx(1.0));
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(2.0)); // hits min speed
 
         strat->apply(ctx, 1.0);
-        CHECK_EQ(ctx->get_speed(), doctest::Approx(1.0));
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(2.0)); // stays at min
 
         CHECK(strat->is_done());
     }
 
-    TEST_CASE_FIXTURE(AcceleratingFixture, "Position updates correctly with delta and direction")
+    TEST_CASE_FIXTURE(AcceleratingFixture, "Zero acceleration keeps speed constant")
     {
-        ctx->set_direction(Vector3(0, 0, 1)); // move in +Z
+        ctx->set_speed(3.0);
+        strat->set_acceleration_per_second(0.0);
+        strat->set_min_speed(0.0);
+        strat->set_max_speed(5.0);
 
+        strat->apply(ctx, 1.0);
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(3.0));
+
+        strat->apply(ctx, 1.0);
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(3.0));
+
+        CHECK_FALSE(strat->is_done()); // done only when hitting limit
+    }
+
+    TEST_CASE_FIXTURE(AcceleratingFixture, "Acceleration hitting max_speed mid-frame")
+    {
+        ctx->set_speed(4.0);
+        strat->set_acceleration_per_second(3.0);
+        strat->set_min_speed(0.0);
+        strat->set_max_speed(5.0);
+
+        strat->apply(ctx, 1.0);
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(5.0)); // clamps correctly
+        CHECK(strat->is_done());
+    }
+
+    TEST_CASE_FIXTURE(AcceleratingFixture, "Acceleration hitting min_speed mid-frame")
+    {
+        ctx->set_speed(3.0);
+        strat->set_acceleration_per_second(-4.0);
+        strat->set_min_speed(2.0);
+        strat->set_max_speed(10.0);
+
+        strat->apply(ctx, 1.0);
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(2.0)); // clamps correctly
+        CHECK(strat->is_done());
+    }
+
+    TEST_CASE_FIXTURE(AcceleratingFixture, "Position updates correctly")
+    {
+        ctx->set_direction(Vector3(0, 0, 1));
         strat->set_acceleration_per_second(2.0);
         strat->set_min_speed(0.0);
         strat->set_max_speed(10.0);
 
         strat->apply(ctx, 0.5);
-        CHECK_EQ(ctx->get_position(), Vector3(0, 0, 1));
+        /* displacement = s*t + 0.5*a*t^2 = 0*0.5 + 0.5*2*0.25 = 0.25 */
+        CHECK_VECTORS_EQ(ctx->get_position(), Vector3(0, 0, 0.25));
 
         strat->apply(ctx, 1.0);
-        CHECK_EQ(ctx->get_position(), Vector3(0, 0, 5));
+        /* speed at start 1.0? displacement = s*t + 0.5*a*t^2 = 1*1 + 0.5*2*1 = 2 */
+        CHECK_VECTORS_EQ(ctx->get_position(), Vector3(0, 0, 2.25));
     }
-
-    TEST_CASE_FIXTURE(AcceleratingFixture, "is_done false while under max_speed (positive acceleration)")
+    TEST_CASE_FIXTURE(AcceleratingFixture, "Displacement correct when hitting max_speed mid-frame")
     {
-        strat->set_acceleration_per_second(1.0);
-        strat->set_min_speed(0.0);
-        strat->set_max_speed(5.0);
-
-        strat->apply(ctx, 1.0);
-        CHECK_FALSE(strat->is_done());
-        strat->apply(ctx, 1.0);
-        CHECK_FALSE(strat->is_done());
-        strat->apply(ctx, 1.0);
-        CHECK_FALSE(strat->is_done());
-    }
-
-    TEST_CASE_FIXTURE(AcceleratingFixture, "is_done true when speed reaches max_speed (positive)")
-    {
+        // Start close to max_speed so it hits mid-frame
         ctx->set_speed(4.0);
-
-        strat->set_acceleration_per_second(2.0);
+        strat->set_acceleration_per_second(3.0);
         strat->set_min_speed(0.0);
         strat->set_max_speed(5.0);
 
-        strat->apply(ctx, 1.0);
-        CHECK(strat->is_done());
-    }
+        double delta = 1.0;
+        strat->apply(ctx, delta);
 
-    TEST_CASE_FIXTURE(AcceleratingFixture, "is_done true when speed reaches min_speed (negative)")
-    {
-        ctx->set_speed(2.0);
+        double time_accelerating = (5.0 - 4.0) / 3.0;
+        double time_at_max = delta - time_accelerating;
+        double displacement = 4.0 * time_accelerating + 0.5 * 3.0 * time_accelerating * time_accelerating; // during acceleration
+        displacement += 5.0 * time_at_max;
 
-        strat->set_acceleration_per_second(-5.0);
-        strat->set_min_speed(2.0);
-        strat->set_max_speed(10.0);
+        CHECK_VECTORS_EQ(ctx->get_position(), Vector3(displacement, 0, 0));
 
-        strat->apply(ctx, 1.0);
+        CHECK_EQ(ctx->get_speed(), doctest::Approx(5.0));
+
         CHECK(strat->is_done());
     }
 }

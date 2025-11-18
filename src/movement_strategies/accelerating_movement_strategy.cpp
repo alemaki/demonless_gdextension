@@ -4,10 +4,35 @@
 void AcceleratingMovementStrategy::_apply(godot::Ref<MovementContext> context, double delta)
 {
     double speed = context->get_speed();
+   /*
+    * Integrate the velocity over the current frame.
+    * Starting from the current speed `s`, compute the displacement by
+    * integrating (acceleration * x + s) over the interval [0, delta].
+    * which is 1/2*(acceleration * delta^2) + delta*s
+    * Take into account that max_speed/min_speed can be reached in the meantime so split integral.
+    */
+    double time_at_extreme = 0;
+    double distance_at_extreme = 0;
+    if (this->acceleration_per_second > 0)
+    {
+        time_at_extreme = ((speed + delta*this->acceleration_per_second) - this->max_speed)/this->acceleration_per_second;
+    }
+    else
+    {
+        time_at_extreme = (this->min_speed - (speed + delta*this->acceleration_per_second))/this->acceleration_per_second;
+    }
+    time_at_extreme = time_at_extreme > 0 ? time_at_extreme : 0;
+    time_at_extreme = godot::Math::clamp<double>(time_at_extreme, 0, delta);
+    double time_accelerating = delta - time_at_extreme;
+    context->set_position(
+        context->get_position()
+        + context->get_direction()*speed*time_accelerating
+        + 0.5*context->get_direction()*this->acceleration_per_second*time_accelerating*time_accelerating
+        + context->get_direction()*time_at_extreme*(this->acceleration_per_second > 0 ? this->max_speed : this->min_speed)
+    );
     speed += this->acceleration_per_second*delta;
     speed = godot::Math::clamp<double>(speed, this->min_speed, this->max_speed);
     context->set_speed(speed);
-    context->set_position(context->get_position() + context->get_direction()*context->get_speed()*delta);
     last_speed_call = speed;
 }
 

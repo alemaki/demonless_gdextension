@@ -94,9 +94,9 @@ void Projectile::_physics_process(double delta)
     ERR_FAIL_NULL(this->movement_strategy);
     this->movement_context->set_position(this->get_position());
     this->movement_strategy->apply(this->movement_context, delta);
-    godot::Vector3 displacement = this->movement_context->get_position()- this->get_position();
+    godot::Vector3 displacement = this->movement_context->get_position() - this->get_position();
     this->set_velocity(displacement / delta); // velocity to reach in one frame
-    this->look_at(this->get_position().direction_to(this->movement_context->get_position()));
+    this->look_at(this->get_position() + displacement);
     this->move_and_slide();
 }
 
